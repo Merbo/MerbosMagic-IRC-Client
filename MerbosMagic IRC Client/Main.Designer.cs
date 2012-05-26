@@ -31,13 +31,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.@DEBUG = new System.Windows.Forms.TabPage();
             this.toolStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -48,6 +45,7 @@
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(765, 25);
+            this.toolStrip1.Stretch = true;
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -61,57 +59,28 @@
             this.toolStripButton1.Text = "Connect";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
-            // textBox1
-            // 
-            this.textBox1.BackColor = System.Drawing.Color.Black;
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.textBox1.ForeColor = System.Drawing.Color.White;
-            this.textBox1.Location = new System.Drawing.Point(3, 3);
-            this.textBox1.MaxLength = 999999999;
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(751, 317);
-            this.textBox1.TabIndex = 1;
-            this.textBox1.TabStop = false;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            // 
-            // textBox2
-            // 
-            this.textBox2.BackColor = System.Drawing.Color.Black;
-            this.textBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.textBox2.ForeColor = System.Drawing.Color.White;
-            this.textBox2.Location = new System.Drawing.Point(3, 344);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(751, 20);
-            this.textBox2.TabIndex = 2;
-            this.textBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox2_KeyPress);
-            // 
             // tabControl1
             // 
-            this.tabControl1.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.HotTrack = true;
+            this.tabControl1.Appearance = System.Windows.Forms.TabAppearance.Buttons;
+            this.tabControl1.Controls.Add(this.DEBUG);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.tabControl1.Location = new System.Drawing.Point(0, 25);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(765, 396);
-            this.tabControl1.TabIndex = 3;
-            this.tabControl1.TabStop = false;
+            this.tabControl1.Size = new System.Drawing.Size(765, 397);
+            this.tabControl1.TabIndex = 1;
             // 
-            // tabPage1
+            // @DEBUG
             // 
-            this.tabPage1.Controls.Add(this.textBox1);
-            this.tabPage1.Controls.Add(this.textBox2);
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(757, 367);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Status";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.DEBUG.BackColor = System.Drawing.Color.Black;
+            this.DEBUG.ForeColor = System.Drawing.Color.White;
+            this.DEBUG.Location = new System.Drawing.Point(4, 25);
+            this.DEBUG.Name = "@DEBUG";
+            this.DEBUG.Padding = new System.Windows.Forms.Padding(3);
+            this.DEBUG.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.DEBUG.Size = new System.Drawing.Size(757, 368);
+            this.DEBUG.TabIndex = 0;
+            this.DEBUG.Text = "DEBUG";
             // 
             // Main
             // 
@@ -128,8 +97,6 @@
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -139,9 +106,7 @@
 
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage DEBUG;
     }
 }

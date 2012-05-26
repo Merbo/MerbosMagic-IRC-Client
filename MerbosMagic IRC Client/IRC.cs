@@ -41,7 +41,7 @@ namespace MerbosMagic_IRC_Client
 
         public static void ProcessRaw(string raw) {
 #if DEBUG
-            Program.M.ChatAdd("<-- " + raw);
+            Program.M.ChatAdd("@DEBUG", "<-- " + raw);
 #endif
             string[] commands = raw.Split(' ');
             if (commands[0] == "PING")
@@ -80,7 +80,7 @@ namespace MerbosMagic_IRC_Client
         public static void SendRaw(string raw)
         {
 #if DEBUG
-            Program.M.ChatAdd("--> " + raw);
+            Program.M.ChatAdd("@DEBUG", "--> " + raw);
 #endif
             if (IRCClient.Connected)
             {
