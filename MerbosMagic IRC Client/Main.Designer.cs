@@ -32,9 +32,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.@DEBUG = new System.Windows.Forms.TabPage();
             this.toolStrip1.SuspendLayout();
-            this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -61,26 +59,14 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Appearance = System.Windows.Forms.TabAppearance.Buttons;
-            this.tabControl1.Controls.Add(this.DEBUG);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.HotTrack = true;
             this.tabControl1.Location = new System.Drawing.Point(0, 25);
+            this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(765, 397);
+            this.tabControl1.Size = new System.Drawing.Size(765, 396);
             this.tabControl1.TabIndex = 1;
-            // 
-            // @DEBUG
-            // 
-            this.DEBUG.BackColor = System.Drawing.Color.Black;
-            this.DEBUG.ForeColor = System.Drawing.Color.White;
-            this.DEBUG.Location = new System.Drawing.Point(4, 25);
-            this.DEBUG.Name = "@DEBUG";
-            this.DEBUG.Padding = new System.Windows.Forms.Padding(3);
-            this.DEBUG.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.DEBUG.Size = new System.Drawing.Size(757, 368);
-            this.DEBUG.TabIndex = 0;
-            this.DEBUG.Text = "DEBUG";
             // 
             // Main
             // 
@@ -94,9 +80,9 @@
             this.Name = "Main";
             this.Text = "Main";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
+            this.Load += new System.EventHandler(this.Main_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -107,6 +93,6 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage DEBUG;
+        //private System.Windows.Forms.TabPage DEBUG;
     }
 }

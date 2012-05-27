@@ -15,6 +15,8 @@ namespace MerbosMagic_IRC_Client
         public static NetworkStream IRCStream;
         public static StreamReader IRCReader;
         public static StreamWriter IRCWriter;
+        public static string nick = "ClientTest";
+        public static string user = "Ethan Carr";
         public static void Connect()
         {
 
@@ -33,15 +35,16 @@ namespace MerbosMagic_IRC_Client
 
         public static bool alive = true;
         public static void PostConnect() {
-            SendRaw("NICK ClientTest");
-            SendRaw("USER ClientTest 0 * :Ethan Carr");
+            SendRaw("NICK " + nick);
+            SendRaw("USER " + nick + " 0 * :" + user);
 
             ReadInput();
         }
+        //:ClientTest!ClientTest@108.49.53.188 JOIN :#MerbosMagic
 
         public static void ProcessRaw(string raw) {
 #if DEBUG
-            Program.M.ChatAdd("@DEBUG", "<-- " + raw);
+            Program.M.ChatAdd("debugPage", "<-- " + raw);
 #endif
             string[] commands = raw.Split(' ');
             if (commands[0] == "PING")
@@ -50,7 +53,15 @@ namespace MerbosMagic_IRC_Client
             }
             else
             {
-                
+                switch (commands[1])
+                {
+                    case "JOIN":
+                        if (commands[0].StartsWith(":" + nick))
+                        {
+                            Program.M.AddPage(commands[2].Remove(0, 2), commands[2].Remove(0, 1));
+                        }
+                        break;
+                }
             }
         }
 
@@ -80,7 +91,7 @@ namespace MerbosMagic_IRC_Client
         public static void SendRaw(string raw)
         {
 #if DEBUG
-            Program.M.ChatAdd("@DEBUG", "--> " + raw);
+            Program.M.ChatAdd("debugPage", "--> " + raw);
 #endif
             if (IRCClient.Connected)
             {
