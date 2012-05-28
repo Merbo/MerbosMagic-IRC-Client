@@ -83,10 +83,10 @@ namespace MerbosMagic_IRC_Client
             {
                 string input;
 
-                input = IRCReader.ReadLine();
-
                 try
                 {
+                    input = IRCReader.ReadLine();
+
                     if (input != null)
                     {
                         ProcessRaw(input);
@@ -107,9 +107,14 @@ namespace MerbosMagic_IRC_Client
 #endif
             string[] commands = raw.Split(' ');
 
-            if (commands[0] == "PRIVMSG")
+            if (commands[0].ToUpper() == "PRIVMSG")
             {
                 Program.M.ChatAdd(commands[1].Remove(0, 1), "<" + nick + "> " + String.Join(" ", commands, 2, commands.Length - 2).Remove(0, 1));
+            }
+            if (commands[0].ToUpper() == "NICK")
+            {
+                nick = commands[1];
+                Program.M.ChatAdd("You are now known as " + nick + ".");
             }
 
             if (IRCClient.Connected)

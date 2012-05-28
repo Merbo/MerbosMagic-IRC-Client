@@ -17,7 +17,7 @@ namespace MerbosMagic_IRC_Client
             InitializeComponent();
         }
 
-        private delegate void ChatAddSafe(string target, string text);
+        private delegate void ChatAddSafeOne(string target, string text);
         public void ChatAdd(string target, string text)
         {
             //target is the tab window to add it to
@@ -25,7 +25,7 @@ namespace MerbosMagic_IRC_Client
 
             if (this.tabControl1.InvokeRequired)
             {
-                this.tabControl1.BeginInvoke(new ChatAddSafe(ChatAdd), target, text);
+                this.tabControl1.BeginInvoke(new ChatAddSafeOne(ChatAdd), target, text);
                 return;
             }
             else
@@ -44,19 +44,61 @@ namespace MerbosMagic_IRC_Client
             }
         }
 
+        private delegate void ChatAddSafeTwo(string text);
+        public void ChatAdd(string text)
+        {
+            //target is the tab window to add it to
+            //text is the text to add
+
+            if (this.tabControl1.InvokeRequired)
+            {
+                this.tabControl1.BeginInvoke(new ChatAddSafeTwo(ChatAdd), text);
+                return;
+            }
+            else
+            {
+                //tabControl1.SelectedTab
+                TabPage TP = tabControl1.SelectedTab;
+
+                Control[] targetFindTextBox = TP.Controls.Find(TP.Name + "_tb1", true);
+                //if (targetFindTextBox.Length >= 1)
+                //{
+                    TextBox TB = (TextBox)targetFindTextBox[0];
+                    TB.Text += "\r\n" + text;
+                //}
+            }
+        }
+
         Thread IRCThread = new Thread(IRC.Connect);
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            IRCThread.Name = "IRCThread";
-            IRCThread.Start();
+            try
+            {
+                IRCThread.Name = "IRCThread";
+                IRCThread.Start();
+            }
+            catch (InvalidOperationException)
+            {
+                MessageBox.Show("You're already connected.");
+            }
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
-            IRC.SendRaw("QUIT :Program Closing");
-            IRC.IRCStream.Close();
-            IRCThread.Abort();
-            Application.Exit();
+            try
+            {
+                IRC.SendRaw("QUIT :Program Closing");
+                IRC.IRCStream.Close();
+                IRCThread.Abort();
+            }
+            catch (Exception)
+            {
+
+            }
+            finally
+            {
+                Application.Exit();
+            }
         }
 
         private delegate void AddPageSafe(string codeName, string Text);
@@ -129,14 +171,15 @@ namespace MerbosMagic_IRC_Client
                 {
                     IRC.SendRaw("PRIVMSG " + TP.Text + " :" + TB.Text);
                 }
-                else
+                else if (TB.Text.StartsWith("/"))
                 {
-                    IRC.SendRaw(TB.Text);
+                    IRC.SendRaw(TB.Text.Remove(0, 1));
                 }
                 
                 TB.Text = "";
             }
         }
+
         private void tb1_TextChanged(object sender, EventArgs e)
         {
 
