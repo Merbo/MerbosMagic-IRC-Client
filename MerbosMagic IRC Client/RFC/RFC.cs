@@ -5,7 +5,8 @@ using System.Text;
 
 namespace MerbosMagic_IRC_Client.RFC
 {
-    class RFC_Insp_Commands : RFC
+    class RFC
     {
+        
     }
 }
