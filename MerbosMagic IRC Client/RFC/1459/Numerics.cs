@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace MerbosMagic_IRC_Client.RFC
 {
@@ -11,7 +12,6 @@ namespace MerbosMagic_IRC_Client.RFC
         {
             Program.M.ChatAdd("page_Status", text);
         }
-        //Go to 4 and remove 1 for everything but numeric 004
         public static void RPL_WELCOME_001(string input)
         {
             string[] commands = input.Split(' ');
@@ -48,14 +48,15 @@ namespace MerbosMagic_IRC_Client.RFC
 
         public static void RPL_NAMREPLY_353(string input)
         {
-            string[] commands = input.Split(' ');
-            commands[6] = commands[6].Remove(0, 1);
-            string[] nicks = String.Join(" ", commands, 6, commands.Length - 6).Split(' ');
-            List<string> nickslist = nicks.ToList<string>();
-            foreach (string nick in nickslist)
+            //:merbosmagic.org 353 ClientTest = #MerbosMagic :Triclops200 !StatServ !MMServiceBot xaxes !Merbo ClientTest 
+            string[] split = input.Split(' ');
+            string chan = split[4];
+            string[] nicks = input.Remove(0, 1).Split(':');
+            string[] nicksonchan = nicks[1].Split(' ');
+            List<string> alldemnicks = nicksonchan.ToList<string>();
+            foreach (string nick in alldemnicks)
             {
-                if (nick != "")
-                    Program.M.UserAdd(commands[5].Remove(0, 1), nick);
+                Program.M.UserAdd(chan.Remove(0, 1), nick);
             }
         }
     }

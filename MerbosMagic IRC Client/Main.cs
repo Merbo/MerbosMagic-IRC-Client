@@ -18,6 +18,7 @@ namespace MerbosMagic_IRC_Client
             InitializeComponent();
         }
 
+        #region Chat Functions
         private delegate void ChatAddSafeOne(string target, string text);
         public void ChatAdd(string target, string text)
         {
@@ -34,7 +35,7 @@ namespace MerbosMagic_IRC_Client
                 if (!target.StartsWith("page_"))
                     target = "page_" + target;
                 Control[] targetFindTabPage = this.tabControl1.Controls.Find(target, true);
-                if (targetFindTabPage.Length >= 1) 
+                if (targetFindTabPage.Length >= 1)
                 {
                     TabPage TP = (TabPage)targetFindTabPage[0];
                     Control[] targetFindTextBox = TP.Controls.Find(target + "_tb1", true);
@@ -60,19 +61,37 @@ namespace MerbosMagic_IRC_Client
             }
             else
             {
-                //tabControl1.SelectedTab
+                int Count = tabControl1.TabPages.Count;
+                List<Control> ControlList = new List<Control>();
+                for (int i = 1; i < Count; i++)
+                {
+                    ControlList.Add(tabControl1.GetControl(i));
+                }
+                foreach (Control C in ControlList)
+                {
+                    TabPage TP = (TabPage)C;
+                    if (TP.Name != "page_debugPage" && TP.Name != "page_Status")
+                    {
+                        Control[] targetFindTextBox = TP.Controls.Find(TP.Name + "_tb1", true);
+                        TextBox TB = (TextBox)targetFindTextBox[0];
+                        TB.Text += "\r\n[" + DateTime.Now + "] " + text;
+                    }
+                }
+            }
+            /*else
+            {
                 TabPage TP = tabControl1.SelectedTab;
-
-                Control[] targetFindTextBox = TP.Controls.Find(TP.Name + "_tb1", true);
-                //if (targetFindTextBox.Length >= 1)
-                //{
+                if (TP.Name != "page_debugPage" && TP.Name != "page_Status")
+                {
+                    Control[] targetFindTextBox = TP.Controls.Find(TP.Name + "_tb1", true);
                     TextBox TB = (TextBox)targetFindTextBox[0];
                     TB.Text += "\r\n[" + DateTime.Now + "] " + text;
-                //}
-            }
+                }
+            }*/
         }
+        #endregion
 
-
+        #region User Functions
         private delegate void UserAddSafeOne(string chan, string text);
         public void UserAdd(string chan, string nick)
         {
@@ -193,12 +212,15 @@ namespace MerbosMagic_IRC_Client
                     foreach (Control C in ControlList)
                     {
                         TabPage TP = (TabPage)C;
-                        Control[] targetFindListBox = TP.Controls.Find(TP.Name + "_lb1", true);
-                        ListBox LB = (ListBox)targetFindListBox[0];
-                        string[] PNicks = { nick, "+" + nick, "%" + nick, "@" + nick, "&" + nick, "=" + nick, "~" + nick, "!" + nick, "." + nick };
-                        List<string> PNicksList = PNicks.ToList<string>();
-                        foreach (string nicktoremove in PNicksList)
-                            LB.Items.Remove(nicktoremove);
+                        if (TP.Name != "page_debugPage" && TP.Name != "page_Status")
+                        {
+                            Control[] targetFindListBox = TP.Controls.Find(TP.Name + "_lb1", true);
+                            ListBox LB = (ListBox)targetFindListBox[0];
+                            string[] PNicks = { nick, "+" + nick, "%" + nick, "@" + nick, "&" + nick, "=" + nick, "~" + nick, "!" + nick, "." + nick };
+                            List<string> PNicksList = PNicks.ToList<string>();
+                            foreach (string nicktoremove in PNicksList)
+                                LB.Items.Remove(nicktoremove);
+                        }
                     }
                 }
             }
@@ -208,12 +230,60 @@ namespace MerbosMagic_IRC_Client
             }
         }
 
+        private delegate void UserRenameSafe(string oldnick, string newnick);
+        public void UserRename(string oldnick, string newnick)
+        {
+            try
+            {
+                if (this.tabControl1.InvokeRequired)
+                {
+                    this.tabControl1.BeginInvoke(new UserRenameSafe(UserRename), oldnick, newnick);
+                    return;
+                }
+                else
+                {
+                    int Count = tabControl1.TabPages.Count;
+                    List<Control> ControlList = new List<Control>();
+                    for (int i = 1; i < Count; i++)
+                    {
+                        ControlList.Add(tabControl1.GetControl(i));
+                    }
+                    foreach (Control C in ControlList)
+                    {
+                        TabPage TP = (TabPage)C;
+                        if (TP.Name != "page_debugPage" && TP.Name != "page_Status")
+                        {
+                            Control[] targetFindListBox = TP.Controls.Find(TP.Name + "_lb1", true);
+                            ListBox LB = (ListBox)targetFindListBox[0];
+                            string[] PNicks = { oldnick, "+" + oldnick, "%" + oldnick, "@" + oldnick, "&" + oldnick, "=" + oldnick, "~" + oldnick, "!" + oldnick, "." + oldnick };
+                            List<string> PNicksList = PNicks.ToList<string>();
+                            foreach (string nicktoremove in PNicksList)
+                            {
+                                if (LB.Items.Contains(nicktoremove))
+                                {
+                                    LB.Items.Remove(nicktoremove);
+                                    LB.Items.Add(newnick);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (IndexOutOfRangeException)
+            {
+
+            }
+        }
+        #endregion
+
+        #region Form Functions
         Thread IRCThread = new Thread(IRC.Connect);
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             try
             {
                 IRCThread.Name = "IRCThread";
+                IRCThread.IsBackground = true;
                 IRCThread.Start();
             }
             catch (InvalidOperationException)
@@ -228,7 +298,6 @@ namespace MerbosMagic_IRC_Client
             {
                 RFC_1459_Commands.QUIT("Program Closing");
                 IRC.IRCStream.Close();
-                IRCThread.Abort();
             }
             catch (Exception)
             {
@@ -240,6 +309,7 @@ namespace MerbosMagic_IRC_Client
             }
         }
 
+        #region Page Functions
         private delegate void AddPageSafe(string codeName, string Text);
         public void AddPage(string codeName, string Text)
         {
@@ -315,6 +385,7 @@ namespace MerbosMagic_IRC_Client
                 this.tabControl1.Controls.RemoveByKey("page_" + Key);
             }
         }
+        #endregion
 
         private void Main_Load(object sender, EventArgs e)
         {
@@ -339,7 +410,7 @@ namespace MerbosMagic_IRC_Client
                 {
                     DataProcessing.ProcessSend(TB.Text);
                 }
-                
+
                 TB.Text = "";
             }
         }
@@ -353,8 +424,7 @@ namespace MerbosMagic_IRC_Client
             TB.ScrollToCaret();
             TB.Refresh();
         }
-
-
+        #endregion
 
     }
 }

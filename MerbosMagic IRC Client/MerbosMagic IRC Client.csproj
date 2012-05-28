@@ -58,6 +58,7 @@
     <Compile Include="RFC\1459\Numerics.cs" />
     <Compile Include="RFC\1459\SNOMASKS.cs" />
     <Compile Include="RFC\1459\UserModes.cs" />
+    <Compile Include="RFC\Commands.cs" />
     <Compile Include="RFC\CTCP.cs" />
     <Compile Include="RFC\DataProcessing.cs" />
     <Compile Include="RFC\Insp\ChannelModes.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="RFC\Insp\Numerics.cs" />
     <Compile Include="RFC\Insp\SNOMASKS.cs" />
     <Compile Include="RFC\Insp\UserModes.cs" />
+    <Compile Include="RFC\Numerics.cs" />
     <Compile Include="RFC\RFC.cs" />
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>

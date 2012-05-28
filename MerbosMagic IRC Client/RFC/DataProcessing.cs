@@ -73,137 +73,15 @@ namespace MerbosMagic_IRC_Client.RFC
 #if DEBUG
             Program.M.ChatAdd("page_debugPage", "<-- " + raw);
 #endif
+            int num = 0;
             string[] commands = raw.Split(' ');
-            if (commands[0] == "PING")
+            if (int.TryParse(commands[1], out num))
             {
-                RFC_1459_Commands.PONG(commands[1]);
+                Numerics.Parse(raw);
             }
             else
             {
-                string whattheysaid = "";
-                string whotheyare = "";
-                string nicksep = "";
-                int i = 0;
-                string text = "";
-                string AllArgs = String.Join(" ", commands, 2, commands.Length - 2);
-                string FullLine = String.Join(" ", commands, 0, commands.Length);
-                switch (commands[1])
-                {
-                    #region JOINs/Parts
-                    case "JOIN":
-                        whotheyare = commands[0].Remove(0, 1);
-                        nicksep = "!";
-                        i = whotheyare.IndexOf(nicksep);
-                        if (i >= 0)
-                        {
-                            whotheyare = whotheyare.Remove(i, whotheyare.Length - i);
-                        }
-                        if (whotheyare != IRC.nick)
-                        {
-                            Program.M.UserAdd(commands[2].Remove(0, 2), whotheyare);
-                            Program.M.ChatAdd(commands[2].Remove(0, 2), whotheyare + " has joined " + commands[2].Remove(0, 1));
-                        }
-                        break;
-                    case "PART":
-                        whotheyare = commands[0].Remove(0, 1);
-                        nicksep = "!";
-                        i = whotheyare.IndexOf(nicksep);
-                        if (i >= 0)
-                        {
-                            whotheyare = whotheyare.Remove(i, whotheyare.Length - i);
-                        }
-                        if (whotheyare != IRC.nick)
-                        {
-                            Program.M.UserRemove(commands[2].Remove(0, 1), whotheyare);
-                            Program.M.ChatAdd(commands[2].Remove(0, 1), whotheyare + " has left " + commands[2]);
-                        }
-                        break;
-                    #endregion
-                    #region NICKs
-                    case "NICK":
-                        whotheyare = commands[0].Remove(0, 1);
-                        nicksep = "!";
-                        i = whotheyare.IndexOf(nicksep);
-                        if (i >= 0)
-                        {
-                            whotheyare = whotheyare.Remove(i, whotheyare.Length - i);
-                        }
-                        if (whotheyare != IRC.nick)
-                        {
-                            Program.M.UserRemove(whotheyare);
-                            Program.M.UserAdd(commands[2]);
-                            Program.M.ChatAdd(whotheyare + " is now known as " + commands[2]);
-                        }
-                        break;
-                    #endregion
-                    #region Show PRIVMSGs
-                    case "PRIVMSG":
-                        whattheysaid = String.Join(" ", commands, 3, commands.Length - 3).Remove(0, 1);
-                        whotheyare = commands[0].Remove(0, 1);
-                        nicksep = "!";
-                        i = whotheyare.IndexOf(nicksep);
-                        if (i >= 0)
-                        {
-                            whotheyare = whotheyare.Remove(i, whotheyare.Length - i);
-                        }
-                        if (!whattheysaid.StartsWith("\x01"))
-                        {
-                            text = "<" + whotheyare + "> " + whattheysaid;
-                            Program.M.ChatAdd(commands[2].Remove(0, 1), text);
-                        }
-                        else
-                        {
-                            CTCP.SendCTCPReply(whotheyare, whattheysaid);
-                        }
-                        break;
-                    #endregion
-                    #region Show NOTICEs
-                    case "NOTICE":
-                        if (commands[2] != "Auth")
-                        {
-                            whattheysaid = String.Join(" ", commands, 3, commands.Length - 3).Remove(0, 1);
-                            whotheyare = commands[0].Remove(0, 1);
-                            nicksep = "!";
-                            i = whotheyare.IndexOf(nicksep);
-                            if (i >= 0)
-                            {
-                                whotheyare = whotheyare.Remove(i, whotheyare.Length - i);
-                            }
-                            text = "-" + whotheyare + "- " + whattheysaid;
-                            Program.M.ChatAdd(commands[2].Remove(0, 1), text);
-                        }
-                        else
-                        {
-                            whattheysaid = String.Join(" ", commands, 3, commands.Length - 3).Remove(0, 1);
-                            Program.M.ChatAdd("page_Status", whattheysaid);
-                        }
-                        break;
-                    #endregion
-                    #region Numerics
-                    #region RFC 1459
-                    case "001":
-                        RFC_1459_Numerics.RPL_WELCOME_001(FullLine);
-                        break;
-                    case "002":
-                        RFC_1459_Numerics.RPL_YOURHOST_002(FullLine);
-                        break;
-                    case "003":
-                        RFC_1459_Numerics.RPL_CREATED_003(FullLine);
-                        break;
-                    case "004":
-                        RFC_1459_Numerics.RPL_MYINFO_004(FullLine);
-                        break;
-                    case "005":
-                        RFC_1459_Numerics.RPL_MYINFO_005(FullLine);
-                        break;
-                    case "353":
-                        RFC_1459_Numerics.RPL_NAMREPLY_353(FullLine);
-                        break;
-                    #endregion
-                    #region InspIRCd RFC
-                    #endregion
-                    #endregion
-                }
+                Commands.Parse(raw);
             }
         }
     }
