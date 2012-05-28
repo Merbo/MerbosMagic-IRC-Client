@@ -123,9 +123,12 @@ namespace MerbosMagic_IRC_Client
                     foreach (Control C in ControlList)
                     {
                         TabPage TP = (TabPage)C;
-                        Control[] targetFindListBox = TP.Controls.Find(TP.Name + "_lb1", true);
-                        ListBox LB = (ListBox)targetFindListBox[0];
-                        LB.Items.Add(nick);
+                        if (TP.Name != "page_debugPage" && TP.Name != "page_Status")
+                        {
+                            Control[] targetFindListBox = TP.Controls.Find(TP.Name + "_lb1", true);
+                            ListBox LB = (ListBox)targetFindListBox[0];
+                            LB.Items.Add(nick);
+                        }
                     }
                 }
             }
