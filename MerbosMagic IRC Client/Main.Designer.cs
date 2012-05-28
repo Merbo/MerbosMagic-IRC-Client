@@ -44,7 +44,7 @@
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip1.Size = new System.Drawing.Size(765, 59);
+            this.toolStrip1.Size = new System.Drawing.Size(771, 59);
             this.toolStrip1.Stretch = true;
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
@@ -68,7 +68,7 @@
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(765, 399);
+            this.tabControl1.Size = new System.Drawing.Size(771, 405);
             this.tabControl1.TabIndex = 1;
             // 
             // Main
@@ -76,7 +76,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(765, 458);
+            this.ClientSize = new System.Drawing.Size(771, 464);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.toolStrip1);
             this.ForeColor = System.Drawing.Color.White;

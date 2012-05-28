@@ -82,6 +82,7 @@ namespace MerbosMagic_IRC_Client.RFC
                 string nicksep = "";
                 int i = 0;
                 string text = "";
+                string AllArgs = String.Join(" ", commands, 2, commands.Length - 2); 
                 switch (commands[1])
                 {
                     #region Show PRIVMSGs
@@ -110,6 +111,11 @@ namespace MerbosMagic_IRC_Client.RFC
                         }
                         text = "-" + whotheyare + "- " + whattheysaid;
                         Program.M.ChatAdd(commands[2].Remove(0, 1), text);
+                        break;
+                    #endregion
+                    #region Numerics
+                    case "353":
+                        RFC_1459_Numerics.RPL_NAMREPLY(AllArgs);
                         break;
                     #endregion
                 }

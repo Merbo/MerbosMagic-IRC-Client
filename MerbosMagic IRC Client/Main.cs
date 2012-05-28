@@ -70,6 +70,28 @@ namespace MerbosMagic_IRC_Client
             }
         }
 
+        private delegate void UserAddSafe(string chan, string text);
+        public void UserAdd(string chan, string nick)
+        {
+            //target is the tab window to add it to
+            //text is the text to add
+
+            if (this.tabControl1.InvokeRequired)
+            {
+                this.tabControl1.BeginInvoke(new UserAddSafe(UserAdd), chan, nick);
+                return;
+            }
+            else
+            {
+                Control[] targetFindTabPage = tabControl1.Controls.Find(chan, true);
+                TabPage TP = (TabPage)targetFindTabPage[0];
+
+                Control[] targetFindListBox = TP.Controls.Find(TP.Name + "_lb1", true);
+                ListBox LB = (ListBox)targetFindListBox[0];
+                LB.Items.Add(nick);
+            }
+        }
+
         Thread IRCThread = new Thread(IRC.Connect);
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
@@ -138,11 +160,19 @@ namespace MerbosMagic_IRC_Client
                 tb2.TabIndex = 1;
                 tb2.KeyPress += new KeyPressEventHandler(this.tb2_KeyPress);
                 #endregion
+                #region ListBox1
+                ListBox lb1 = new ListBox();
+                lb1.BackColor = Color.Black;
+                lb1.Dock = DockStyle.Right;
+                lb1.ForeColor = Color.White;
+                lb1.Name = codeName + "_lb1";
+                #endregion
                 #region Page
                 TabPage tp = new TabPage();
                 tp.BackColor = Color.Black;
                 tp.Controls.Add(tb2);
                 tp.Controls.Add(tb1);
+                tp.Controls.Add(lb1);
                 tp.Location = new Point(4, 22);
                 tp.Name = codeName;
                 tp.Padding = new Padding(3);
