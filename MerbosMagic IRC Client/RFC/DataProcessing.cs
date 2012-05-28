@@ -100,7 +100,7 @@ namespace MerbosMagic_IRC_Client.RFC
                         if (whotheyare != IRC.nick)
                         {
                             Program.M.UserAdd(commands[2].Remove(0, 2), whotheyare);
-                            Program.M.ChatAdd(commands[2].Remove(0, 2), whotheyare + " has left " + commands[2].Remove(0, 1));
+                            Program.M.ChatAdd(commands[2].Remove(0, 2), whotheyare + " has joined " + commands[2].Remove(0, 1));
                         }
                         break;
                     case "PART":
@@ -179,9 +179,13 @@ namespace MerbosMagic_IRC_Client.RFC
                         break;
                     #endregion
                     #region Numerics
+                    #region RFC 1459
                     case "353":
                         RFC_1459_Numerics.RPL_NAMREPLY(AllArgs);
                         break;
+                    #endregion
+                    #region InspIRCd RFC
+                    #endregion
                     #endregion
                 }
             }
