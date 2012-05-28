@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.IO;
 using System.Threading;
 using System.Text.RegularExpressions;
+using MerbosMagic_IRC_Client.RFC;
 
 namespace MerbosMagic_IRC_Client
 {
@@ -35,45 +36,10 @@ namespace MerbosMagic_IRC_Client
 
         public static bool alive = true;
         public static void PostConnect() {
-            SendRaw("NICK " + nick);
-            SendRaw("USER " + nick + " 0 * :" + user);
+            RFC_1459_Commands.NICK(nick);
+            RFC_1459_Commands.USER(nick, "*", "0", user);
 
             ReadInput();
-        }
-
-        public static void ProcessRaw(string raw) {
-#if DEBUG
-            Program.M.ChatAdd("debugPage", "<-- " + raw);
-#endif
-            string[] commands = raw.Split(' ');
-            if (commands[0] == "PING")
-            {
-                SendRaw("PONG " + commands[1]);
-            }
-            else
-            {
-                switch (commands[1])
-                {
-                    case "JOIN":
-                        if (commands[0].StartsWith(":" + nick))
-                        {
-                            Program.M.AddPage(commands[2].Remove(0, 2), commands[2].Remove(0, 1));
-                        }
-                        break;
-                    case "PRIVMSG":
-                        string whattheysaid = String.Join(" ", commands, 3, commands.Length - 3).Remove(0, 1);
-                        string whotheyare = commands[0].Remove(0, 1);
-                        string nicksep = "!";
-                        int i = whotheyare.IndexOf(nicksep);
-                        if (i >= 0)
-                        {
-                            whotheyare = whotheyare.Remove(i, whotheyare.Length - i);
-                        }
-                        string text = "<" + whotheyare + "> " + whattheysaid;
-                        Program.M.ChatAdd(commands[2].Remove(0, 1), text);
-                        break;
-                }
-            }
         }
 
         public static void ReadInput()
@@ -88,13 +54,20 @@ namespace MerbosMagic_IRC_Client
 
                     if (input != null)
                     {
-                        ProcessRaw(input);
-                        //Thread.Sleep(25);
+                        DataProcessing.ProcessRecv(input);
                     }
                 }
                 catch (NullReferenceException)
                 {
-
+                    break;
+                }
+                catch (IOException)
+                {
+                    break;
+                }
+                catch (ObjectDisposedException)
+                {
+                    break;
                 }
             }
         }
@@ -109,18 +82,6 @@ namespace MerbosMagic_IRC_Client
                 IRCWriter.WriteLine(raw);
                 IRCWriter.Flush();
             }
-
-            /*string[] commands = raw.Split(' ');
-
-if (commands[0].ToUpper() == "PRIVMSG")
-{
-    Program.M.ChatAdd(commands[1].Remove(0, 1), "<" + nick + "> " + String.Join(" ", commands, 2, commands.Length - 2).Remove(0, 1));
-}
-if (commands[0].ToUpper() == "NICK")
-{
-    nick = commands[1];
-    Program.M.ChatAdd("You are now known as " + nick + ".");
-}*/
         }
         public static void SendCommand(string cmd)
         {

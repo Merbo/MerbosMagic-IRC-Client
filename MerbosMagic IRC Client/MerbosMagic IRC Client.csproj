@@ -64,6 +64,7 @@
     <Compile Include="RFC\Insp\Numerics.cs" />
     <Compile Include="RFC\Insp\SNOMASKS.cs" />
     <Compile Include="RFC\Insp\UserModes.cs" />
+    <Compile Include="RFC\RFC.cs" />
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MerbosMagic_IRC_Client.RFC
 {
-    public static class RFC_1459_Commands : RFC
+    class RFC_1459_Commands : RFC
     {
         public static void PASS(string password)
         {
@@ -27,10 +27,18 @@ namespace MerbosMagic_IRC_Client.RFC
             IRC.SendRaw("OPER " + user + " " + password);
             Program.M.ChatAdd("You have \"Opered Up\"!");
         }
-        public static void QUIT(string quitMessage)
+        public static void QUIT(string quitMessage = "")
         {
-            IRC.SendRaw("QUIT :" + quitMessage);
-            Program.M.ChatAdd("You've quit with message \"" + quitMessage + "\"");
+            if (quitMessage != "")
+            {
+                IRC.SendRaw("QUIT :" + quitMessage);
+                Program.M.ChatAdd("You've quit with message \"" + quitMessage + "\"");
+            }
+            else
+            {
+                IRC.SendRaw("QUIT");
+                Program.M.ChatAdd("You've quit IRC.");
+            }
         }
         public static void JOIN(string channel, string key = "")
         {
@@ -55,7 +63,7 @@ namespace MerbosMagic_IRC_Client.RFC
             {
                 IRC.SendRaw("PART " + channel);
             }
-            Program.M.RemovePage(channel);
+            Program.M.RemovePage(channel.Remove(0, 1));
             Program.M.ChatAdd("You have left channel " + channel);
         }
         public static void MODE(string channel, string mode)
@@ -187,12 +195,12 @@ namespace MerbosMagic_IRC_Client.RFC
         public static void PRIVMSG(string target, string text)
         {
             IRC.SendRaw("PRIVMSG " + target + " :" + text);
-            Program.M.ChatAdd(target, "<" + IRC.nick + "> " + text);
+            Program.M.ChatAdd(target.Remove(0, 1), "<" + IRC.nick + "> " + text);
         }
         public static void NOTICE(string target, string text)
         {
             IRC.SendRaw("NOTICE " + target + " :" + text);
-            Program.M.ChatAdd(target, "-" + IRC.nick + "- " + text);
+            Program.M.ChatAdd(target.Remove(0, 1), "-" + IRC.nick + "- " + text);
         }
         public static void WHO(string mask, bool opers = false)
         {

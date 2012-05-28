@@ -44,7 +44,7 @@
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip1.Size = new System.Drawing.Size(765, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(765, 59);
             this.toolStrip1.Stretch = true;
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
@@ -55,19 +55,20 @@
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(56, 22);
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 56);
             this.toolStripButton1.Text = "Connect";
+            this.toolStripButton1.TextDirection = System.Windows.Forms.ToolStripTextDirection.Vertical90;
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // tabControl1
             // 
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.HotTrack = true;
-            this.tabControl1.Location = new System.Drawing.Point(0, 25);
+            this.tabControl1.Location = new System.Drawing.Point(0, 59);
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(765, 396);
+            this.tabControl1.Size = new System.Drawing.Size(765, 399);
             this.tabControl1.TabIndex = 1;
             // 
             // Main
@@ -75,7 +76,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(765, 421);
+            this.ClientSize = new System.Drawing.Size(765, 458);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.toolStrip1);
             this.ForeColor = System.Drawing.Color.White;

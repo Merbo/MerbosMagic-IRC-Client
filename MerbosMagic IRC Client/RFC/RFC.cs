@@ -7,6 +7,5 @@ namespace MerbosMagic_IRC_Client.RFC
 {
     class RFC
     {
-        
     }
 }

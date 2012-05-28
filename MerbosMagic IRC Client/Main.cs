@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
+using MerbosMagic_IRC_Client.RFC;
 
 namespace MerbosMagic_IRC_Client
 {
@@ -87,7 +88,7 @@ namespace MerbosMagic_IRC_Client
         {
             try
             {
-                IRC.SendRaw("QUIT :Program Closing");
+                RFC_1459_Commands.QUIT("Program Closing");
                 IRC.IRCStream.Close();
                 IRCThread.Abort();
             }
@@ -184,11 +185,11 @@ namespace MerbosMagic_IRC_Client
 
                 if (TP.Text.StartsWith("#") && !TB.Text.StartsWith("/"))
                 {
-                    IRC.SendRaw("PRIVMSG " + TP.Text + " :" + TB.Text);
+                    RFC_1459_Commands.PRIVMSG(TP.Text, TB.Text);
                 }
                 else if (TB.Text.StartsWith("/"))
                 {
-                    IRC.SendRaw(TB.Text.Remove(0, 1));
+                    DataProcessing.ProcessSend(TB.Text);
                 }
                 
                 TB.Text = "";
