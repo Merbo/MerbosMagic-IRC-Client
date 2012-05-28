@@ -75,20 +75,57 @@ namespace MerbosMagic_IRC_Client
         {
             //target is the tab window to add it to
             //text is the text to add
-
-            if (this.tabControl1.InvokeRequired)
+            try
             {
-                this.tabControl1.BeginInvoke(new UserAddSafe(UserAdd), chan, nick);
-                return;
+                if (this.tabControl1.InvokeRequired)
+                {
+                    this.tabControl1.BeginInvoke(new UserAddSafe(UserAdd), chan, nick);
+                    return;
+                }
+                else
+                {
+                    Control[] targetFindTabPage = tabControl1.Controls.Find(chan, true);
+                    TabPage TP = (TabPage)targetFindTabPage[0];
+
+                    Control[] targetFindListBox = TP.Controls.Find(TP.Name + "_lb1", true);
+                    ListBox LB = (ListBox)targetFindListBox[0];
+                    LB.Items.Add(nick);
+                }
             }
-            else
+            catch (IndexOutOfRangeException)
             {
-                Control[] targetFindTabPage = tabControl1.Controls.Find(chan, true);
-                TabPage TP = (TabPage)targetFindTabPage[0];
 
-                Control[] targetFindListBox = TP.Controls.Find(TP.Name + "_lb1", true);
-                ListBox LB = (ListBox)targetFindListBox[0];
-                LB.Items.Add(nick);
+            }
+        }
+
+        private delegate void UserRemoveSafe(string chan, string text);
+        public void UserRemove(string chan, string nick)
+        {
+            //target is the tab window to add it to
+            //text is the text to add
+            try
+            {
+                if (this.tabControl1.InvokeRequired)
+                {
+                    this.tabControl1.BeginInvoke(new UserRemoveSafe(UserRemove), chan, nick);
+                    return;
+                }
+                else
+                {
+                    Control[] targetFindTabPage = tabControl1.Controls.Find(chan, true);
+                    TabPage TP = (TabPage)targetFindTabPage[0];
+
+                    Control[] targetFindListBox = TP.Controls.Find(TP.Name + "_lb1", true);
+                    ListBox LB = (ListBox)targetFindListBox[0];
+                    string[] PNicks = { nick, "+" + nick, "%" + nick, "@" + nick, "&" + nick, "=" + nick, "~" + nick, "!" + nick, "." + nick };
+                    List<string> PNicksList = PNicks.ToList<string>();
+                    foreach (string nicktoremove in PNicksList)
+                        LB.Items.Remove(nicktoremove);
+                }
+            }
+            catch (IndexOutOfRangeException)
+            {
+
             }
         }
 

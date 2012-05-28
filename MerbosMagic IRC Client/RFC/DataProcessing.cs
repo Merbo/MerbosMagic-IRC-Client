@@ -85,6 +85,30 @@ namespace MerbosMagic_IRC_Client.RFC
                 string AllArgs = String.Join(" ", commands, 2, commands.Length - 2); 
                 switch (commands[1])
                 {
+                    #region JOINs/Parts
+                    case "JOIN":
+                        whotheyare = commands[0].Remove(0, 1);
+                        nicksep = "!";
+                        i = whotheyare.IndexOf(nicksep);
+                        if (i >= 0)
+                        {
+                            whotheyare = whotheyare.Remove(i, whotheyare.Length - i);
+                        }
+                        if (whotheyare != IRC.nick)
+                            Program.M.UserAdd(commands[2].Remove(0, 2), whotheyare);
+                        break;
+                    case "PART":
+                        whotheyare = commands[0].Remove(0, 1);
+                        nicksep = "!";
+                        i = whotheyare.IndexOf(nicksep);
+                        if (i >= 0)
+                        {
+                            whotheyare = whotheyare.Remove(i, whotheyare.Length - i);
+                        }
+                        if (whotheyare != IRC.nick)
+                            Program.M.UserRemove(commands[2].Remove(0, 1), whotheyare);
+                        break;
+                    #endregion
                     #region Show PRIVMSGs
                     case "PRIVMSG":
                         whattheysaid = String.Join(" ", commands, 3, commands.Length - 3).Remove(0, 1);
