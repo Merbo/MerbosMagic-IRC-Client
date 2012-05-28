@@ -16,13 +16,12 @@ namespace MerbosMagic_IRC_Client
         public static NetworkStream IRCStream;
         public static StreamReader IRCReader;
         public static StreamWriter IRCWriter;
-        public static string nick = "ClientTest";
-        public static string user = "Ethan Carr";
+        public static string nick = "ClientTest"; //Nick
+        public static string user = "Ethan Carr"; //Real name
+        public static int port = 6667; //Port to connect on
+        public static string server = "merbosmagic.org"; //Server to connect to
         public static void Connect()
         {
-
-            int port = 6667; //Port to connect on
-            string server = "irc.merbosmagic.co.cc"; //Server to connect to
 
             IRCClient = new TcpClient(server, port); //Connect to the server
 
