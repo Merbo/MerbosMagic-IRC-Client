@@ -204,6 +204,7 @@ namespace MerbosMagic_IRC_Client
 #if DEBUG
             AddPage("debugPage", "debugPage");
 #endif
+            AddPage("Status", "Status");
         }
 
         private void tb2_KeyPress(object sender, KeyPressEventArgs e)

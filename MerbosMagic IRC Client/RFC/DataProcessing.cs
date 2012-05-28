@@ -95,22 +95,37 @@ namespace MerbosMagic_IRC_Client.RFC
                         {
                             whotheyare = whotheyare.Remove(i, whotheyare.Length - i);
                         }
-                        text = "<" + whotheyare + "> " + whattheysaid;
-                        Program.M.ChatAdd(commands[2].Remove(0, 1), text);
+                        if (!whattheysaid.StartsWith("\x01"))
+                        {
+                            text = "<" + whotheyare + "> " + whattheysaid;
+                            Program.M.ChatAdd(commands[2].Remove(0, 1), text);
+                        }
+                        else
+                        {
+                            CTCP.SendCTCPReply(whotheyare, whattheysaid);
+                        }
                         break;
                     #endregion
                     #region Show NOTICEs
                     case "NOTICE":
-                        whattheysaid = String.Join(" ", commands, 3, commands.Length - 3).Remove(0, 1);
-                        whotheyare = commands[0].Remove(0, 1);
-                        nicksep = "!";
-                        i = whotheyare.IndexOf(nicksep);
-                        if (i >= 0)
+                        if (commands[2] != "Auth")
                         {
-                            whotheyare = whotheyare.Remove(i, whotheyare.Length - i);
+                            whattheysaid = String.Join(" ", commands, 3, commands.Length - 3).Remove(0, 1);
+                            whotheyare = commands[0].Remove(0, 1);
+                            nicksep = "!";
+                            i = whotheyare.IndexOf(nicksep);
+                            if (i >= 0)
+                            {
+                                whotheyare = whotheyare.Remove(i, whotheyare.Length - i);
+                            }
+                            text = "-" + whotheyare + "- " + whattheysaid;
+                            Program.M.ChatAdd(commands[2].Remove(0, 1), text);
                         }
-                        text = "-" + whotheyare + "- " + whattheysaid;
-                        Program.M.ChatAdd(commands[2].Remove(0, 1), text);
+                        else
+                        {
+                            whattheysaid = String.Join(" ", commands, 3, commands.Length - 3).Remove(0, 1);
+                            Program.M.ChatAdd("Status", whattheysaid);
+                        }
                         break;
                     #endregion
                     #region Numerics
