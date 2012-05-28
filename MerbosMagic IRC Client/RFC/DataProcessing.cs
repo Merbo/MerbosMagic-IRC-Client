@@ -181,6 +181,21 @@ namespace MerbosMagic_IRC_Client.RFC
                     #endregion
                     #region Numerics
                     #region RFC 1459
+                    case "001":
+                        RFC_1459_Numerics.RPL_WELCOME_001(FullLine);
+                        break;
+                    case "002":
+                        RFC_1459_Numerics.RPL_YOURHOST_002(FullLine);
+                        break;
+                    case "003":
+                        RFC_1459_Numerics.RPL_CREATED_003(FullLine);
+                        break;
+                    case "004":
+                        RFC_1459_Numerics.RPL_MYINFO_004(FullLine);
+                        break;
+                    case "005":
+                        RFC_1459_Numerics.RPL_MYINFO_005(FullLine);
+                        break;
                     case "353":
                         RFC_1459_Numerics.RPL_NAMREPLY_353(FullLine);
                         break;
