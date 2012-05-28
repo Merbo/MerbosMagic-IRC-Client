@@ -31,6 +31,8 @@ namespace MerbosMagic_IRC_Client
             }
             else
             {
+                if (!target.StartsWith("page_"))
+                    target = "page_" + target;
                 Control[] targetFindTabPage = this.tabControl1.Controls.Find(target, true);
                 if (targetFindTabPage.Length >= 1) 
                 {
@@ -70,7 +72,8 @@ namespace MerbosMagic_IRC_Client
             }
         }
 
-        private delegate void UserAddSafe(string chan, string text);
+
+        private delegate void UserAddSafeOne(string chan, string text);
         public void UserAdd(string chan, string nick)
         {
             //target is the tab window to add it to
@@ -79,11 +82,12 @@ namespace MerbosMagic_IRC_Client
             {
                 if (this.tabControl1.InvokeRequired)
                 {
-                    this.tabControl1.BeginInvoke(new UserAddSafe(UserAdd), chan, nick);
+                    this.tabControl1.BeginInvoke(new UserAddSafeOne(UserAdd), chan, nick);
                     return;
                 }
                 else
                 {
+                    chan = "page_" + chan;
                     Control[] targetFindTabPage = tabControl1.Controls.Find(chan, true);
                     TabPage TP = (TabPage)targetFindTabPage[0];
 
@@ -97,8 +101,41 @@ namespace MerbosMagic_IRC_Client
 
             }
         }
+        private delegate void UserAddSafeTwo(string nick);
+        public void UserAdd(string nick)
+        {
+            //text is the text to add
+            try
+            {
+                if (this.tabControl1.InvokeRequired)
+                {
+                    this.tabControl1.BeginInvoke(new UserAddSafeTwo(UserAdd), nick);
+                    return;
+                }
+                else
+                {
+                    int Count = tabControl1.TabPages.Count;
+                    List<Control> ControlList = new List<Control>();
+                    for (int i = 1; i < Count; i++)
+                    {
+                        ControlList.Add(tabControl1.GetControl(i));
+                    }
+                    foreach (Control C in ControlList)
+                    {
+                        TabPage TP = (TabPage)C;
+                        Control[] targetFindListBox = TP.Controls.Find(TP.Name + "_lb1", true);
+                        ListBox LB = (ListBox)targetFindListBox[0];
+                        LB.Items.Add(nick);
+                    }
+                }
+            }
+            catch (IndexOutOfRangeException)
+            {
 
-        private delegate void UserRemoveSafe(string chan, string text);
+            }
+        }
+
+        private delegate void UserRemoveSafeOne(string chan, string nick);
         public void UserRemove(string chan, string nick)
         {
             //target is the tab window to add it to
@@ -107,11 +144,13 @@ namespace MerbosMagic_IRC_Client
             {
                 if (this.tabControl1.InvokeRequired)
                 {
-                    this.tabControl1.BeginInvoke(new UserRemoveSafe(UserRemove), chan, nick);
+                    this.tabControl1.BeginInvoke(new UserRemoveSafeOne(UserRemove), chan, nick);
                     return;
                 }
                 else
                 {
+                    if (!chan.StartsWith("page_"))
+                        chan = "page_" + chan;
                     Control[] targetFindTabPage = tabControl1.Controls.Find(chan, true);
                     TabPage TP = (TabPage)targetFindTabPage[0];
 
@@ -121,6 +160,43 @@ namespace MerbosMagic_IRC_Client
                     List<string> PNicksList = PNicks.ToList<string>();
                     foreach (string nicktoremove in PNicksList)
                         LB.Items.Remove(nicktoremove);
+                }
+            }
+            catch (IndexOutOfRangeException)
+            {
+
+            }
+        }
+        private delegate void UserRemoveSafeTwo(string nick);
+        public void UserRemove(string nick)
+        {
+            //target is the tab window to add it to
+            //text is the text to add
+            try
+            {
+                if (this.tabControl1.InvokeRequired)
+                {
+                    this.tabControl1.BeginInvoke(new UserRemoveSafeTwo(UserRemove), nick);
+                    return;
+                }
+                else
+                {
+                    int Count = tabControl1.TabPages.Count;
+                    List<Control> ControlList = new List<Control>();
+                    for (int i = 1; i < Count; i++)
+                    {
+                        ControlList.Add(tabControl1.GetControl(i));
+                    }
+                    foreach (Control C in ControlList)
+                    {
+                        TabPage TP = (TabPage)C;
+                        Control[] targetFindListBox = TP.Controls.Find(TP.Name + "_lb1", true);
+                        ListBox LB = (ListBox)targetFindListBox[0];
+                        string[] PNicks = { nick, "+" + nick, "%" + nick, "@" + nick, "&" + nick, "=" + nick, "~" + nick, "!" + nick, "." + nick };
+                        List<string> PNicksList = PNicks.ToList<string>();
+                        foreach (string nicktoremove in PNicksList)
+                            LB.Items.Remove(nicktoremove);
+                    }
                 }
             }
             catch (IndexOutOfRangeException)
@@ -171,6 +247,7 @@ namespace MerbosMagic_IRC_Client
             }
             else
             {
+                codeName = "page_" + codeName;
                 #region TextBox1
                 TextBox tb1 = new TextBox();
                 tb1.BackColor = Color.Black;
@@ -232,7 +309,7 @@ namespace MerbosMagic_IRC_Client
             }
             else
             {
-                this.tabControl1.Controls.RemoveByKey(Key);
+                this.tabControl1.Controls.RemoveByKey("page_" + Key);
             }
         }
 

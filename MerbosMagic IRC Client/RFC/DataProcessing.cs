@@ -71,7 +71,7 @@ namespace MerbosMagic_IRC_Client.RFC
         public static void ProcessRecv(string raw)
         {
 #if DEBUG
-            Program.M.ChatAdd("debugPage", "<-- " + raw);
+            Program.M.ChatAdd("page_debugPage", "<-- " + raw);
 #endif
             string[] commands = raw.Split(' ');
             if (commands[0] == "PING")
@@ -118,6 +118,23 @@ namespace MerbosMagic_IRC_Client.RFC
                         }
                         break;
                     #endregion
+                    #region NICKs
+                    case "NICK":
+                        whotheyare = commands[0].Remove(0, 1);
+                        nicksep = "!";
+                        i = whotheyare.IndexOf(nicksep);
+                        if (i >= 0)
+                        {
+                            whotheyare = whotheyare.Remove(i, whotheyare.Length - i);
+                        }
+                        if (whotheyare != IRC.nick)
+                        {
+                            Program.M.UserRemove(whotheyare);
+                            Program.M.UserAdd(commands[2]);
+                            Program.M.ChatAdd(whotheyare + " is now known as " + commands[2]);
+                        }
+                        break;
+                    #endregion
                     #region Show PRIVMSGs
                     case "PRIVMSG":
                         whattheysaid = String.Join(" ", commands, 3, commands.Length - 3).Remove(0, 1);
@@ -157,7 +174,7 @@ namespace MerbosMagic_IRC_Client.RFC
                         else
                         {
                             whattheysaid = String.Join(" ", commands, 3, commands.Length - 3).Remove(0, 1);
-                            Program.M.ChatAdd("Status", whattheysaid);
+                            Program.M.ChatAdd("page_Status", whattheysaid);
                         }
                         break;
                     #endregion

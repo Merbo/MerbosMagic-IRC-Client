@@ -75,7 +75,7 @@ namespace MerbosMagic_IRC_Client
         public static void SendRaw(string raw)
         {
 #if DEBUG
-            Program.M.ChatAdd("debugPage", "--> " + raw);
+            Program.M.ChatAdd("page_debugPage", "--> " + raw);
 #endif
             if (IRCClient.Connected)
             {
