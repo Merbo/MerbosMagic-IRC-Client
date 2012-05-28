@@ -85,7 +85,8 @@ namespace MerbosMagic_IRC_Client.RFC
                 string nicksep = "";
                 int i = 0;
                 string text = "";
-                string AllArgs = String.Join(" ", commands, 2, commands.Length - 2); 
+                string AllArgs = String.Join(" ", commands, 2, commands.Length - 2);
+                string FullLine = String.Join(" ", commands, 0, commands.Length);
                 switch (commands[1])
                 {
                     #region JOINs/Parts
@@ -181,7 +182,7 @@ namespace MerbosMagic_IRC_Client.RFC
                     #region Numerics
                     #region RFC 1459
                     case "353":
-                        RFC_1459_Numerics.RPL_NAMREPLY(AllArgs);
+                        RFC_1459_Numerics.RPL_NAMREPLY_353(FullLine);
                         break;
                     #endregion
                     #region InspIRCd RFC
