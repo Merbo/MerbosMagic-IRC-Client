@@ -38,7 +38,7 @@ namespace MerbosMagic_IRC_Client
                     if (targetFindTextBox.Length >= 1)
                     {
                         TextBox TB = (TextBox)targetFindTextBox[0];
-                        TB.Text += "\r\n" + text;
+                        TB.Text += "\r\n[" + DateTime.Now + "] " + text;
                     }
                 }
             }
@@ -64,7 +64,7 @@ namespace MerbosMagic_IRC_Client
                 //if (targetFindTextBox.Length >= 1)
                 //{
                     TextBox TB = (TextBox)targetFindTextBox[0];
-                    TB.Text += "\r\n" + text;
+                    TB.Text += "\r\n[" + DateTime.Now + "] " + text;
                 //}
             }
         }
@@ -107,6 +107,7 @@ namespace MerbosMagic_IRC_Client
             if (this.tabControl1.InvokeRequired)
             {
                 this.tabControl1.BeginInvoke(new AddPageSafe(AddPage), codeName, Text);
+                return;
             }
             else
             {
@@ -150,6 +151,20 @@ namespace MerbosMagic_IRC_Client
                 //tp.Text = tp.Name; //Debugging
                 #endregion
                 tabControl1.Controls.Add(tp);
+            }
+        }
+
+        private delegate void RemovePageSafe(string Key);
+        public void RemovePage(string Key)
+        {
+            if (this.tabControl1.InvokeRequired)
+            {
+                this.tabControl1.BeginInvoke(new RemovePageSafe(RemovePage), Key);
+                return;
+            }
+            else
+            {
+                this.tabControl1.Controls.RemoveByKey(Key);
             }
         }
 

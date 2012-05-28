@@ -104,36 +104,27 @@ namespace MerbosMagic_IRC_Client
 #if DEBUG
             Program.M.ChatAdd("debugPage", "--> " + raw);
 #endif
-            string[] commands = raw.Split(' ');
-
-            if (commands[0].ToUpper() == "PRIVMSG")
-            {
-                Program.M.ChatAdd(commands[1].Remove(0, 1), "<" + nick + "> " + String.Join(" ", commands, 2, commands.Length - 2).Remove(0, 1));
-            }
-            if (commands[0].ToUpper() == "NICK")
-            {
-                nick = commands[1];
-                Program.M.ChatAdd("You are now known as " + nick + ".");
-            }
-
             if (IRCClient.Connected)
             {
                 IRCWriter.WriteLine(raw);
                 IRCWriter.Flush();
             }
+
+            /*string[] commands = raw.Split(' ');
+
+if (commands[0].ToUpper() == "PRIVMSG")
+{
+    Program.M.ChatAdd(commands[1].Remove(0, 1), "<" + nick + "> " + String.Join(" ", commands, 2, commands.Length - 2).Remove(0, 1));
+}
+if (commands[0].ToUpper() == "NICK")
+{
+    nick = commands[1];
+    Program.M.ChatAdd("You are now known as " + nick + ".");
+}*/
         }
         public static void SendCommand(string cmd)
         {
-            string[] commands = cmd.Split(' ');
-            switch (commands[0].ToLower())
-            {
-                case "/msg":
-                    SendRaw("PRIVMSG " + commands[1] + " :" + commands[2]);
-                    break;
-                case "/notice":
-                    SendRaw("NOTICE");
-                    break;
-            }
+            //Process this later using RFC1459/RFCInsp
         }
     }
 }
