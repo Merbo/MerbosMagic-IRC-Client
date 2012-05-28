@@ -95,7 +95,10 @@ namespace MerbosMagic_IRC_Client.RFC
                             whotheyare = whotheyare.Remove(i, whotheyare.Length - i);
                         }
                         if (whotheyare != IRC.nick)
+                        {
                             Program.M.UserAdd(commands[2].Remove(0, 2), whotheyare);
+                            Program.M.ChatAdd(commands[2].Remove(0, 2), whotheyare + " has left " + commands[2].Remove(0, 1));
+                        }
                         break;
                     case "PART":
                         whotheyare = commands[0].Remove(0, 1);
@@ -106,7 +109,10 @@ namespace MerbosMagic_IRC_Client.RFC
                             whotheyare = whotheyare.Remove(i, whotheyare.Length - i);
                         }
                         if (whotheyare != IRC.nick)
+                        {
                             Program.M.UserRemove(commands[2].Remove(0, 1), whotheyare);
+                            Program.M.ChatAdd(commands[2].Remove(0, 1), whotheyare + " has left " + commands[2]);
+                        }
                         break;
                     #endregion
                     #region Show PRIVMSGs
