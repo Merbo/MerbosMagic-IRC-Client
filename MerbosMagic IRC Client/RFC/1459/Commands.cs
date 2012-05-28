@@ -10,23 +10,24 @@ namespace MerbosMagic_IRC_Client.RFC
         public static void PASS(string password)
         {
             IRC.SendRaw("PASS " + password);
-            Program.M.ChatAdd("Password sent.");
+            Program.M.ChatAdd("page_status", "Password sent.");
         }
         public static void NICK(string nick)
         {
+            Program.M.ChatAdd("page_Status", "You are now known as " + nick + ".");
             IRC.SendRaw("NICK " + nick);
-            Program.M.ChatAdd("You are now known as " + nick);
             IRC.nick = nick;
         }
         public static void USER(string user, string host, string server, string real)
         {
             IRC.SendRaw("USER " + user + " " + host + " " + server + " :" + real);
-            Program.M.ChatAdd("You have identified as user " + user + " with real name " + real);
+            Program.M.ChatAdd("page_Status", "You have identified as user " + user + " with real name " + real);
         }
         public static void OPER(string user, string password)
         {
             IRC.SendRaw("OPER " + user + " " + password);
             Program.M.ChatAdd("You have \"Opered Up\"!");
+            Program.M.ChatAdd("page_Status", "You have \"Opered Up\"!");
         }
         public static void QUIT(string quitMessage = "")
         {
@@ -52,7 +53,6 @@ namespace MerbosMagic_IRC_Client.RFC
                 IRC.SendRaw("JOIN " + channel);
             }
             Program.M.AddPage(channel.Remove(0, 1), channel);
-            Program.M.ChatAdd(channel.Remove(0, 1), "You have joined " + channel);
         }
         public static void PART(string channel, string partMessage = "")
         {

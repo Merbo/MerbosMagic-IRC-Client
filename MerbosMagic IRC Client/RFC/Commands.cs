@@ -71,7 +71,8 @@ namespace MerbosMagic_IRC_Client.RFC
                     {
                         case "JOIN":
                             Program.M.ChatAdd(tabname, nick + " has joined " + chan + ".");
-                            Program.M.UserAdd(tabname, nick);
+                            if (nick != IRC.nick)
+                                Program.M.UserAdd(tabname, nick);
                             break;
                         case "PART":
                             if (args != "")
@@ -97,6 +98,10 @@ namespace MerbosMagic_IRC_Client.RFC
                 }
             }
             catch (IndexOutOfRangeException)
+            {
+                return;
+            }
+            catch (ArgumentOutOfRangeException)
             {
                 return;
             }

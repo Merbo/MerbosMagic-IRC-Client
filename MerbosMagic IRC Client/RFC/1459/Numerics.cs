@@ -36,7 +36,7 @@ namespace MerbosMagic_IRC_Client.RFC
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
             StatusAdd(RestOfIt);
         }
-        public static void RPL_MYINFO_005(string input)
+        public static void RPL_ISUPPORT_005(string input)
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
@@ -56,7 +56,8 @@ namespace MerbosMagic_IRC_Client.RFC
             List<string> alldemnicks = nicksonchan.ToList<string>();
             foreach (string nick in alldemnicks)
             {
-                Program.M.UserAdd(chan.Remove(0, 1), nick);
+                if (nick != "")
+                    Program.M.UserAdd(chan.Remove(0, 1), nick);
             }
         }
     }
