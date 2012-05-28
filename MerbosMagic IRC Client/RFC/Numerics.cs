@@ -29,7 +29,7 @@ namespace MerbosMagic_IRC_Client.RFC
                         RFC_1459_Numerics.RPL_MYINFO_004(input);
                         break;
                     case 005:
-                        RFC_1459_Numerics.RPL_MYINFO_005(input);
+                        RFC_1459_Numerics.RPL_ISUPPORT_005(input);
                         break;
                     case 353:
                         RFC_1459_Numerics.RPL_NAMREPLY_353(input);
