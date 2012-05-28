@@ -58,6 +58,9 @@ namespace MerbosMagic_IRC_Client.RFC
                             RFC_1459_Commands.QUIT();
                         }
                         break;
+                    case "nick":
+                        RFC_1459_Commands.NICK(commands[1]);
+                        break;
                 }
             }
             catch (IndexOutOfRangeException)
