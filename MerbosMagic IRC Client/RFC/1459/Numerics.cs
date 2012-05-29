@@ -42,6 +42,22 @@ namespace MerbosMagic_IRC_Client.RFC
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
             StatusAdd(RestOfIt);
         }
+
+        public static void RPL_NAMREPLY_353(string input)
+        {
+            //:merbosmagic.org 353 ClientTest = #MerbosMagic :Triclops200 !StatServ !MMServiceBot xaxes !Merbo ClientTest 
+            string[] split = input.Split(' ');
+            string chan = split[4];
+            string[] nicks = input.Remove(0, 1).Split(':');
+            string[] nicksonchan = nicks[1].Split(' ');
+            List<string> alldemnicks = nicksonchan.ToList<string>();
+            foreach (string nick in alldemnicks)
+            {
+                if (nick != "")
+                    Program.M.UserAdd(chan.Remove(0, 1), nick);
+            }
+        }
+
         public static void ERR_NOSUCHNICK_401(string input)
         {
             string[] commands = input.Split(' ');
@@ -88,19 +104,19 @@ namespace MerbosMagic_IRC_Client.RFC
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt.Remove(0, 1);
+            StatusAdd(RestOfIt.Remove(0, 1));
         }
         public static void ERR_NORECIPIENT_411(string input)
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt.Remove(0, 1);
+            StatusAdd(RestOfIt.Remove(0, 1));
         }
         public static void ERR_NOTEXTTOSEND_412(string input)
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt.Remove(0, 1);
+            StatusAdd(RestOfIt.Remove(0, 1));
         }
         public static void ERR_NOTOPLEVEL_413(string input)
         {
@@ -124,7 +140,7 @@ namespace MerbosMagic_IRC_Client.RFC
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt.Remove(0, 1);
+            StatusAdd(RestOfIt.Remove(0, 1));
         }
         public static void ERR_NOADMININFO_423(string input)
         {
@@ -136,13 +152,13 @@ namespace MerbosMagic_IRC_Client.RFC
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt.Remove(0, 1);
+            StatusAdd(RestOfIt.Remove(0, 1));
         }
         public static void ERR_NONICKNAMEGIVEN_431(string input)
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt.Remove(0, 1);
+            StatusAdd(RestOfIt.Remove(0, 1));
         }
         public static void ERR_ERRONEUSNICKNAME_432(string input)
         {
@@ -190,19 +206,19 @@ namespace MerbosMagic_IRC_Client.RFC
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt.Remove(0, 1);
+            StatusAdd(RestOfIt.Remove(0, 1));
         }
         public static void ERR_USERDISABLED_446(string input)
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt.Remove(0, 1);
+            StatusAdd(RestOfIt.Remove(0, 1));
         }
         public static void ERR_NOTREGISTERED_451(string input)
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt.Remove(0, 1);
+            StatusAdd(RestOfIt.Remove(0, 1));
         }
         public static void ERR_NEEDMOREPARAMS_461(string input)
         {
@@ -210,31 +226,31 @@ namespace MerbosMagic_IRC_Client.RFC
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
             StatusAdd(RestOfIt);
         }
-        public static void ERR_ALREADYREGISTRED_462(string input)
+        public static void ERR_ALREADYREGISTERED_462(string input)
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt.Remove(0, 1);
+            StatusAdd(RestOfIt.Remove(0, 1));
         }
         public static void ERR_NOPERMFORHOST_463(string input)
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt.Remove(0, 1);
+            StatusAdd(RestOfIt.Remove(0, 1));
         }
         public static void ERR_PASSWDMISMATCH_464(string input)
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt.Remove(0, 1);
+            StatusAdd(RestOfIt.Remove(0, 1));
         }
         public static void ERR_YOUREBANNEDCREEP_465(string input)
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt.Remove(0, 1);
+            StatusAdd(RestOfIt.Remove(0, 1));
         }
-        public static void ERR_KESET_467(string input)
+        public static void ERR_KEYSET_467(string input)
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
@@ -274,54 +290,37 @@ namespace MerbosMagic_IRC_Client.RFC
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt.Remove(0, 1);
+            StatusAdd(RestOfIt.Remove(0, 1));
         }
         public static void ERR_CHANOPRIVSNEEDED_482(string input)
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt.Remove(0, 1);
+            StatusAdd(RestOfIt.Remove(0, 1));
         }
         public static void ERR_CANTKILLSERVER_483(string input)
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt.Remove(0, 1);
+            StatusAdd(RestOfIt.Remove(0, 1));
         }
         public static void ERR_NOOPERHOST_491(string input)
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt.Remove(0, 1);
+            StatusAdd(RestOfIt.Remove(0, 1));
         }
-        public static void ERR_UNMODEUNKNOWNFLAG_501(string input)
+        public static void ERR_UMODEUNKNOWNFLAG_501(string input)
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt.Remove(0, 1);
+            StatusAdd(RestOfIt.Remove(0, 1));
         }
         public static void ERR_USERSDONTMATCH_502(string input)
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt.Remove(0, 1);
-        }
-
-
-
-        public static void RPL_NAMREPLY_353(string input)
-        {
-            //:merbosmagic.org 353 ClientTest = #MerbosMagic :Triclops200 !StatServ !MMServiceBot xaxes !Merbo ClientTest 
-            string[] split = input.Split(' ');
-            string chan = split[4];
-            string[] nicks = input.Remove(0, 1).Split(':');
-            string[] nicksonchan = nicks[1].Split(' ');
-            List<string> alldemnicks = nicksonchan.ToList<string>();
-            foreach (string nick in alldemnicks)
-            {
-                if (nick != "")
-                    Program.M.UserAdd(chan.Remove(0, 1), nick);
-            }
+            StatusAdd(RestOfIt.Remove(0, 1));
         }
     }
 }

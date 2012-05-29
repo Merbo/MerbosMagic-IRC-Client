@@ -128,7 +128,7 @@ namespace MerbosMagic_IRC_Client.RFC
 						RFC_1459_Numerics.ERR_PASSWDMISMATCH_464(input);
 						break;
 					case 465:
-						RFC_1459_Numerics.ERR_YOUREBANNECREEP_465(input);
+						RFC_1459_Numerics.ERR_YOUREBANNEDCREEP_465(input);
 						break;
 					case 467:
 						RFC_1459_Numerics.ERR_KEYSET_467(input);
