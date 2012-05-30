@@ -20,14 +20,14 @@ namespace MerbosMagic_IRC_Client
 
         #region Chat Functions
 
-        private delegate void ChatAddSafeOne(string target, string text, int colorVal = 0);
-        public void ChatAdd(string target, string text, int colorVal = 0)
+        private delegate void ChatAddSafeOne(string target, string text, int colorVal = 0, int fontVal = 0);
+        public void ChatAdd(string target, string text, int colorVal = 0, int fontVal = 0)
         {
             //target is the tab window to add it to
             //text is the text to add
             if (this.tabControl1.InvokeRequired)
             {
-                this.tabControl1.BeginInvoke(new ChatAddSafeOne(ChatAdd), target, text, colorVal);
+                this.tabControl1.BeginInvoke(new ChatAddSafeOne(ChatAdd), target, text, colorVal, fontVal);
                 return;
             }
             else
@@ -43,6 +43,7 @@ namespace MerbosMagic_IRC_Client
                     {
                         RichTextBox RTB = (RichTextBox)targetFindTextBox[0];
                         string stext = Environment.NewLine + "[" + DateTime.Now + "] " + text;
+
                         Color color = Color.White;
                         #region Color Selector
                         switch (colorVal)
@@ -74,21 +75,54 @@ namespace MerbosMagic_IRC_Client
                         }
                         #endregion
                         RTB.SelectionColor = color;
+
+                        Font font = new Font("FixedsysTTF", 10f);
+                        #region Font Selector
+                        switch (fontVal)
+                        {
+                            case 0: //
+                                font = new Font("FixedsysTTF", 10f, FontStyle.Regular);
+                                break;
+                            case 1: //b
+                                font = new Font("FixedsysTTF", 10f, FontStyle.Bold);
+                                break;
+                            case 2: //i
+                                font = new Font("FixedsysTTF", 10f, FontStyle.Italic);
+                                break;
+                            case 3: //u
+                                font = new Font("FixedsysTTF", 10f, FontStyle.Underline);
+                                break;
+                            case 4: //bi
+                                font = new Font("FixedsysTTF", 10f, FontStyle.Bold | FontStyle.Italic);
+                                break;
+                            case 5: //bu
+                                font = new Font("FixedsysTTF", 10f, FontStyle.Bold | FontStyle.Underline);
+                                break;
+                            case 6: //iu
+                                font = new Font("FixedsysTTF", 10f, FontStyle.Italic | FontStyle.Underline);
+                                break;
+                            case 7: //biu
+                                font = new Font("FixedsysTTF", 10f, FontStyle.Bold | FontStyle.Italic | FontStyle.Underline);
+                                break;
+                        }
+                        #endregion
+                        RTB.SelectionFont = font;
+
                         RTB.SelectedText = stext;
                     }
                 }
             }
         }
 
-        private delegate void ChatAddSafeTwo(string text, int colorVal = 0);
-        public void ChatAdd(string text, int colorVal = 0)
+        private delegate void ChatAddSafeTwo(string text, int colorVal = 0, int fontVal = 0);
+        public void ChatAdd(string text, int colorVal = 0, int fontVal = 0)
         {
             //target is the tab window to add it to
             //text is the text to add
 
             if (this.tabControl1.InvokeRequired)
             {
-                this.tabControl1.BeginInvoke(new ChatAddSafeTwo(ChatAdd), text, colorVal);
+                this.tabControl1.BeginInvoke(new ChatAddSafeTwo(ChatAdd), text, colorVal, fontVal);
                 return;
             }
             else
@@ -107,6 +141,7 @@ namespace MerbosMagic_IRC_Client
                         Control[] targetFindTextBox = TP.Controls.Find(TP.Name + "_tb1", true);
                         RichTextBox RTB = (RichTextBox)targetFindTextBox[0];
                         string stext = Environment.NewLine + "[" + DateTime.Now + "] " + text;
+
                         Color color = Color.White;
                         #region Color Selector
                         switch (colorVal)
@@ -138,6 +173,39 @@ namespace MerbosMagic_IRC_Client
                         }
                         #endregion
                         RTB.SelectionColor = color;
+
+                        Font font = new Font("FixedsysTTF", 10f);
+                        #region Font Selector
+                        switch (fontVal)
+                        {
+                            case 0: //
+                                font = new Font("FixedsysTTF", 10f, FontStyle.Regular);
+                                break;
+                            case 1: //b
+                                font = new Font("FixedsysTTF", 10f, FontStyle.Bold);
+                                break;
+                            case 2: //i
+                                font = new Font("FixedsysTTF", 10f, FontStyle.Italic);
+                                break;
+                            case 3: //u
+                                font = new Font("FixedsysTTF", 10f, FontStyle.Underline);
+                                break;
+                            case 4: //bi
+                                font = new Font("FixedsysTTF", 10f, FontStyle.Bold | FontStyle.Italic);
+                                break;
+                            case 5: //bu
+                                font = new Font("FixedsysTTF", 10f, FontStyle.Underline | FontStyle.Underline);
+                                break;
+                            case 6: //iu
+                                font = new Font("FixedsysTTF", 10f, FontStyle.Italic | FontStyle.Underline);
+                                break;
+                            case 7: //biu
+                                font = new Font("FixedsysTTF", 10f, FontStyle.Bold | FontStyle.Italic | FontStyle.Underline);
+                                break;
+                        }
+                        #endregion
+                        RTB.SelectionFont = font;
+
                         RTB.SelectedText = stext;
                     }
                 }

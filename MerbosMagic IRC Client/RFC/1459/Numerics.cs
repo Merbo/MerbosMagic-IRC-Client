@@ -8,9 +8,9 @@ namespace MerbosMagic_IRC_Client.RFC
 {
     class RFC_1459_Numerics : RFC
     {
-        private static void StatusAdd(string text, int i = 0)
+        private static void StatusAdd(string text, int x = 0, int y = 0)
         {
-            Program.M.ChatAdd("page_Status", text, i);
+            Program.M.ChatAdd("page_Status", text, x, y);
         }
         public static void RPL_WELCOME_001(string input)
         {
@@ -22,7 +22,7 @@ namespace MerbosMagic_IRC_Client.RFC
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt.Remove(0, 1), 2);
+            StatusAdd(RestOfIt.Remove(0, 1), 2, 5);
         }
         public static void RPL_CREATED_003(string input)
         {

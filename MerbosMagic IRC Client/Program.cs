@@ -7,6 +7,13 @@ namespace MerbosMagic_IRC_Client
 {
     static class Program
     {
+        /*
+         * If you are not retarded you will install this font:
+         * http://www.moviecorner.de/download/fixedsys500c.zip
+         * Otherwise you are severely retarded.
+         * No offense.
+         */ 
+
         public static Main M;
         /// <summary>
         /// The main entry point for the application.
