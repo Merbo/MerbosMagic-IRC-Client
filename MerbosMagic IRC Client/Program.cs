@@ -14,10 +14,21 @@ namespace MerbosMagic_IRC_Client
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            M = new Main();
-            Application.Run(M);
+            try
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                M = new Main();
+                Application.Run(M);
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                MessageBox.Show(ex.ToString());
+#else
+                MessageBox.Show("There was an error. Contact Merbo.");
+#endif
+            }
         }
     }
 }

@@ -19,15 +19,15 @@ namespace MerbosMagic_IRC_Client
         }
 
         #region Chat Functions
-        private delegate void ChatAddSafeOne(string target, string text);
-        public void ChatAdd(string target, string text)
+
+        private delegate void ChatAddSafeOne(string target, string text, int colorVal = 0);
+        public void ChatAdd(string target, string text, int colorVal = 0)
         {
             //target is the tab window to add it to
             //text is the text to add
-
             if (this.tabControl1.InvokeRequired)
             {
-                this.tabControl1.BeginInvoke(new ChatAddSafeOne(ChatAdd), target, text);
+                this.tabControl1.BeginInvoke(new ChatAddSafeOne(ChatAdd), target, text, colorVal);
                 return;
             }
             else
@@ -41,22 +41,54 @@ namespace MerbosMagic_IRC_Client
                     Control[] targetFindTextBox = TP.Controls.Find(target + "_tb1", true);
                     if (targetFindTextBox.Length >= 1)
                     {
-                        TextBox TB = (TextBox)targetFindTextBox[0];
-                        TB.Text += "\r\n[" + DateTime.Now + "] " + text;
+                        RichTextBox RTB = (RichTextBox)targetFindTextBox[0];
+                        string stext = Environment.NewLine + "[" + DateTime.Now + "] " + text;
+                        Color color = Color.White;
+                        #region Color Selector
+                        switch (colorVal)
+                        {
+                            case 0:
+                                color = Color.White;
+                                break;
+                            case 1:
+                                color = Color.LightGray;
+                                break;
+                            case 2:
+                                color = Color.Gray;
+                                break;
+                            case 3:
+                                color = Color.DarkGray;
+                                break;
+                            case 4:
+                                color = Color.LightBlue;
+                                break;
+                            case 5:
+                                color = Color.Green;
+                                break;
+                            case 6:
+                                color = Color.Yellow;
+                                break;
+                            case 7:
+                                color = Color.Red;
+                                break;
+                        }
+                        #endregion
+                        RTB.SelectionColor = color;
+                        RTB.SelectedText = stext;
                     }
                 }
             }
         }
 
-        private delegate void ChatAddSafeTwo(string text);
-        public void ChatAdd(string text)
+        private delegate void ChatAddSafeTwo(string text, int colorVal = 0);
+        public void ChatAdd(string text, int colorVal = 0)
         {
             //target is the tab window to add it to
             //text is the text to add
 
             if (this.tabControl1.InvokeRequired)
             {
-                this.tabControl1.BeginInvoke(new ChatAddSafeTwo(ChatAdd), text);
+                this.tabControl1.BeginInvoke(new ChatAddSafeTwo(ChatAdd), text, colorVal);
                 return;
             }
             else
@@ -73,21 +105,43 @@ namespace MerbosMagic_IRC_Client
                     if (TP.Name != "page_debugPage" && TP.Name != "page_Status")
                     {
                         Control[] targetFindTextBox = TP.Controls.Find(TP.Name + "_tb1", true);
-                        TextBox TB = (TextBox)targetFindTextBox[0];
-                        TB.Text += "\r\n[" + DateTime.Now + "] " + text;
+                        RichTextBox RTB = (RichTextBox)targetFindTextBox[0];
+                        string stext = Environment.NewLine + "[" + DateTime.Now + "] " + text;
+                        Color color = Color.White;
+                        #region Color Selector
+                        switch (colorVal)
+                        {
+                            case 0:
+                                color = Color.White;
+                                break;
+                            case 1:
+                                color = Color.LightGray;
+                                break;
+                            case 2:
+                                color = Color.Gray;
+                                break;
+                            case 3:
+                                color = Color.DarkGray;
+                                break;
+                            case 4:
+                                color = Color.LightBlue;
+                                break;
+                            case 5:
+                                color = Color.Green;
+                                break;
+                            case 6:
+                                color = Color.Yellow;
+                                break;
+                            case 7:
+                                color = Color.Red;
+                                break;
+                        }
+                        #endregion
+                        RTB.SelectionColor = color;
+                        RTB.SelectedText = stext;
                     }
                 }
             }
-            /*else
-            {
-                TabPage TP = tabControl1.SelectedTab;
-                if (TP.Name != "page_debugPage" && TP.Name != "page_Status")
-                {
-                    Control[] targetFindTextBox = TP.Controls.Find(TP.Name + "_tb1", true);
-                    TextBox TB = (TextBox)targetFindTextBox[0];
-                    TB.Text += "\r\n[" + DateTime.Now + "] " + text;
-                }
-            }*/
         }
         #endregion
 
@@ -97,8 +151,8 @@ namespace MerbosMagic_IRC_Client
         {
             //target is the tab window to add it to
             //text is the text to add
-            try
-            {
+            //try
+            //{
                 if (this.tabControl1.InvokeRequired)
                 {
                     this.tabControl1.BeginInvoke(new UserAddSafeOne(UserAdd), chan, nick);
@@ -114,18 +168,18 @@ namespace MerbosMagic_IRC_Client
                     ListBox LB = (ListBox)targetFindListBox[0];
                     LB.Items.Add(nick);
                 }
-            }
-            catch (IndexOutOfRangeException)
-            {
+            //}
+            //catch (IndexOutOfRangeException)
+            //{
 
-            }
+            //}
         }
         private delegate void UserAddSafeTwo(string nick);
         public void UserAdd(string nick)
         {
             //text is the text to add
-            try
-            {
+            //try
+            //{
                 if (this.tabControl1.InvokeRequired)
                 {
                     this.tabControl1.BeginInvoke(new UserAddSafeTwo(UserAdd), nick);
@@ -150,11 +204,11 @@ namespace MerbosMagic_IRC_Client
                         }
                     }
                 }
-            }
-            catch (IndexOutOfRangeException)
-            {
+            //}
+            //catch (IndexOutOfRangeException)
+            //{
 
-            }
+            //}
         }
 
         private delegate void UserRemoveSafeOne(string chan, string nick);
@@ -162,8 +216,8 @@ namespace MerbosMagic_IRC_Client
         {
             //target is the tab window to add it to
             //text is the text to add
-            try
-            {
+            //try
+            //{
                 if (this.tabControl1.InvokeRequired)
                 {
                     this.tabControl1.BeginInvoke(new UserRemoveSafeOne(UserRemove), chan, nick);
@@ -183,19 +237,19 @@ namespace MerbosMagic_IRC_Client
                     foreach (string nicktoremove in PNicksList)
                         LB.Items.Remove(nicktoremove);
                 }
-            }
-            catch (IndexOutOfRangeException)
-            {
+            //}
+            //catch (IndexOutOfRangeException)
+            //{
 
-            }
+            //}
         }
         private delegate void UserRemoveSafeTwo(string nick);
         public void UserRemove(string nick)
         {
             //target is the tab window to add it to
             //text is the text to add
-            try
-            {
+            //try
+            //{
                 if (this.tabControl1.InvokeRequired)
                 {
                     this.tabControl1.BeginInvoke(new UserRemoveSafeTwo(UserRemove), nick);
@@ -223,18 +277,18 @@ namespace MerbosMagic_IRC_Client
                         }
                     }
                 }
-            }
-            catch (IndexOutOfRangeException)
-            {
-
-            }
+            //}
+            //catch (IndexOutOfRangeException)
+            //{
+            //
+            //}
         }
 
         private delegate void UserRenameSafe(string oldnick, string newnick);
         public void UserRename(string oldnick, string newnick)
         {
-            try
-            {
+            //try
+            //{
                 if (this.tabControl1.InvokeRequired)
                 {
                     this.tabControl1.BeginInvoke(new UserRenameSafe(UserRename), oldnick, newnick);
@@ -268,11 +322,11 @@ namespace MerbosMagic_IRC_Client
                         }
                     }
                 }
-            }
-            catch (IndexOutOfRangeException)
-            {
+            //}
+            //catch (IndexOutOfRangeException)
+            //{
 
-            }
+            //}
         }
         #endregion
 
@@ -322,7 +376,7 @@ namespace MerbosMagic_IRC_Client
             {
                 codeName = "page_" + codeName;
                 #region TextBox1
-                TextBox tb1 = new TextBox();
+                RichTextBox tb1 = new RichTextBox();
                 tb1.BackColor = Color.Black;
                 tb1.Dock = DockStyle.Top;
                 tb1.ForeColor = Color.White;
@@ -333,7 +387,7 @@ namespace MerbosMagic_IRC_Client
                 tb1.ReadOnly = true;
                 tb1.Size = new Size(751, 349);
                 tb1.TabIndex = 0;
-                tb1.ScrollBars = ScrollBars.Vertical;
+                tb1.ScrollBars = RichTextBoxScrollBars.Vertical;
                 tb1.TextChanged += new EventHandler(tb1_TextChanged);
                 #endregion
                 #region TextBox2
@@ -418,7 +472,7 @@ namespace MerbosMagic_IRC_Client
         private void tb1_TextChanged(object sender, EventArgs e)
         {
 
-            TextBox TB = (TextBox)sender;
+            RichTextBox TB = (RichTextBox)sender;
 
             TB.SelectionStart = TB.Text.Length;
             TB.ScrollToCaret();

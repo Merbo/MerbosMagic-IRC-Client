@@ -8,39 +8,39 @@ namespace MerbosMagic_IRC_Client.RFC
 {
     class RFC_1459_Numerics : RFC
     {
-        private static void StatusAdd(string text)
+        private static void StatusAdd(string text, int i = 0)
         {
-            Program.M.ChatAdd("page_Status", text);
+            Program.M.ChatAdd("page_Status", text, i);
         }
         public static void RPL_WELCOME_001(string input)
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt.Remove(0, 1));
+            StatusAdd(RestOfIt.Remove(0, 1), 5);
         }
         public static void RPL_YOURHOST_002(string input)
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt.Remove(0, 1));
+            StatusAdd(RestOfIt.Remove(0, 1), 2);
         }
         public static void RPL_CREATED_003(string input)
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt.Remove(0, 1));
+            StatusAdd(RestOfIt.Remove(0, 1), 2);
         }
         public static void RPL_MYINFO_004(string input)
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt);
+            StatusAdd(RestOfIt, 2);
         }
         public static void RPL_ISUPPORT_005(string input)
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt);
+            StatusAdd(RestOfIt, 2);
         }
 
         public static void RPL_NAMREPLY_353(string input)
