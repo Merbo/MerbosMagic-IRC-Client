@@ -7,6 +7,11 @@ namespace MerbosMagic_IRC_Client.RFC
 {
     class DataProcessing : RFC
     {
+        private static string GetRest(string[] Array, int Start)
+        {
+            return String.Join(" ", Array, Start, Array.Length - Start);
+        }
+
         public static void ProcessSend(string raw)
         {
             string[] commands = raw.Split(' ');
@@ -14,11 +19,10 @@ namespace MerbosMagic_IRC_Client.RFC
             {
                 string chan = "";
                 string msgargs = "";
-                string allargs = "";
+
                 if (commands.Length > 0)
                 {
                     chan = commands[1];
-                    allargs = String.Join(" ", commands, 1, commands.Length - 1);
                 }
                 if (commands.Length > 1)
                 {
@@ -49,9 +53,10 @@ namespace MerbosMagic_IRC_Client.RFC
                         }
                         break;
                     case "quit":
-                        if (allargs != "")
+                        string rest = GetRest(commands, 1);
+                        if (rest != "")
                         {
-                                RFC_1459_Commands.QUIT(allargs);
+                                RFC_1459_Commands.QUIT(rest);
                         }
                         else
                         {
@@ -60,6 +65,13 @@ namespace MerbosMagic_IRC_Client.RFC
                         break;
                     case "nick":
                         RFC_1459_Commands.NICK(commands[1]);
+                        break;
+                    case "query":
+                        Program.M.AddPage(commands[1], commands[1]);
+                        if (commands.Length > 2)
+                        {
+                            RFC_1459_Commands.PRIVMSG(commands[1], GetRest(commands, 2));
+                        }
                         break;
                 }
             }

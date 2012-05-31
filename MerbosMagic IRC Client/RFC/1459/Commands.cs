@@ -196,12 +196,16 @@ namespace MerbosMagic_IRC_Client.RFC
         public static void PRIVMSG(string target, string text)
         {
             IRC.SendRaw("PRIVMSG " + target + " :" + text);
-            Program.M.ChatAdd(target.Remove(0, 1), "<" + IRC.nick + "> " + text);
+            if (target.StartsWith("#"))
+                target = target.Remove(0, 1);
+            Program.M.ChatAdd(target, "<" + IRC.nick + "> " + text);
         }
         public static void NOTICE(string target, string text)
         {
             IRC.SendRaw("NOTICE " + target + " :" + text);
-            Program.M.ChatAdd(target.Remove(0, 1), "-" + IRC.nick + "- " + text);
+            if (target.StartsWith("#"))
+                target = target.Remove(0, 1);
+            Program.M.ChatAdd(target, "-" + IRC.nick + "- " + text);
         }
         public static void WHO(string mask, bool opers = false)
         {

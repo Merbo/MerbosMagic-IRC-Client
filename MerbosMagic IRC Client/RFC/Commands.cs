@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace MerbosMagic_IRC_Client.RFC
 {
@@ -67,7 +68,7 @@ namespace MerbosMagic_IRC_Client.RFC
                     }
                     #endregion
                     #region switch (commands[1])
-                    switch (commands[1])
+                    switch (commands[1].ToUpper())
                     {
                         case "JOIN":
                             Program.M.ChatAdd(tabname, nick + " has joined " + chan + ".");
@@ -88,10 +89,20 @@ namespace MerbosMagic_IRC_Client.RFC
                             Program.M.UserRename(nick, chan);
                             break;
                         case "PRIVMSG":
-                            Program.M.ChatAdd(tabname, "<" + nick + "> " + args.Remove(0, chan.Length + 2));
+                            if (chan == IRC.nick)
+                            {
+                                Program.M.ChatAdd(nick, "<" + nick + "> " + args.Remove(0, chan.Length + 2));
+                            }
+                            else
+                                Program.M.ChatAdd(tabname, "<" + nick + "> " + args.Remove(0, chan.Length + 2));
                             break;
                         case "NOTICE":
-                            Program.M.ChatAdd(tabname, "-" + nick + "- " + args.Remove(0, chan.Length + 2));
+                            if (chan == IRC.nick)
+                            {
+                                Program.M.ChatAdd("-" + nick + "- " + args.Remove(0, chan.Length + 2), 6);
+                            }
+                            else
+                                Program.M.ChatAdd(tabname, "-" + nick + "- " + args.Remove(0, chan.Length + 2), 6);
                             break;
                     }
                     #endregion

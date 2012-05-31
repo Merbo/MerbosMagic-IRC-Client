@@ -442,7 +442,8 @@ namespace MerbosMagic_IRC_Client
             }
             else
             {
-                codeName = "page_" + codeName;
+                if (!codeName.StartsWith("page_"))
+                    codeName = "page_" + codeName;
                 #region TextBox1
                 RichTextBox tb1 = new RichTextBox();
                 tb1.BackColor = Color.Black;
@@ -454,7 +455,8 @@ namespace MerbosMagic_IRC_Client
                 tb1.Name = codeName + "_tb1";
                 tb1.ReadOnly = true;
                 tb1.Size = new Size(751, 349);
-                tb1.TabIndex = 0;
+                tb1.TabStop = false;
+                tb1.TabIndex = 1;
                 tb1.ScrollBars = RichTextBoxScrollBars.Vertical;
                 tb1.TextChanged += new EventHandler(tb1_TextChanged);
                 #endregion
@@ -466,7 +468,7 @@ namespace MerbosMagic_IRC_Client
                 tb2.Location = new Point(3, 347);
                 tb2.Name = codeName + "_tb2";
                 tb2.Size = new Size(751, 20);
-                tb2.TabIndex = 1;
+                tb2.TabIndex = 0;
                 tb2.KeyPress += new KeyPressEventHandler(this.tb2_KeyPress);
                 #endregion
                 #region ListBox1
@@ -524,7 +526,7 @@ namespace MerbosMagic_IRC_Client
                 TextBox TB = (TextBox)sender;
                 TabPage TP = (TabPage)TB.Parent;
 
-                if (TP.Text.StartsWith("#") && !TB.Text.StartsWith("/"))
+                if (TP.Text != "debugPage" && TP.Text != "Status" && !TB.Text.StartsWith("/"))
                 {
                     RFC_1459_Commands.PRIVMSG(TP.Text, TB.Text);
                 }
