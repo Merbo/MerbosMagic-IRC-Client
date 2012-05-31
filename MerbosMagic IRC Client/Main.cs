@@ -61,7 +61,7 @@ namespace MerbosMagic_IRC_Client
                                 color = Color.DarkGray;
                                 break;
                             case 4:
-                                color = Color.LightBlue;
+                                color = Color.Blue;
                                 break;
                             case 5:
                                 color = Color.Green;
@@ -159,7 +159,7 @@ namespace MerbosMagic_IRC_Client
                                 color = Color.DarkGray;
                                 break;
                             case 4:
-                                color = Color.LightBlue;
+                                color = Color.Blue;
                                 break;
                             case 5:
                                 color = Color.Green;
@@ -219,8 +219,6 @@ namespace MerbosMagic_IRC_Client
         {
             //target is the tab window to add it to
             //text is the text to add
-            //try
-            //{
                 if (this.tabControl1.InvokeRequired)
                 {
                     this.tabControl1.BeginInvoke(new UserAddSafeOne(UserAdd), chan, nick);
@@ -236,18 +234,11 @@ namespace MerbosMagic_IRC_Client
                     ListBox LB = (ListBox)targetFindListBox[0];
                     LB.Items.Add(nick);
                 }
-            //}
-            //catch (IndexOutOfRangeException)
-            //{
-
-            //}
         }
         private delegate void UserAddSafeTwo(string nick);
         public void UserAdd(string nick)
         {
             //text is the text to add
-            //try
-            //{
                 if (this.tabControl1.InvokeRequired)
                 {
                     this.tabControl1.BeginInvoke(new UserAddSafeTwo(UserAdd), nick);
@@ -272,11 +263,6 @@ namespace MerbosMagic_IRC_Client
                         }
                     }
                 }
-            //}
-            //catch (IndexOutOfRangeException)
-            //{
-
-            //}
         }
 
         private delegate void UserRemoveSafeOne(string chan, string nick);
@@ -284,8 +270,6 @@ namespace MerbosMagic_IRC_Client
         {
             //target is the tab window to add it to
             //text is the text to add
-            //try
-            //{
                 if (this.tabControl1.InvokeRequired)
                 {
                     this.tabControl1.BeginInvoke(new UserRemoveSafeOne(UserRemove), chan, nick);
@@ -305,19 +289,12 @@ namespace MerbosMagic_IRC_Client
                     foreach (string nicktoremove in PNicksList)
                         LB.Items.Remove(nicktoremove);
                 }
-            //}
-            //catch (IndexOutOfRangeException)
-            //{
-
-            //}
         }
         private delegate void UserRemoveSafeTwo(string nick);
         public void UserRemove(string nick)
         {
             //target is the tab window to add it to
             //text is the text to add
-            //try
-            //{
                 if (this.tabControl1.InvokeRequired)
                 {
                     this.tabControl1.BeginInvoke(new UserRemoveSafeTwo(UserRemove), nick);
@@ -345,18 +322,11 @@ namespace MerbosMagic_IRC_Client
                         }
                     }
                 }
-            //}
-            //catch (IndexOutOfRangeException)
-            //{
-            //
-            //}
         }
 
         private delegate void UserRenameSafe(string oldnick, string newnick);
         public void UserRename(string oldnick, string newnick)
         {
-            //try
-            //{
                 if (this.tabControl1.InvokeRequired)
                 {
                     this.tabControl1.BeginInvoke(new UserRenameSafe(UserRename), oldnick, newnick);
@@ -390,11 +360,6 @@ namespace MerbosMagic_IRC_Client
                         }
                     }
                 }
-            //}
-            //catch (IndexOutOfRangeException)
-            //{
-
-            //}
         }
         #endregion
 

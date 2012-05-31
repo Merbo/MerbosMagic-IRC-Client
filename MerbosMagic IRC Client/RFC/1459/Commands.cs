@@ -14,7 +14,8 @@ namespace MerbosMagic_IRC_Client.RFC
         }
         public static void NICK(string nick)
         {
-            Program.M.ChatAdd("page_Status", "You are now known as " + nick + ".");
+            Program.M.ChatAdd("page_Status", "You are now known as " + nick + ".", 5);
+            Program.M.ChatAdd("You are now known as " + nick + ".", 5);
             IRC.SendRaw("NICK " + nick);
             IRC.nick = nick;
         }

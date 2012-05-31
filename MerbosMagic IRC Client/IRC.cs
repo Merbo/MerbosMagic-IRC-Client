@@ -23,8 +23,14 @@ namespace MerbosMagic_IRC_Client
         public static string server = "merbosmagic.org"; //Server to connect to
         public static void Connect()
         {
-
-            IRCClient = new TcpClient(server, port); //Connect to the server
+            try
+            {
+                IRCClient = new TcpClient(server, port); //Connect to the server
+            }
+            catch (SocketException)
+            {
+                return;
+            }
 
             IRCStream = IRCClient.GetStream(); //Initialize the stream
 
