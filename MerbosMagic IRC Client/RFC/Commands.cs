@@ -105,7 +105,8 @@ namespace MerbosMagic_IRC_Client.RFC
                                     Program.M.ChatAdd(tabname, nick + " (" + user + "@" + host + ") has left " + chan + ". (" + args.Remove(0, chan.Length + 2) + ")", 6, 3);
                                 else
                                     Program.M.ChatAdd(tabname, nick + " (" + user + "@" + host + ") has left " + chan + ".", 6, 3);
-                                Program.M.UserRemove(tabname, nick);
+                                if (nick != IRC.nick)
+                                    Program.M.UserRemove(tabname, nick);
                                 break;
                             case "NICK":
                                 //NOTES:

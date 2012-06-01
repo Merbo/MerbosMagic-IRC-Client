@@ -495,7 +495,7 @@ namespace MerbosMagic_IRC_Client
                 {
                     RFC_1459_Commands.PRIVMSG(TP.Text, TB.Text);
                 }
-                else if (TB.Text.StartsWith("/"))
+                else if (TB.Text.StartsWith("/") || TP.Text == "debugPage")
                 {
                     DataProcessing.ProcessSend(TB.Text);
                 }

@@ -20,15 +20,19 @@ namespace MerbosMagic_IRC_Client.RFC
                 string chan = "";
                 string msgargs = "";
 
-                if (commands.Length > 0)
+                if (commands.Length > 1)
                 {
                     chan = commands[1];
                 }
-                if (commands.Length > 1)
+                if (commands.Length > 2)
                 {
                     msgargs = String.Join(" ", commands, 2, commands.Length - 2);
                 }
-                switch (commands[0].ToLower().Remove(0, 1))
+                if (commands[0].StartsWith("/"))
+                {
+                    commands[0] = commands[0].Remove(0, 1);
+                }
+                switch (commands[0])
                 {
                     case "msg":
                         RFC_1459_Commands.PRIVMSG(chan, msgargs);
