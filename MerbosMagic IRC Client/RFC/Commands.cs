@@ -88,19 +88,24 @@ namespace MerbosMagic_IRC_Client.RFC
                     {
                         switch (commands[1].ToUpper())
                         {
+                            case "QUIT":
+                                if (commands.Length > 3 && args != "")
+                                    Program.M.ChatAdd(nick + " (" + user + "@" + host + ") has quit. (" + args.Remove(0, 1) + ")", 5, 3);
+                                else
+                                    Program.M.ChatAdd(nick + " (" + user + "@" + host + ") has quit.", 5, 3);
+                                Program.M.UserRemove(nick);
+                                break;
                             case "JOIN":
-                                Program.M.ChatAdd(tabname, nick + " has joined " + chan + ".", 6, 3);
+                                Program.M.ChatAdd(tabname, nick + " (" + user + "@" + host + ") has joined " + chan + ".", 6, 3);
                                 if (nick != IRC.nick)
                                     Program.M.UserAdd(tabname, nick);
                                 break;
                             case "PART":
-                                MessageBox.Show("Start");
                                 if (commands.Length > 3 && args != "")
-                                    Program.M.ChatAdd(tabname, nick + " has left " + chan + ". (" + args.Remove(0, chan.Length + 2) + ")", 6, 3);
+                                    Program.M.ChatAdd(tabname, nick + " (" + user + "@" + host + ") has left " + chan + ". (" + args.Remove(0, chan.Length + 2) + ")", 6, 3);
                                 else
-                                    Program.M.ChatAdd(tabname, nick + " has left " + chan + ".", 6, 3);
+                                    Program.M.ChatAdd(tabname, nick + " (" + user + "@" + host + ") has left " + chan + ".", 6, 3);
                                 Program.M.UserRemove(tabname, nick);
-                                MessageBox.Show("End");
                                 break;
                             case "NICK":
                                 //NOTES:
