@@ -458,6 +458,7 @@ namespace MerbosMagic_IRC_Client
                 //tp.Text = tp.Name; //Debugging
                 #endregion
                 tabControl1.Controls.Add(tp);
+                tabControl1.SelectedTab = tp;
             }
         }
 
@@ -473,6 +474,13 @@ namespace MerbosMagic_IRC_Client
             {
                 this.tabControl1.Controls.RemoveByKey("page_" + Key);
             }
+        }
+
+        private delegate TabPage GetPageSafe();
+        public TabPage GetPage()
+        {
+            TabPage tp = tabControl1.SelectedTab;
+            return tp;
         }
         #endregion
 
@@ -491,15 +499,23 @@ namespace MerbosMagic_IRC_Client
                 TextBox TB = (TextBox)sender;
                 TabPage TP = (TabPage)TB.Parent;
 
-                if (TB.Text.StartsWith("/"))
+                if (TB.Text.StartsWith("/."))
                 {
-                    string s = DataProcessing.ResolveVars(TB.Text);
+                    string s = DataProcessing.ResolveVars(TB.Text.Remove(0, 2));
+                    RFC_1459_Commands.PRIVMSG(TP.Text, s);
+                }
+                else if (TB.Text.StartsWith("//"))
+                {
+                    string s = DataProcessing.ResolveVars(TB.Text.Remove(0, 1));
                     DataProcessing.ProcessSend(s);
+                }
+                else if (TB.Text.StartsWith("/"))
+                {
+                    DataProcessing.ProcessSend(TB.Text);
                 }
                 else if (TP.Text != "debugPage" && TP.Text != "Status")
                 {
-                    string s = DataProcessing.ResolveVars(TB.Text);
-                    RFC_1459_Commands.PRIVMSG(TP.Text, s);
+                    RFC_1459_Commands.PRIVMSG(TP.Text, TB.Text);
                 }
 
                 TB.Text = "";
@@ -514,6 +530,14 @@ namespace MerbosMagic_IRC_Client
             TB.SelectionStart = TB.Text.Length;
             TB.ScrollToCaret();
             TB.Refresh();
+        }
+
+        private void tc1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //Change form window name.
+            TabControl tc = (TabControl)sender;
+            TabPage tp = tc.SelectedTab;
+            this.Text = IRC.longversion + " - " + tp.Text; 
         }
         #endregion
 

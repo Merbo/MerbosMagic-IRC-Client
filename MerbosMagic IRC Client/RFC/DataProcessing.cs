@@ -109,16 +109,29 @@ namespace MerbosMagic_IRC_Client.RFC
 
             output = "";
 
+            int i = 0;
+
             foreach (string s in outlist)
             {
+                i++;
                 string tmp = s;
                 switch (tmp.ToLower())
                 {
                     case "$time":
                         tmp = DateTime.Now.ToString();
                         break;
+                    case "$version":
+                        tmp = IRC.version;
+                        break;
+                    case "$me":
+                        tmp = IRC.nick;
+                        break;
+                    case "$active":
+                        tmp = Program.M.GetPage().Text;
+                        break;
+
                 }
-                output += tmp + " ";
+                output += i == outlist.Count ? tmp + "" : tmp + " ";
             }
 
             return output;
