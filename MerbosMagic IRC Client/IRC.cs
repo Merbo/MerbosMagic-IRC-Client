@@ -20,7 +20,7 @@ namespace MerbosMagic_IRC_Client
         public static string nick = "ClientTest"; //Nick
         public static string user = "Ethan Carr"; //Real name
         public static int port = 6667; //Port to connect on
-        public static string server = "merbosmagic.org"; //Server to connect to
+        public static string server = "chat.freenode.net"; //Server to connect to
         public static void Connect()
         {
             try

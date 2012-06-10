@@ -491,13 +491,15 @@ namespace MerbosMagic_IRC_Client
                 TextBox TB = (TextBox)sender;
                 TabPage TP = (TabPage)TB.Parent;
 
-                if (TP.Text != "debugPage" && TP.Text != "Status" && !TB.Text.StartsWith("/"))
+                if (TB.Text.StartsWith("/"))
                 {
-                    RFC_1459_Commands.PRIVMSG(TP.Text, TB.Text);
+                    string s = DataProcessing.ResolveVars(TB.Text);
+                    DataProcessing.ProcessSend(s);
                 }
-                else if (TB.Text.StartsWith("/") || TP.Text == "debugPage")
+                else if (TP.Text != "debugPage" && TP.Text != "Status")
                 {
-                    DataProcessing.ProcessSend(TB.Text);
+                    string s = DataProcessing.ResolveVars(TB.Text);
+                    RFC_1459_Commands.PRIVMSG(TP.Text, s);
                 }
 
                 TB.Text = "";

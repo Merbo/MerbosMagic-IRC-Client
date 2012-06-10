@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace MerbosMagic_IRC_Client.RFC
 {
@@ -99,6 +100,28 @@ namespace MerbosMagic_IRC_Client.RFC
             {
                 Commands.Parse(raw);
             }
+        }
+        public static string ResolveVars(string input)
+        {
+            string output = input;
+            string[] outsplit = output.Split(' ');
+            List<string> outlist = outsplit.ToList<string>();
+
+            output = "";
+
+            foreach (string s in outlist)
+            {
+                string tmp = s;
+                switch (tmp.ToLower())
+                {
+                    case "$time":
+                        tmp = DateTime.Now.ToString();
+                        break;
+                }
+                output += tmp + " ";
+            }
+
+            return output;
         }
     }
 }
