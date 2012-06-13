@@ -6,3 +6,11 @@ C:\Users\Merbo\documents\visual studio 11\Projects\MerbosMagic IRC Client\Merbos
 C:\Users\Merbo\documents\visual studio 11\Projects\MerbosMagic IRC Client\MerbosMagic IRC Client\obj\Debug\MerbosMagic IRC Client.csproj.GenerateResource.Cache
 C:\Users\Merbo\documents\visual studio 11\Projects\MerbosMagic IRC Client\MerbosMagic IRC Client\obj\Debug\MerbosMagic IRC Client.exe
 C:\Users\Merbo\documents\visual studio 11\Projects\MerbosMagic IRC Client\MerbosMagic IRC Client\obj\Debug\MerbosMagic IRC Client.pdb
+C:\Users\Bryan\Desktop\MerbosMagic-IRC-Client\MerbosMagic IRC Client\obj\Debug\MerbosMagic IRC Client.exe
+C:\Users\Bryan\Desktop\MerbosMagic-IRC-Client\MerbosMagic IRC Client\obj\Debug\MerbosMagic IRC Client.pdb
+C:\Users\Bryan\Desktop\MerbosMagic-IRC-Client\MerbosMagic IRC Client\bin\Debug\MerbosMagic IRC Client.exe
+C:\Users\Bryan\Desktop\MerbosMagic-IRC-Client\MerbosMagic IRC Client\bin\Debug\MerbosMagic IRC Client.pdb
+C:\Users\Bryan\Desktop\MerbosMagic-IRC-Client\MerbosMagic IRC Client\obj\Debug\MerbosMagic IRC Client.csprojResolveAssemblyReference.cache
+C:\Users\Bryan\Desktop\MerbosMagic-IRC-Client\MerbosMagic IRC Client\obj\Debug\MerbosMagic_IRC_Client.Main.resources
+C:\Users\Bryan\Desktop\MerbosMagic-IRC-Client\MerbosMagic IRC Client\obj\Debug\MerbosMagic_IRC_Client.Properties.Resources.resources
+C:\Users\Bryan\Desktop\MerbosMagic-IRC-Client\MerbosMagic IRC Client\obj\Debug\MerbosMagic IRC Client.csproj.GenerateResource.Cache

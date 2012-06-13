@@ -17,20 +17,18 @@ namespace MerbosMagic_IRC_Client
         public static NetworkStream IRCStream;
         public static StreamReader IRCReader;
         public static StreamWriter IRCWriter;
-        public static string nick        = "ClientTest";                                //Nick
-        public static string user        = "Ethan Carr";                                //Real name
-        public static int port           = 6667;                                        //Port to connect on
-        public static string server      = "chat.freenode.net";                         //Server to connect to
-        public static string version     = "1.5.2";                                     //Client version :D
+        public static string nick = "ClientTest";                                //Nick
+        public static string user = "Ethan Carr";                                //Real name
+        public static int port = 6667;                                        //Port to connect on
+        public static string server = "chat.freenode.net";                         //Server to connect to
+        public static string version = "1.5.2";                                     //Client version :D
         public static string longversion = "MerbosMagic IRC Client Version " + version; //Longer client version :D
         public static void Connect()
         {
-            try
-            {
+            try {
                 IRCClient = new TcpClient(server, port); //Connect to the server
             }
-            catch (SocketException)
-            {
+            catch (SocketException) {
                 return;
             }
 
@@ -43,7 +41,8 @@ namespace MerbosMagic_IRC_Client
         }
 
         public static bool alive = true;
-        public static void PostConnect() {
+        public static void PostConnect()
+        {
             RFC_1459_Commands.NICK(nick);
             RFC_1459_Commands.USER(nick, "*", "0", user);
 
@@ -52,29 +51,23 @@ namespace MerbosMagic_IRC_Client
 
         public static void ReadInput()
         {
-            while (true)
-            {
+            while (true) {
                 string input;
 
-                try
-                {
+                try {
                     input = IRCReader.ReadLine();
 
-                    if (input != null)
-                    {
+                    if (input != null) {
                         DataProcessing.ProcessRecv(input);
                     }
                 }
-                catch (NullReferenceException)
-                {
+                catch (NullReferenceException) {
                     break;
                 }
-                catch (IOException)
-                {
+                catch (IOException) {
                     break;
                 }
-                catch (ObjectDisposedException)
-                {
+                catch (ObjectDisposedException) {
                     break;
                 }
             }
@@ -85,8 +78,7 @@ namespace MerbosMagic_IRC_Client
 #if DEBUG
             Program.M.ChatAdd("page_debugPage", "--> " + raw);
 #endif
-            if (IRCClient.Connected)
-            {
+            if (IRCClient.Connected) {
                 IRCWriter.WriteLine(raw);
                 IRCWriter.Flush();
             }
