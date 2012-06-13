@@ -12,7 +12,7 @@ namespace MerbosMagic_IRC_Client
          * http://www.moviecorner.de/download/fixedsys500c.zip
          * Otherwise you are severely retarded.
          * No offense.
-         */ 
+         */
 
         public static Main M;
         /// <summary>
@@ -21,15 +21,13 @@ namespace MerbosMagic_IRC_Client
         [STAThread]
         static void Main()
         {
-            try
-            {
+            try {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 M = new Main();
                 Application.Run(M);
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
 #if DEBUG
                 MessageBox.Show(ex.ToString());
 #else
