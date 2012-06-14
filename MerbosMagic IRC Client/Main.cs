@@ -326,26 +326,34 @@ namespace MerbosMagic_IRC_Client
         Thread IRCThread = new Thread(IRC.Connect);
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            try {
-                IRCThread.Name = "IRCThread";
-                IRCThread.IsBackground = true;
-                IRCThread.Start();
-            }
-            catch (InvalidOperationException) {
-                MessageBox.Show("You're already connected.");
+            if (IRC.IRCClient.Connected)
+            {
+                try
+                {
+                    IRCThread.Name = "IRCThread";
+                    IRCThread.IsBackground = true;
+                    IRCThread.Start();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
-            try {
-                RFC_1459_Commands.QUIT("Program Closing");
+            try 
+            {
+                RFC_1459_Commands.QUIT(IRC.longversion);
                 IRC.IRCStream.Close();
             }
-            catch (Exception) {
+            catch (Exception) 
+            {
 
             }
-            finally {
+            finally 
+            {
                 Application.Exit();
             }
         }
@@ -442,19 +450,27 @@ namespace MerbosMagic_IRC_Client
 
         private void tb2_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)13) {
+            if (e.KeyChar == (char)13) 
+            {
                 TextBox TB = (TextBox)sender;
                 TabPage TP = (TabPage)TB.Parent;
 
-                if (TB.Text.StartsWith("/.")) {
+                if (TB.Text.StartsWith("/.")) 
+                {
                     string s = DataProcessing.ResolveVars(TB.Text.Remove(0, 2));
                     RFC_1459_Commands.PRIVMSG(TP.Text, s);
-                } else if (TB.Text.StartsWith("//")) {
+                } 
+                else if (TB.Text.StartsWith("//")) 
+                {
                     string s = DataProcessing.ResolveVars(TB.Text.Remove(0, 1));
                     DataProcessing.ProcessSend(s);
-                } else if (TB.Text.StartsWith("/")) {
+                } 
+                else if (TB.Text.StartsWith("/")) 
+                {
                     DataProcessing.ProcessSend(TB.Text);
-                } else if (TP.Text != "debugPage" && TP.Text != "Status") {
+                } 
+                else if (TP.Text != "debugPage" && TP.Text != "Status") 
+                {
                     RFC_1459_Commands.PRIVMSG(TP.Text, TB.Text);
                 }
 

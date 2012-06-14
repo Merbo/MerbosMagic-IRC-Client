@@ -25,10 +25,12 @@ namespace MerbosMagic_IRC_Client
         public static string longversion = "MerbosMagic IRC Client Version " + version; //Longer client version :D
         public static void Connect()
         {
-            try {
+            try 
+            {
                 IRCClient = new TcpClient(server, port); //Connect to the server
             }
-            catch (SocketException) {
+            catch (SocketException) 
+            {
                 return;
             }
 
