@@ -57,8 +57,7 @@ namespace MerbosMagic_IRC_Client.RFC
             string[] nicks = input.Remove(0, 1).Split(':');
             string[] nicksonchan = nicks[1].Split(' ');
             List<string> alldemnicks = nicksonchan.ToList<string>();
-            foreach (string nick in alldemnicks)
-            {
+            foreach (string nick in alldemnicks) {
                 if (nick != "")
                     Program.M.UserAdd(chan.Remove(0, 1), nick);
             }
@@ -175,7 +174,7 @@ namespace MerbosMagic_IRC_Client.RFC
         public static void ERR_NICKNAMEINUSE_433(string input)
         {
             string[] commands = input.Split(' ');
-            RFC_1459_Commands.NICK(IRC.nick+"_");
+            RFC_1459_Commands.NICK(IRC.nick + "_");
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
             ErrorAdd(RestOfIt);
         }

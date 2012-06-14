@@ -11,8 +11,7 @@ namespace MerbosMagic_IRC_Client.RFC
         private static string ctcpchar = "\x01";
         public static void SendCTCPReply(string sender, string CTCP)
         {
-            switch (CTCP.ToLower())
-            {
+            switch (CTCP.ToLower()) {
                 case "\x01version\x01":
                     RFC_1459_Commands.NOTICE(sender, ctcpchar + "VERSION " + IRC.longversion + ctcpchar);
                     break;
