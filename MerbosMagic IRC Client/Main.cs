@@ -237,23 +237,26 @@ namespace MerbosMagic_IRC_Client
         Thread IRCThread = new Thread(IRC.Connect);
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            try
-            {
-                IRCThread.Name = "IRCThread";
-                IRCThread.IsBackground = true;
-                IRCThread.Start();
-            }
-            catch (InvalidOperationException)
-            {
-                MessageBox.Show("You're already connected.");
-            }
+            if (IRC.IRCClient != null && IRC.IRCClient.Connected)
+                MessageBox.Show("You are already connected!", IRC.longversion, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            else
+                try
+                {
+                    IRCThread.Name = "IRCThread";
+                    IRCThread.IsBackground = true;
+                    IRCThread.Start();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
             try
             {
-                RFC_1459_Commands.QUIT("Program Closing");
+                RFC_1459_Commands.QUIT(IRC.longversion);
                 IRC.IRCStream.Close();
             }
             catch (Exception)
