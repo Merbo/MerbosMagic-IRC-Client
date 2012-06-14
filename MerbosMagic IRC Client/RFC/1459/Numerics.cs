@@ -175,6 +175,7 @@ namespace MerbosMagic_IRC_Client.RFC
         public static void ERR_NICKNAMEINUSE_433(string input)
         {
             string[] commands = input.Split(' ');
+            RFC_1459_Commands.NICK(IRC.nick+"_");
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
             ErrorAdd(RestOfIt);
         }
