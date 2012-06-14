@@ -8,45 +8,49 @@ namespace MerbosMagic_IRC_Client.RFC
 {
     class RFC_1459_Numerics : RFC
     {
-        private static void StatusAdd(string text, int x = 0, int y = 0)
+        public static string FormatInfo = "\x03"+"02\x1d"; // italic, blue
+        public static string FormatMsgYourHost = "\x03"+"08\x1d"; // italic, yellow
+        public static string FormatError = "\x03"+"04\x02"; // bold, red
+
+        private static void StatusAdd(string text)
         {
-            Program.M.ChatAdd("page_Status", text, x, y);
+            Program.M.ChatAdd("page_Status", text);
         }
 
         private static void ErrorAdd(string text)
         {
-            StatusAdd(text, 7, 1);
+            StatusAdd(FormatError + text);
         }
 
         public static void RPL_WELCOME_001(string input)
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt.Remove(0, 1), 4, 2);
+            StatusAdd(FormatInfo + RestOfIt.Remove(0, 1));
         }
         public static void RPL_YOURHOST_002(string input)
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt.Remove(0, 1), 6, 7);
+            StatusAdd(FormatMsgYourHost + RestOfIt.Remove(0, 1));
         }
         public static void RPL_CREATED_003(string input)
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt.Remove(0, 1), 2);
+            StatusAdd(FormatInfo + RestOfIt.Remove(0, 1));
         }
         public static void RPL_MYINFO_004(string input)
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt, 2);
+            StatusAdd(FormatInfo + RestOfIt);
         }
         public static void RPL_ISUPPORT_005(string input)
         {
             string[] commands = input.Split(' ');
             string RestOfIt = String.Join(" ", commands, 3, commands.Length - 3);
-            StatusAdd(RestOfIt, 2);
+            StatusAdd(FormatInfo + RestOfIt);
         }
 
         public static void RPL_NAMREPLY_353(string input)
