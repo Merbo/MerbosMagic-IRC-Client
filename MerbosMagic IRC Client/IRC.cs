@@ -19,9 +19,9 @@ namespace MerbosMagic_IRC_Client
         public static StreamWriter IRCWriter;
         public static string nick = Environment.UserName.Replace(" ","");                                //Nick
         public static string user = Environment.UserName;                                //Real name
-        public static int port = 6667;                                        //Port to connect on
+        public static int port = 6667;                                             //Port to connect on
         public static string server = "chat.freenode.net";                         //Server to connect to
-        public static string version = "1.5.2";                                     //Client version :D
+        public static VersionClass version = new VersionClass(1,5,3);                                     //Client version :D
         public static string longversion = "MerbosMagic IRC Client Version " + version; //Longer client version :D
         public static void Connect()
         {

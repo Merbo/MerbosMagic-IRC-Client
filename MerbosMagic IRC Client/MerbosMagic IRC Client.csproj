@@ -68,6 +68,7 @@
     <Compile Include="RFC\Insp\UserModes.cs" />
     <Compile Include="RFC\Numerics.cs" />
     <Compile Include="RFC\RFC.cs" />
+    <Compile Include="VersionClass.cs" />
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
