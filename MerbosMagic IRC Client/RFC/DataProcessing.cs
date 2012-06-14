@@ -103,7 +103,7 @@ namespace MerbosMagic_IRC_Client.RFC
                         tmp = DateTime.Now.ToString();
                         break;
                     case "$version":
-                        tmp = IRC.version.Text;
+                        tmp = IRC.version;
                         break;
                     case "$me":
                         tmp = IRC.nick;

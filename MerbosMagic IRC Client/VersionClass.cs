@@ -23,6 +23,9 @@ namespace MerbosMagic_IRC_Client
                 return _MajorVersion.ToString() +"."+ _MinorVersion.ToString() +"."+ _SubVersion.ToString();
             }
         }
+        public static implicit operator string(VersionClass c){
+            return c._MajorVersion.ToString() + "." + c._MinorVersion.ToString() + "." + c._SubVersion.ToString();
+        }
             
     }
 }
