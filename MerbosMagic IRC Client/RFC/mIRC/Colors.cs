@@ -18,12 +18,19 @@ namespace MerbosMagic_IRC_Client.RFC
     {
         // Formatting constants
         public const string
-            FormatBold = "\x02",
-            FormatItalic = "\x1D", // The specification is fucked up here. This has been found out by testing.
-            FormatUnderlined = "\x1F",
-            FormatReversed = "\x16",
-            FormatReset = "\x0F",
-            FormatColor = "\x03";
+            FormatBold            = "\x02",
+            FormatItalic          = "\x1D", // The specification is fucked up here. This has been found out by testing.
+            FormatUnderlined      = "\x1F",
+            FormatReversed        = "\x16",
+            FormatReset           = "\x0F",
+            FormatColor           = "\x03";
+        public const char
+            FormatBoldC           = (char)2,
+            FormatItalicC         = (char)29, //No longer fucked up, because doing it this way wins the game (ASCII)
+            FormatUnderlinedC     = (char)31,
+            FormatReversedC       = (char)22,
+            FormatResetC          = (char)15,
+            FormatColor           = (char)3;
 
         public static void ParseIrcToRtf(string ircText, RichTextBox rtfCtl)
         {
