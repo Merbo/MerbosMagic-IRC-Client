@@ -13,7 +13,6 @@ namespace MerbosMagic_IRC_Client
          * Otherwise you are severely retarded.
          * No offense.
          */
-
         public static Main M;
         /// <summary>
         /// The main entry point for the application.

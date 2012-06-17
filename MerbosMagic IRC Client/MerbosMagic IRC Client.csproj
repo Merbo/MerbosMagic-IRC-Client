@@ -61,11 +61,11 @@
     <Compile Include="RFC\Commands.cs" />
     <Compile Include="RFC\CTCP.cs" />
     <Compile Include="RFC\DataProcessing.cs" />
-    <Compile Include="RFC\Insp\ChannelModes.cs" />
-    <Compile Include="RFC\Insp\Commands.cs" />
-    <Compile Include="RFC\Insp\Numerics.cs" />
-    <Compile Include="RFC\Insp\SNOMASKS.cs" />
-    <Compile Include="RFC\Insp\UserModes.cs" />
+    <Compile Include="RFC\InspIRCd\ChannelModes.cs" />
+    <Compile Include="RFC\InspIRCd\Commands.cs" />
+    <Compile Include="RFC\InspIRCd\Numerics.cs" />
+    <Compile Include="RFC\InspIRCd\SNOMASKS.cs" />
+    <Compile Include="RFC\InspIRCd\UserModes.cs" />
     <Compile Include="RFC\Numerics.cs" />
     <Compile Include="RFC\RFC.cs" />
     <Compile Include="VersionClass.cs" />
@@ -91,7 +91,14 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="RFC\Charybdick\" />
+    <Folder Include="RFC\ircd-seven\" />
+    <Folder Include="RFC\Plexus\" />
+    <Folder Include="RFC\Unreal\" />
+    <Folder Include="Services\Anope\" />
+    <Folder Include="Services\Atheme\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
