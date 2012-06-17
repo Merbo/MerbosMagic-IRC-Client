@@ -8,6 +8,14 @@ namespace MerbosMagic_IRC_Client.RFC
 {
     class Commands
     {
+        public static string FormatQuit = "\x03" + "03"; // green
+        public static string FormatJoin = "\x03" + "08"; // yellow
+        public static string FormatPart = "\x03" + "08"; // yellow
+        public static string FormatCtcp = "\x03" + "07"; // orange
+        public static string FormatNickChange = "\x03" + "03"; // green
+        public static string FormatHighlight = "\x03" + "02"; // blue
+
+
         public static void Parse(string input)
         {
             try {
@@ -68,8 +76,8 @@ namespace MerbosMagic_IRC_Client.RFC
                         string c3 = commands[3];
                         c3 = c3.Remove(0, 2);
                         c3 = c3.Remove(c3.Length - 1, 1);
-                        Program.M.ChatAdd("CTCP request \"" + c3 + "\" from " + nick, 7);
-                        Program.M.ChatAdd("page_Status", "CTCP request \"" + c3 + "\" from " + nick, 7);
+                        Program.M.ChatAdd(FormatCtcp + "CTCP request \"" + c3 + "\" from " + nick);
+                        Program.M.ChatAdd(FormatCtcp + "page_Status", "CTCP request \"" + c3 + "\" from " + nick);
                     }
                     #endregion
 
@@ -78,41 +86,41 @@ namespace MerbosMagic_IRC_Client.RFC
                         switch (commands[1].ToUpper()) {
                             case "QUIT":
                                 if (commands.Length > 3 && args != "")
-                                    Program.M.ChatAdd(nick + " (" + user + "@" + host + ") has quit. (" + args.Remove(0, 1) + ")", 5, 3);
+                                    Program.M.ChatAdd(FormatQuit + nick + " (" + user + "@" + host + ") has quit. (" + args.Remove(0, 1) + ")");
                                 else
-                                    Program.M.ChatAdd(nick + " (" + user + "@" + host + ") has quit.", 5, 3);
+                                    Program.M.ChatAdd(FormatQuit + nick + " (" + user + "@" + host + ") has quit.");
                                 Program.M.UserRemove(nick);
                                 break;
                             case "JOIN":
-                                Program.M.ChatAdd(tabname, nick + " (" + user + "@" + host + ") has joined " + chan + ".", 6, 3);
+                                Program.M.ChatAdd(tabname, FormatJoin + nick + " (" + user + "@" + host + ") has joined " + chan + ".");
                                 if (nick != IRC.nick)
                                     Program.M.UserAdd(tabname, nick);
                                 break;
                             case "PART":
                                 if (commands.Length > 3 && args != "")
-                                    Program.M.ChatAdd(tabname, nick + " (" + user + "@" + host + ") has left " + chan + ". (" + args.Remove(0, chan.Length + 2) + ")", 6, 3);
+                                    Program.M.ChatAdd(tabname, FormatPart + nick + " (" + user + "@" + host + ") has left " + chan + ". (" + args.Remove(0, chan.Length + 2) + ")");
                                 else
-                                    Program.M.ChatAdd(tabname, nick + " (" + user + "@" + host + ") has left " + chan + ".", 6, 3);
+                                    Program.M.ChatAdd(tabname, FormatPart + nick + " (" + user + "@" + host + ") has left " + chan + ".");
                                 if (nick != IRC.nick)
                                     Program.M.UserRemove(tabname, nick);
                                 break;
                             case "NICK":
                                 //NOTES:
                                 //In this case, chan is the new nick. Don't get confused.
-                                Program.M.ChatAdd(nick + " is now known as " + chan, 5);
+                                Program.M.ChatAdd(FormatNickChange + nick + " is now known as " + chan);
                                 Program.M.UserRename(nick, chan);
                                 break;
                             case "PRIVMSG":
                                 if (chan == IRC.nick) {
                                     Program.M.ChatAdd(nick, "<" + nick + "> " + args.Remove(0, chan.Length + 2));
                                 } else
-                                    Program.M.ChatAdd(tabname, "<" + nick + "> " + args.Remove(0, chan.Length + 2), args.Remove(0, chan.Length + 2).Contains(IRC.nick) ? 4 : 0);
+                                    Program.M.ChatAdd(tabname, (args.Remove(0, chan.Length + 2).Contains(IRC.nick) ? FormatHighlight : "") + "<" + nick + "> " + args.Remove(0, chan.Length + 2));
                                 break;
                             case "NOTICE":
                                 if (chan == IRC.nick) {
-                                    Program.M.ChatAdd("-" + nick + "- " + args.Remove(0, chan.Length + 2), 6);
+                                    Program.M.ChatAdd("-" + nick + "- " + args.Remove(0, chan.Length + 2));
                                 } else
-                                    Program.M.ChatAdd(tabname, "-" + nick + "- " + args.Remove(0, chan.Length + 2), 6);
+                                    Program.M.ChatAdd(tabname, FormatHighlight + "-" + nick + "- " + args.Remove(0, chan.Length + 2));
                                 break;
                         }
                     }

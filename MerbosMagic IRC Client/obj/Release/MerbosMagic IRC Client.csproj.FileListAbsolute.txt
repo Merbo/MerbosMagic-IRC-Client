@@ -1,8 +1,0 @@
-C:\Users\Bryan\Desktop\MerbosMagic-IRC-Client\MerbosMagic IRC Client\bin\Release\MerbosMagic IRC Client.exe
-C:\Users\Bryan\Desktop\MerbosMagic-IRC-Client\MerbosMagic IRC Client\bin\Release\MerbosMagic IRC Client.pdb
-C:\Users\Bryan\Desktop\MerbosMagic-IRC-Client\MerbosMagic IRC Client\obj\Release\MerbosMagic IRC Client.csprojResolveAssemblyReference.cache
-C:\Users\Bryan\Desktop\MerbosMagic-IRC-Client\MerbosMagic IRC Client\obj\Release\MerbosMagic_IRC_Client.Main.resources
-C:\Users\Bryan\Desktop\MerbosMagic-IRC-Client\MerbosMagic IRC Client\obj\Release\MerbosMagic_IRC_Client.Properties.Resources.resources
-C:\Users\Bryan\Desktop\MerbosMagic-IRC-Client\MerbosMagic IRC Client\obj\Release\MerbosMagic IRC Client.csproj.GenerateResource.Cache
-C:\Users\Bryan\Desktop\MerbosMagic-IRC-Client\MerbosMagic IRC Client\obj\Release\MerbosMagic IRC Client.exe
-C:\Users\Bryan\Desktop\MerbosMagic-IRC-Client\MerbosMagic IRC Client\obj\Release\MerbosMagic IRC Client.pdb

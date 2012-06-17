@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,178 +20,63 @@ namespace MerbosMagic_IRC_Client
 
         #region Chat Functions
 
-        private delegate void ChatAddSafeOne(string target, string text, int colorVal = 0, int fontVal = 0);
-        public void ChatAdd(string target, string text, int colorVal = 0, int fontVal = 0)
+        private delegate void ChatAddSafeOne(string target, string text);
+        public void ChatAdd(string target, string text)
         {
             //target is the tab window to add it to
             //text is the text to add
-            if (this.tabControl1.InvokeRequired) {
-                this.tabControl1.BeginInvoke(new ChatAddSafeOne(ChatAdd), target, text, colorVal, fontVal);
+            if (this.tabControl1.InvokeRequired)
+            {
+                this.tabControl1.BeginInvoke(new ChatAddSafeOne(ChatAdd), target, text);
                 return;
-            } else {
+            }
+            else
+            {
                 if (!target.StartsWith("page_"))
                     target = "page_" + target;
                 Control[] targetFindTabPage = this.tabControl1.Controls.Find(target, true);
-                if (targetFindTabPage.Length >= 1) {
+                if (targetFindTabPage.Length >= 1)
+                {
                     TabPage TP = (TabPage)targetFindTabPage[0];
                     Control[] targetFindTextBox = TP.Controls.Find(target + "_tb1", true);
-                    if (targetFindTextBox.Length >= 1) {
+                    if (targetFindTextBox.Length >= 1)
+                    {
                         RichTextBox RTB = (RichTextBox)targetFindTextBox[0];
                         string stext = Environment.NewLine + "[" + DateTime.Now + "] " + text;
-
-                        Color color = Color.White;
-                        #region Color Selector
-                        switch (colorVal) {
-                            case 0:
-                                color = Color.White;
-                                break;
-                            case 1:
-                                color = Color.LightGray;
-                                break;
-                            case 2:
-                                color = Color.Gray;
-                                break;
-                            case 3:
-                                color = Color.DarkGray;
-                                break;
-                            case 4:
-                                color = Color.Blue;
-                                break;
-                            case 5:
-                                color = Color.Green;
-                                break;
-                            case 6:
-                                color = Color.Yellow;
-                                break;
-                            case 7:
-                                color = Color.Red;
-                                break;
-                        }
-                        #endregion
-                        RTB.SelectionColor = color;
-
-                        Font font = new Font("FixedsysTTF", 10f);
-                        #region Font Selector
-                        switch (fontVal) {
-                            case 0: //
-                                font = new Font("FixedsysTTF", 10f, FontStyle.Regular);
-                                break;
-                            case 1: //b
-                                font = new Font("FixedsysTTF", 10f, FontStyle.Bold);
-                                break;
-                            case 2: //i
-                                font = new Font("FixedsysTTF", 10f, FontStyle.Italic);
-                                break;
-                            case 3: //u
-                                font = new Font("FixedsysTTF", 10f, FontStyle.Underline);
-                                break;
-                            case 4: //bi
-                                font = new Font("FixedsysTTF", 10f, FontStyle.Bold | FontStyle.Italic);
-                                break;
-                            case 5: //bu
-                                font = new Font("FixedsysTTF", 10f, FontStyle.Bold | FontStyle.Underline);
-                                break;
-                            case 6: //iu
-                                font = new Font("FixedsysTTF", 10f, FontStyle.Italic | FontStyle.Underline);
-                                break;
-                            case 7: //biu
-                                font = new Font("FixedsysTTF", 10f, FontStyle.Bold | FontStyle.Italic | FontStyle.Underline);
-                                break;
-                        }
-                        #endregion
-                        RTB.SelectionFont = font;
-
-                        RTB.SelectedText = stext;
+                        RFC_mIRC_Colors.ParseIrcToRtf(stext, RTB);
                     }
                 }
             }
         }
 
-        private delegate void ChatAddSafeTwo(string text, int colorVal = 0, int fontVal = 0);
-        public void ChatAdd(string text, int colorVal = 0, int fontVal = 0)
+        private delegate void ChatAddSafeTwo(string text);
+        public void ChatAdd(string text)
         {
             //target is the tab window to add it to
             //text is the text to add
 
-            if (this.tabControl1.InvokeRequired) {
-                this.tabControl1.BeginInvoke(new ChatAddSafeTwo(ChatAdd), text, colorVal, fontVal);
+            if (this.tabControl1.InvokeRequired)
+            {
+                this.tabControl1.BeginInvoke(new ChatAddSafeTwo(ChatAdd), text);
                 return;
-            } else {
+            }
+            else
+            {
                 int Count = tabControl1.TabPages.Count;
                 List<Control> ControlList = new List<Control>();
-                for (int i = 1; i < Count; i++) {
+                for (int i = 1; i < Count; i++)
+                {
                     ControlList.Add(tabControl1.GetControl(i));
                 }
-                foreach (Control C in ControlList) {
+                foreach (Control C in ControlList)
+                {
                     TabPage TP = (TabPage)C;
-                    if (TP.Name != "page_debugPage" && TP.Name != "page_Status") {
+                    if (TP.Name != "page_debugPage" && TP.Name != "page_Status")
+                    {
                         Control[] targetFindTextBox = TP.Controls.Find(TP.Name + "_tb1", true);
                         RichTextBox RTB = (RichTextBox)targetFindTextBox[0];
                         string stext = Environment.NewLine + "[" + DateTime.Now + "] " + text;
-
-                        Color color = Color.White;
-                        #region Color Selector
-                        switch (colorVal) {
-                            case 0:
-                                color = Color.White;
-                                break;
-                            case 1:
-                                color = Color.LightGray;
-                                break;
-                            case 2:
-                                color = Color.Gray;
-                                break;
-                            case 3:
-                                color = Color.DarkGray;
-                                break;
-                            case 4:
-                                color = Color.Blue;
-                                break;
-                            case 5:
-                                color = Color.Green;
-                                break;
-                            case 6:
-                                color = Color.Yellow;
-                                break;
-                            case 7:
-                                color = Color.Red;
-                                break;
-                        }
-                        #endregion
-                        RTB.SelectionColor = color;
-
-                        Font font = new Font("FixedsysTTF", 10f);
-                        #region Font Selector
-                        switch (fontVal) {
-                            case 0: //
-                                font = new Font("FixedsysTTF", 10f, FontStyle.Regular);
-                                break;
-                            case 1: //b
-                                font = new Font("FixedsysTTF", 10f, FontStyle.Bold);
-                                break;
-                            case 2: //i
-                                font = new Font("FixedsysTTF", 10f, FontStyle.Italic);
-                                break;
-                            case 3: //u
-                                font = new Font("FixedsysTTF", 10f, FontStyle.Underline);
-                                break;
-                            case 4: //bi
-                                font = new Font("FixedsysTTF", 10f, FontStyle.Bold | FontStyle.Italic);
-                                break;
-                            case 5: //bu
-                                font = new Font("FixedsysTTF", 10f, FontStyle.Underline | FontStyle.Underline);
-                                break;
-                            case 6: //iu
-                                font = new Font("FixedsysTTF", 10f, FontStyle.Italic | FontStyle.Underline);
-                                break;
-                            case 7: //biu
-                                font = new Font("FixedsysTTF", 10f, FontStyle.Bold | FontStyle.Italic | FontStyle.Underline);
-                                break;
-                        }
-                        #endregion
-                        RTB.SelectionFont = font;
-
-                        RTB.SelectedText = stext;
+                        RFC_mIRC_Colors.ParseIrcToRtf(stext, RTB);
                     }
                 }
             }
@@ -204,10 +89,13 @@ namespace MerbosMagic_IRC_Client
         {
             //target is the tab window to add it to
             //text is the text to add
-            if (this.tabControl1.InvokeRequired) {
+            if (this.tabControl1.InvokeRequired)
+            {
                 this.tabControl1.BeginInvoke(new UserAddSafeOne(UserAdd), chan, nick);
                 return;
-            } else {
+            }
+            else
+            {
                 chan = "page_" + chan;
                 Control[] targetFindTabPage = tabControl1.Controls.Find(chan, true);
                 TabPage TP = (TabPage)targetFindTabPage[0];
@@ -221,18 +109,24 @@ namespace MerbosMagic_IRC_Client
         public void UserAdd(string nick)
         {
             //text is the text to add
-            if (this.tabControl1.InvokeRequired) {
+            if (this.tabControl1.InvokeRequired)
+            {
                 this.tabControl1.BeginInvoke(new UserAddSafeTwo(UserAdd), nick);
                 return;
-            } else {
+            }
+            else
+            {
                 int Count = tabControl1.TabPages.Count;
                 List<Control> ControlList = new List<Control>();
-                for (int i = 1; i < Count; i++) {
+                for (int i = 1; i < Count; i++)
+                {
                     ControlList.Add(tabControl1.GetControl(i));
                 }
-                foreach (Control C in ControlList) {
+                foreach (Control C in ControlList)
+                {
                     TabPage TP = (TabPage)C;
-                    if (TP.Name != "page_debugPage" && TP.Name != "page_Status") {
+                    if (TP.Name != "page_debugPage" && TP.Name != "page_Status")
+                    {
                         Control[] targetFindListBox = TP.Controls.Find(TP.Name + "_lb1", true);
                         ListBox LB = (ListBox)targetFindListBox[0];
                         LB.Items.Add(nick);
@@ -246,10 +140,13 @@ namespace MerbosMagic_IRC_Client
         {
             //target is the tab window to add it to
             //text is the text to add
-            if (this.tabControl1.InvokeRequired) {
+            if (this.tabControl1.InvokeRequired)
+            {
                 this.tabControl1.BeginInvoke(new UserRemoveSafeOne(UserRemove), chan, nick);
                 return;
-            } else {
+            }
+            else
+            {
                 if (!chan.StartsWith("page_"))
                     chan = "page_" + chan;
                 Control[] targetFindTabPage = tabControl1.Controls.Find(chan, true);
@@ -268,18 +165,24 @@ namespace MerbosMagic_IRC_Client
         {
             //target is the tab window to add it to
             //text is the text to add
-            if (this.tabControl1.InvokeRequired) {
+            if (this.tabControl1.InvokeRequired)
+            {
                 this.tabControl1.BeginInvoke(new UserRemoveSafeTwo(UserRemove), nick);
                 return;
-            } else {
+            }
+            else
+            {
                 int Count = tabControl1.TabPages.Count;
                 List<Control> ControlList = new List<Control>();
-                for (int i = 1; i < Count; i++) {
+                for (int i = 1; i < Count; i++)
+                {
                     ControlList.Add(tabControl1.GetControl(i));
                 }
-                foreach (Control C in ControlList) {
+                foreach (Control C in ControlList)
+                {
                     TabPage TP = (TabPage)C;
-                    if (TP.Name != "page_debugPage" && TP.Name != "page_Status") {
+                    if (TP.Name != "page_debugPage" && TP.Name != "page_Status")
+                    {
                         Control[] targetFindListBox = TP.Controls.Find(TP.Name + "_lb1", true);
                         ListBox LB = (ListBox)targetFindListBox[0];
                         string[] PNicks = { nick, "+" + nick, "%" + nick, "@" + nick, "&" + nick, "=" + nick, "~" + nick, "!" + nick, "." + nick };
@@ -294,24 +197,32 @@ namespace MerbosMagic_IRC_Client
         private delegate void UserRenameSafe(string oldnick, string newnick);
         public void UserRename(string oldnick, string newnick)
         {
-            if (this.tabControl1.InvokeRequired) {
+            if (this.tabControl1.InvokeRequired)
+            {
                 this.tabControl1.BeginInvoke(new UserRenameSafe(UserRename), oldnick, newnick);
                 return;
-            } else {
+            }
+            else
+            {
                 int Count = tabControl1.TabPages.Count;
                 List<Control> ControlList = new List<Control>();
-                for (int i = 1; i < Count; i++) {
+                for (int i = 1; i < Count; i++)
+                {
                     ControlList.Add(tabControl1.GetControl(i));
                 }
-                foreach (Control C in ControlList) {
+                foreach (Control C in ControlList)
+                {
                     TabPage TP = (TabPage)C;
-                    if (TP.Name != "page_debugPage" && TP.Name != "page_Status") {
+                    if (TP.Name != "page_debugPage" && TP.Name != "page_Status")
+                    {
                         Control[] targetFindListBox = TP.Controls.Find(TP.Name + "_lb1", true);
                         ListBox LB = (ListBox)targetFindListBox[0];
                         string[] PNicks = { oldnick, "+" + oldnick, "%" + oldnick, "@" + oldnick, "&" + oldnick, "=" + oldnick, "~" + oldnick, "!" + oldnick, "." + oldnick };
                         List<string> PNicksList = PNicks.ToList<string>();
-                        foreach (string nicktoremove in PNicksList) {
-                            if (LB.Items.Contains(nicktoremove)) {
+                        foreach (string nicktoremove in PNicksList)
+                        {
+                            if (LB.Items.Contains(nicktoremove))
+                            {
                                 LB.Items.Remove(nicktoremove);
                                 LB.Items.Add(newnick);
                             }
@@ -326,8 +237,9 @@ namespace MerbosMagic_IRC_Client
         Thread IRCThread = new Thread(IRC.Connect);
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            if (IRC.IRCClient.Connected)
-            {
+            if (IRC.IRCClient != null && IRC.IRCClient.Connected)
+                MessageBox.Show("You are already connected!", IRC.longversion, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            else
                 try
                 {
                     IRCThread.Name = "IRCThread";
@@ -338,45 +250,73 @@ namespace MerbosMagic_IRC_Client
                 {
                     Console.WriteLine(ex.ToString());
                 }
-            }
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
-            try 
+            try
             {
                 RFC_1459_Commands.QUIT(IRC.longversion);
                 IRC.IRCStream.Close();
             }
-            catch (Exception) 
+            catch (Exception)
             {
 
             }
-            finally 
+            finally
             {
                 Application.Exit();
             }
         }
 
         #region Page Functions
-        private delegate void AddPageSafe(string codeName, string Text);
-        public void AddPage(string codeName, string Text)
+        private delegate void AddPageSafe(string codeName, string Text, bool generateUserList);
+        public void AddPage(string codeName, string Text, bool generateUserList = true)
         {
-            if (this.tabControl1.InvokeRequired) {
-                this.tabControl1.BeginInvoke(new AddPageSafe(AddPage), codeName, Text);
+            if (this.tabControl1.InvokeRequired)
+            {
+                this.tabControl1.BeginInvoke(new AddPageSafe(AddPage), codeName, Text, generateUserList);
                 return;
-            } else {
+            }
+            else
+            {
                 if (!codeName.StartsWith("page_"))
                     codeName = "page_" + codeName;
-                #region TextBox1
+                #region Input box
+                RichTextBox tb2 = new RichTextBox();
+                tb2.BackColor = Color.Black;
+                //tb2.Location = new Point(3, 347);
+                //tb2.Size = new Size(751, 20);
+                tb2.Height = 20;
+                tb2.Margin = new System.Windows.Forms.Padding(3, 3, 3, 3);
+                tb2.Dock = DockStyle.Bottom;
+                tb2.ForeColor = Color.White;
+                tb2.Name = codeName + "_tb2";
+                tb2.TabIndex = 0;
+                tb2.Multiline = false;
+                tb2.KeyPress += new KeyPressEventHandler(this.tb2_KeyPress);
+                #endregion
+                #region User list
+                ListBox lb1 = new ListBox();
+                if (generateUserList)
+                {
+                    lb1.BackColor = Color.Black;
+                    lb1.Dock = DockStyle.Right;
+                    lb1.ForeColor = Color.White;
+                    lb1.Name = codeName + "_lb1";
+                    lb1.Margin = new System.Windows.Forms.Padding(3, 3, 3, 3);
+                }
+                #region Chat history text box
                 RichTextBox tb1 = new RichTextBox();
                 tb1.BackColor = Color.Black;
-                tb1.Dock = DockStyle.Top;
+                //tb1.Location = new Point(3, 3);
+                tb1.Dock = DockStyle.Fill;
                 tb1.ForeColor = Color.White;
-                tb1.Location = new Point(3, 3);
                 tb1.MaxLength = 99999999;
                 tb1.Multiline = true;
+                tb1.Margin = new System.Windows.Forms.Padding(3, 3, 3, 3);
                 tb1.Name = codeName + "_tb1";
+                tb1.Font = tb2.Font = new Font("Courier New", 9);
                 tb1.ReadOnly = true;
                 tb1.Size = new Size(751, 349);
                 tb1.TabStop = false;
@@ -384,36 +324,20 @@ namespace MerbosMagic_IRC_Client
                 tb1.ScrollBars = RichTextBoxScrollBars.Vertical;
                 tb1.TextChanged += new EventHandler(tb1_TextChanged);
                 #endregion
-                #region TextBox2
-                TextBox tb2 = new TextBox();
-                tb2.BackColor = Color.Black;
-                tb2.Dock = DockStyle.Bottom;
-                tb2.ForeColor = Color.White;
-                tb2.Location = new Point(3, 347);
-                tb2.Name = codeName + "_tb2";
-                tb2.Size = new Size(751, 20);
-                tb2.TabIndex = 0;
-                tb2.KeyPress += new KeyPressEventHandler(this.tb2_KeyPress);
-                #endregion
-                #region ListBox1
-                ListBox lb1 = new ListBox();
-                lb1.BackColor = Color.Black;
-                lb1.Dock = DockStyle.Right;
-                lb1.ForeColor = Color.White;
-                lb1.Name = codeName + "_lb1";
                 #endregion
                 #region Page
                 TabPage tp = new TabPage();
                 tp.BackColor = Color.Black;
                 tp.Controls.Add(tb2);
                 tp.Controls.Add(tb1);
-                tp.Controls.Add(lb1);
+                if (generateUserList) tp.Controls.Add(lb1);
                 tp.Location = new Point(4, 22);
                 tp.Name = codeName;
                 tp.Padding = new Padding(3);
                 tp.Size = new Size(757, 370);
                 tp.TabIndex = 0;
                 tp.Text = Text;
+                tb1.BringToFront();
                 //tp.Text = tp.Name; //Debugging
                 #endregion
                 tabControl1.Controls.Add(tp);
@@ -424,10 +348,13 @@ namespace MerbosMagic_IRC_Client
         private delegate void RemovePageSafe(string Key);
         public void RemovePage(string Key)
         {
-            if (this.tabControl1.InvokeRequired) {
+            if (this.tabControl1.InvokeRequired)
+            {
                 this.tabControl1.BeginInvoke(new RemovePageSafe(RemovePage), Key);
                 return;
-            } else {
+            }
+            else
+            {
                 this.tabControl1.Controls.RemoveByKey("page_" + Key);
             }
         }
@@ -443,33 +370,33 @@ namespace MerbosMagic_IRC_Client
         private void Main_Load(object sender, EventArgs e)
         {
 #if DEBUG
-            AddPage("debugPage", "debugPage");
+            AddPage("debugPage", "debugPage", false);
 #endif
-            AddPage("Status", "Status");
+            AddPage("Status", "Status", false);
         }
 
         private void tb2_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)13) 
+            if (e.KeyChar == (char)13)
             {
-                TextBox TB = (TextBox)sender;
+                RichTextBox TB = (RichTextBox)sender;
                 TabPage TP = (TabPage)TB.Parent;
 
-                if (TB.Text.StartsWith("/.")) 
+                if (TB.Text.StartsWith("/."))
                 {
-                    string s = DataProcessing.ResolveVars(TB.Text.Remove(0, 2));
+                    string s = DataProcessing.ResolveVars(RFC_mIRC_Colors.ParseRtfToIrc(TB).Remove(0, 2));
                     RFC_1459_Commands.PRIVMSG(TP.Text, s);
-                } 
-                else if (TB.Text.StartsWith("//")) 
+                }
+                else if (TB.Text.StartsWith("//"))
                 {
                     string s = DataProcessing.ResolveVars(TB.Text.Remove(0, 1));
                     DataProcessing.ProcessSend(s);
-                } 
-                else if (TB.Text.StartsWith("/")) 
+                }
+                else if (TB.Text.StartsWith("/"))
                 {
                     DataProcessing.ProcessSend(TB.Text);
-                } 
-                else if (TP.Text != "debugPage" && TP.Text != "Status") 
+                }
+                else if (TP.Text != "debugPage" && TP.Text != "Status")
                 {
                     RFC_1459_Commands.PRIVMSG(TP.Text, TB.Text);
                 }

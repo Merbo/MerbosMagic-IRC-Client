@@ -7,6 +7,8 @@ namespace MerbosMagic_IRC_Client.RFC
 {
     class RFC_1459_Commands : RFC
     {
+        public const string FormatNickChange = "\x03" + "03"; // green
+
         public static void PASS(string password)
         {
             IRC.SendRaw("PASS " + password);
@@ -14,8 +16,8 @@ namespace MerbosMagic_IRC_Client.RFC
         }
         public static void NICK(string nick)
         {
-            Program.M.ChatAdd("page_Status", "You are now known as " + nick + ".", 5);
-            Program.M.ChatAdd("You are now known as " + nick + ".", 5);
+            Program.M.ChatAdd("page_Status", FormatNickChange + "You are now known as " + nick + ".");
+            Program.M.ChatAdd(FormatNickChange + "You are now known as " + nick + ".");
             IRC.SendRaw("NICK " + nick);
             IRC.nick = nick;
         }
