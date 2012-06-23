@@ -75,6 +75,7 @@
     <Compile Include="RFC\Charybdis\Numerics.cs" />
     <Compile Include="RFC\Charybdis\SNOMASKS.cs" />
     <Compile Include="RFC\Charybdis\UserModes.cs" />
+    <Compile Include="RFC\RFC.cs" />
     <Compile Include="RFC\Hybrid\ChannelModes.cs" />
     <Compile Include="RFC\Hybrid\Commands.cs" />
     <Compile Include="RFC\Hybrid\Numerics.cs" />
@@ -85,12 +86,12 @@
     <Compile Include="RFC\ircd-seven\Numerics.cs" />
     <Compile Include="RFC\ircd-seven\SNOMASKS.cs" />
     <Compile Include="RFC\ircd-seven\UserModes.cs" />
+    <Compile Include="RFC\MerbosMagic IRC Client\Commands.cs" />
     <Compile Include="RFC\Plexus\ChannelModes.cs" />
     <Compile Include="RFC\Plexus\Commands.cs" />
     <Compile Include="RFC\Plexus\Numerics.cs" />
     <Compile Include="RFC\Plexus\SNOMASKS.cs" />
     <Compile Include="RFC\Plexus\UserModes.cs" />
-    <Compile Include="RFC\RFC.cs" />
     <Compile Include="RFC\1459\ChannelModes.cs" />
     <Compile Include="RFC\1459\Commands.cs" />
     <Compile Include="RFC\1459\Numerics.cs" />
@@ -106,13 +107,13 @@
     <Compile Include="RFC\InspIRCd\UserModes.cs" />
     <Compile Include="RFC\mIRC\Colors.cs" />
     <Compile Include="RFC\Numerics.cs" />
-    <Compile Include="RFC\RFC.cs" />
     <Compile Include="RFC\Unreal\ChannelModes.cs" />
     <Compile Include="RFC\Unreal\Commands.cs" />
     <Compile Include="RFC\Unreal\Numerics.cs" />
     <Compile Include="RFC\Unreal\SNOMASKS.cs" />
     <Compile Include="RFC\Unreal\UserModes.cs" />
-    <Compile Include="VersionClass.cs" />
+    <Compile Include="Services\Anope\Commands.cs" />
+    <Compile Include="Services\Atheme\Commands.cs" />
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
@@ -135,10 +136,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\Anope\" />
-    <Folder Include="Services\Atheme\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

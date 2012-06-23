@@ -5,8 +5,11 @@ using System.Text;
 
 namespace MerbosMagic_IRC_Client.RFC
 {
-    // Do NOT delete. Used by RFC sub-classes.
+    /// <summary>
+    /// Don't delete this, or I will end you.
+    /// </summary>
     class RFC
     {
+       
     }
 }

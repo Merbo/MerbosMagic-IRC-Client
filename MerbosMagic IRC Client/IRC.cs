@@ -17,12 +17,12 @@ namespace MerbosMagic_IRC_Client
         public static NetworkStream IRCStream;
         public static StreamReader IRCReader;
         public static StreamWriter IRCWriter;
-        public static string nick = Environment.UserName.Replace(" ","");                                //Nick
-        public static string user = Environment.UserName;                                //Real name
-        public static int port = 6667;                                             //Port to connect on
-        public static string server = "chat.freenode.net";                         //Server to connect to
-        public static Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version; //Client version :D
-        public static string longversion = "MerbosMagic IRC Client Version " + version; //Longer client version :D
+        public static string nick = Environment.UserName.Replace(" ","_");                                      //Nick
+        public static string user = Environment.UserName;                                                       //Real name
+        public static int port = 6667;                                                                          //Port to connect on
+        public static string server = "merbosmagic.org";                                                        //Server to connect to
+        public static Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;    //Client version :D
+        public static string longversion = "MerbosMagic IRC Client Version " + version;                         //Longer client version :D
         public static void Connect()
         {
             try 
@@ -34,10 +34,10 @@ namespace MerbosMagic_IRC_Client
                 return;
             }
 
-            IRCStream = IRCClient.GetStream(); //Initialize the stream
+            IRCStream = IRCClient.GetStream();          //Initialize the stream
 
-            IRCReader = new StreamReader(IRCStream); //Initialize the Reader
-            IRCWriter = new StreamWriter(IRCStream); //Initialize the Writer
+            IRCReader = new StreamReader(IRCStream);    //Initialize the Reader
+            IRCWriter = new StreamWriter(IRCStream);    //Initialize the Writer
 
             PostConnect();
         }

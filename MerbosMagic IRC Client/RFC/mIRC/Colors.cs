@@ -30,7 +30,7 @@ namespace MerbosMagic_IRC_Client.RFC
             FormatUnderlinedC     = (char)31,
             FormatReversedC       = (char)22,
             FormatResetC          = (char)15,
-            FormatColor           = (char)3;
+            FormatColorC          = (char)3;
 
         public static void ParseIrcToRtf(string ircText, RichTextBox rtfCtl)
         {
