@@ -70,6 +70,26 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RFC\Charybdis\ChannelModes.cs" />
+    <Compile Include="RFC\Charybdis\Commands.cs" />
+    <Compile Include="RFC\Charybdis\Numerics.cs" />
+    <Compile Include="RFC\Charybdis\SNOMASKS.cs" />
+    <Compile Include="RFC\Charybdis\UserModes.cs" />
+    <Compile Include="RFC\Hybrid\ChannelModes.cs" />
+    <Compile Include="RFC\Hybrid\Commands.cs" />
+    <Compile Include="RFC\Hybrid\Numerics.cs" />
+    <Compile Include="RFC\Hybrid\SNOMASKS.cs" />
+    <Compile Include="RFC\Hybrid\UserModes.cs" />
+    <Compile Include="RFC\ircd-seven\ChannelModes.cs" />
+    <Compile Include="RFC\ircd-seven\Commands.cs" />
+    <Compile Include="RFC\ircd-seven\Numerics.cs" />
+    <Compile Include="RFC\ircd-seven\SNOMASKS.cs" />
+    <Compile Include="RFC\ircd-seven\UserModes.cs" />
+    <Compile Include="RFC\Plexus\ChannelModes.cs" />
+    <Compile Include="RFC\Plexus\Commands.cs" />
+    <Compile Include="RFC\Plexus\Numerics.cs" />
+    <Compile Include="RFC\Plexus\SNOMASKS.cs" />
+    <Compile Include="RFC\Plexus\UserModes.cs" />
     <Compile Include="RFC\RFC.cs" />
     <Compile Include="RFC\1459\ChannelModes.cs" />
     <Compile Include="RFC\1459\Commands.cs" />
@@ -87,6 +107,11 @@
     <Compile Include="RFC\mIRC\Colors.cs" />
     <Compile Include="RFC\Numerics.cs" />
     <Compile Include="RFC\RFC.cs" />
+    <Compile Include="RFC\Unreal\ChannelModes.cs" />
+    <Compile Include="RFC\Unreal\Commands.cs" />
+    <Compile Include="RFC\Unreal\Numerics.cs" />
+    <Compile Include="RFC\Unreal\SNOMASKS.cs" />
+    <Compile Include="RFC\Unreal\UserModes.cs" />
     <Compile Include="VersionClass.cs" />
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
@@ -111,10 +136,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="RFC\Charybdick\" />
-    <Folder Include="RFC\ircd-seven\" />
-    <Folder Include="RFC\Plexus\" />
-    <Folder Include="RFC\Unreal\" />
     <Folder Include="Services\Anope\" />
     <Folder Include="Services\Atheme\" />
   </ItemGroup>
