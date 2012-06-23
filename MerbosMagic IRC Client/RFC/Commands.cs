@@ -91,7 +91,8 @@ namespace MerbosMagic_IRC_Client.RFC
                     #endregion
 
                     #region switch (commands[1])
- else {
+                    else 
+                    {
                         switch (commands[1].ToUpper()) 
                         {
                             case "QUIT":

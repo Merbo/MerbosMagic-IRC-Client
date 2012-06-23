@@ -34,28 +34,37 @@ namespace MerbosMagic_IRC_Client.RFC
         }
         public static void QUIT(string quitMessage = "")
         {
-            if (quitMessage != "") {
+            if (quitMessage != "")
+            {
                 IRC.SendRaw("QUIT :" + quitMessage);
                 Program.M.ChatAdd("You've quit with message \"" + quitMessage + "\"");
-            } else {
+            } 
+            else 
+            {
                 IRC.SendRaw("QUIT");
                 Program.M.ChatAdd("You've quit IRC.");
             }
         }
         public static void JOIN(string channel, string key = "")
         {
-            if (key != "") {
+            if (key != "") 
+            {
                 IRC.SendRaw("JOIN " + channel + " " + key);
-            } else {
+            }
+            else
+            {
                 IRC.SendRaw("JOIN " + channel);
             }
             Program.M.AddPage(channel.Remove(0, 1), channel);
         }
         public static void PART(string channel, string partMessage = "")
         {
-            if (partMessage != "") {
+            if (partMessage != "") 
+            {
                 IRC.SendRaw("PART " + channel + " :" + partMessage);
-            } else {
+            } 
+            else 
+            {
                 IRC.SendRaw("PART " + channel);
             }
             Program.M.RemovePage(channel.Remove(0, 1));
@@ -66,18 +75,24 @@ namespace MerbosMagic_IRC_Client.RFC
         }//Process these through my Mode Handlers!
         public static void TOPIC(string channel, string topic = "")
         {
-            if (topic != "") {
+            if (topic != "") 
+            {
                 IRC.SendRaw("TOPIC " + channel + " :" + topic);
-            } else {
+            } 
+            else 
+            {
                 IRC.SendRaw("TOPIC " + channel);
             }
             Program.M.ChatAdd(channel, "Set topic of " + channel + " to " + topic);
         }//Shows output of TOPIC in a numeric!
         public static void NAMES(string channel = "")
         {
-            if (channel != "") {
+            if (channel != "") 
+            {
                 IRC.SendRaw("NAMES " + channel);
-            } else {
+            } 
+            else 
+            {
                 IRC.SendRaw("NAMES");
             }
         } //Shows output of NAMES in a numeric!
@@ -91,67 +106,93 @@ namespace MerbosMagic_IRC_Client.RFC
         }
         public static void KICK(string channel, string nick, string reason = "")
         {
-            if (reason != "") {
+            if (reason != "") 
+            {
                 IRC.SendRaw("KICK " + channel + " " + nick + " :" + reason);
-            } else {
+            } 
+            else 
+            {
                 IRC.SendRaw("KICK " + channel + " " + nick);
             }
         }
         public static void VERSION(string server = "")
         {
-            if (server != "") {
+            if (server != "") 
+            {
                 IRC.SendRaw("VERSION " + server);
-            } else {
+            } 
+            else 
+            {
                 IRC.SendRaw("VERSION");
             }
         }//Shows output of VERSION in a numeric!
         public static void STATS(string query, string server = "")
         {
-            if (server != "") {
+            if (server != "") 
+            {
                 IRC.SendRaw("STATS " + query + " " + server);
-            } else {
+            } 
+            else 
+            {
                 IRC.SendRaw("STATS " + query);
             }
         }//Shows output of STATS in a numeric!
         public static void LINKS(string servermask, string server = "")
         {
-            if (server != "") {
+            if (server != "") 
+            {
                 IRC.SendRaw("LINKS " + server + " " + servermask);
-            } else {
+            } 
+            else 
+            {
                 IRC.SendRaw("LINKS " + servermask);
             }
         }//Shows output of LINKS in a numeric!
         public static void TIME(string server = "")
         {
-            if (server != "") {
+            if (server != "")
+            {
                 IRC.SendRaw("TIME " + server);
-            } else {
+            } 
+            else 
+            {
                 IRC.SendRaw("TIME");
             }
         }//Shows output of TIME in a numeric!
         public static void CONNECT(string target, string port = "", string remote = "")
         {
-            if (remote != "") {
+            if (remote != "") 
+            {
                 IRC.SendRaw("CONNECT " + target + " " + port + " " + remote);
-            } else if (port != "") {
+            } 
+            else if (port != "") 
+            {
                 IRC.SendRaw("CONNECT " + target + " " + port);
-            } else {
+            } 
+            else 
+            {
                 IRC.SendRaw("CONNECT " + target);
             }
         }
         public static void ADMIN(string server = "")
         {
-            if (server != "") {
+            if (server != "") 
+            {
                 IRC.SendRaw("ADMIN " + server);
-            } else {
+            } 
+            else 
+            {
                 IRC.SendRaw("ADMIN");
             }
         }//Shows output of ADMIN in a numeric!
         public static void INFO(string server = "")
         {
-            if (server != "") {
+            if (server != "")
+            {
                 IRC.SendRaw("INFO " + server);
-            } else {
+            }
+            else 
+            {
                 IRC.SendRaw("INFO");
             }
         }//Shows output of INFO in a numeric!
@@ -176,19 +217,27 @@ namespace MerbosMagic_IRC_Client.RFC
         }//Shows output of WHO in a numeric!
         public static void WHOIS(string nick, string server = "")
         {
-            if (server != "") {
+            if (server != "") 
+            {
                 IRC.SendRaw("WHOIS " + server + " " + nick);
-            } else {
+            } 
+            else 
+            {
                 IRC.SendRaw("WHOIS " + nick);
             }
         }//Shows output of WHOIS in a numeric!
         public static void WHOWAS(string nick, string count = "", string server = "")
         {
-            if (server != "") {
+            if (server != "") 
+            {
                 IRC.SendRaw("WHOWAS " + nick + " " + count + " " + server);
-            } else if (count != "") {
+            } 
+            else if (count != "")
+            {
                 IRC.SendRaw("WHOWAS " + nick + " " + count);
-            } else {
+            } 
+            else 
+            {
                 IRC.SendRaw("WHOWAS " + nick);
             }
         }//Shows output of WHOWAS in a numeric!
@@ -198,26 +247,35 @@ namespace MerbosMagic_IRC_Client.RFC
         }
         public static void PING(string server1, string server2 = "")
         {
-            if (server2 != "") {
+            if (server2 != "")
+            {
                 IRC.SendRaw("PING " + server1 + " " + server2);
-            } else {
+            }
+            else 
+            {
                 IRC.SendRaw("PING " + server1);
             }
         }
         public static void PONG(string server1, string server2 = "")
         {
-            if (server2 != "") {
+            if (server2 != "")
+            {
                 IRC.SendRaw("PONG " + server1 + " " + server2);
-            } else {
+            }
+            else
+            {
                 IRC.SendRaw("PONG " + server1);
             }
         }
         public static void AWAY(string awaymsg = "")
         {
-            if (awaymsg != "") {
+            if (awaymsg != "") 
+            {
                 IRC.SendRaw("AWAY :" + awaymsg);
                 Program.M.ChatAdd("You are now away. Reason: \"" + awaymsg + "\"");
-            } else {
+            } 
+            else 
+            {
                 IRC.SendRaw("AWAY");
                 Program.M.ChatAdd("You are no longer away.");
             }
