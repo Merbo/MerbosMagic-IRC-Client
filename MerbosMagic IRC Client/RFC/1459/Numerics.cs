@@ -8,6 +8,102 @@ namespace MerbosMagic_IRC_Client.RFC
 {
     class RFC_1459_Numerics : RFC
     {
+        private static int CompareNicks(string x, string y)
+        {
+            string pNickx, pNicky;
+
+            if (x != null && x != "")
+            {
+                pNickx = x.Substring(0, 1);
+            }
+            else return 0;
+            
+            if (y != null && y != "")
+            {
+                pNicky = y.Substring(0, 1);
+            }
+            else return 0;
+
+            int xValue, yValue;
+
+            #region switch (pNickx)
+            switch (pNickx)
+            {
+                case "+":
+                    xValue = 1;
+                    break;
+                case "%":
+                    xValue = 2;
+                    break;
+                case "@":
+                    xValue = 3;
+                    break;
+                case "&":
+                    xValue = 4;
+                    break;
+                case "=":
+                    xValue = 5;
+                    break;
+                case "~":
+                    xValue = 6;
+                    break;
+                case ".":
+                    xValue = 7;
+                    break;
+                default:
+                    xValue = 0;
+                    break;
+            }
+            #endregion
+            #region switch (pNicky)
+            switch (pNicky)
+            {
+                case "+":
+                    yValue = 1;
+                    break;
+                case "%":
+                    yValue = 2;
+                    break;
+                case "@":
+                    yValue = 3;
+                    break;
+                case "&":
+                    yValue = 4;
+                    break;
+                case "=":
+                    yValue = 5;
+                    break;
+                case "~":
+                    yValue = 6;
+                    break;
+                case ".":
+                    yValue = 7;
+                    break;
+                default:
+                    yValue = 0;
+                    break;
+            }
+            #endregion
+
+            if (xValue > yValue)
+            {
+                return -1; //Variable x is bigger
+            }
+            else if (xValue == yValue)
+            {
+                return 0; //Both variables are the same :<
+            }
+            else if (xValue < yValue)
+            {
+                return 1; //Variable y is bigger
+            }
+            else
+            {
+                return 0; //The fuck is this shit?
+            }
+                   
+        }
+
         public static string FormatInfo = "\x03"+"02\x1d"; // italic, blue
         public static string FormatMsgYourHost = "\x03"+"08\x1d"; // italic, yellow
         public static string FormatError = "\x03"+"04\x02"; // bold, red
@@ -61,9 +157,13 @@ namespace MerbosMagic_IRC_Client.RFC
             string[] nicks = input.Remove(0, 1).Split(':');
             string[] nicksonchan = nicks[1].Split(' ');
             List<string> alldemnicks = nicksonchan.ToList<string>();
-            foreach (string nick in alldemnicks) {
+            alldemnicks.Sort(CompareNicks);
+            foreach (string nick in alldemnicks)
+            {
                 if (nick != "")
+                {
                     Program.M.UserAdd(chan.Remove(0, 1), nick);
+                }
             }
         }
 
