@@ -93,44 +93,51 @@ namespace MerbosMagic_IRC_Client.RFC
                     rtfCtl.AppendText(t); t = "";
                     int color1 = -1, color2 = -1;
                     Color c1, c2;
-                    if (int.TryParse(ircText.Substring(offset, 2), out color1)
-                        || int.TryParse(ircText.Substring(offset, 1), out color1))
+                    try
                     {
-                        c1 = GetColorFromIrcColor(color1);
-                        if (c1 != Color.Transparent) // Valid color?
+                        if (int.TryParse(ircText.Substring(offset, 2), out color1)
+                            || int.TryParse(ircText.Substring(offset, 1), out color1))
                         {
-                            rtfCtl.SelectionColor = c1;
-
-                            int offsett = offset + 2;
-                            while (offset < offsett && int.TryParse(ircText.Substring(offset, 1), out color1)) // jump all digits already used
+                            c1 = GetColorFromIrcColor(color1);
+                            if (c1 != Color.Transparent) // Valid color?
                             {
-                                offset++;
-                            }
+                                rtfCtl.SelectionColor = c1;
 
-
-                            if (ircText.Substring(offset, 1) == ","
-                                && (
-                                    int.TryParse(ircText.Substring(offset + 1, 2), out color2)
-                                    || int.TryParse(ircText.Substring(offset + 1, 1), out color2)
-                                    )
-                                )
-                            {
-                                offset++;
-
-                                c2 = GetColorFromIrcColor(color2);
-                                if (c2 != Color.Transparent) // Again, valid color?
+                                int offsett = offset + 2;
+                                while (offset < offsett && int.TryParse(ircText.Substring(offset, 1), out color1)) // jump all digits already used
                                 {
-                                    rtfCtl.SelectionBackColor = c2;
-                                    offsett = offset + 2;
-                                    while (offset < offsett && int.TryParse(ircText.Substring(offset, 1), out color2)) // jump all digits already used
+                                    offset++;
+                                }
+
+
+                                if (ircText.Substring(offset, 1) == ","
+                                    && (
+                                        int.TryParse(ircText.Substring(offset + 1, 2), out color2)
+                                        || int.TryParse(ircText.Substring(offset + 1, 1), out color2)
+                                        )
+                                    )
+                                {
+                                    offset++;
+
+                                    c2 = GetColorFromIrcColor(color2);
+                                    if (c2 != Color.Transparent) // Again, valid color?
                                     {
-                                        offset++;
+                                        rtfCtl.SelectionBackColor = c2;
+                                        offsett = offset + 2;
+                                        while (offset < offsett && int.TryParse(ircText.Substring(offset, 1), out color2)) // jump all digits already used
+                                        {
+                                            offset++;
+                                        }
                                     }
                                 }
                             }
                         }
+                        a = offset - 1;
                     }
-                    a = offset - 1;
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        //lolfail
+                    }
                 }
 
                 // Formatting reset control byte
