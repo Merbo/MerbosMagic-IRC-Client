@@ -105,6 +105,9 @@ namespace MerbosMagic_IRC_Client.RFC
                     case "$version":
                         tmp = IRC.version.ToString();
                         break;
+                    case "$longversion":
+                        tmp = IRC.longversion.ToString();
+                        break;
                     case "$me":
                         tmp = IRC.nick;
                         break;
