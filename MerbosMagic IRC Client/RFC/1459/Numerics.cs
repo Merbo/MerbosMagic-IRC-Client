@@ -10,7 +10,7 @@ namespace MerbosMagic_IRC_Client.RFC
     {
         private static int CompareNicks(string x, string y)
         {
-            string pNickx, pNicky;
+            string pNickx, pNicky, aNickx, aNicky;
 
             if (x != null && x != "")
             {
@@ -24,7 +24,7 @@ namespace MerbosMagic_IRC_Client.RFC
             }
             else return 0;
 
-            int xValue, yValue;
+            int xValue, yValue, xNick, yNick;
 
             #region switch (pNickx)
             switch (pNickx)
@@ -85,17 +85,361 @@ namespace MerbosMagic_IRC_Client.RFC
             }
             #endregion
 
+            aNickx = xValue == 0 ? pNickx : x.Substring(1, 1);
+            aNicky = yValue == 0 ? pNicky : y.Substring(1, 1);
+
+            #region switch (aNickx)
+            switch (aNickx)
+            {
+                case "Z":
+                    xNick = 0;
+                    break;
+                case "z":
+                    xNick = 1;
+                    break;
+                case "Y":
+                    xNick = 2;
+                    break;
+                case "y":
+                    xNick = 3;
+                    break;
+                case "X":
+                    xNick = 3;
+                    break;
+                case "x":
+                    xNick = 4;
+                    break;
+                case "W":
+                    xNick = 5;
+                    break;
+                case "w":
+                    xNick = 6;
+                    break;
+                case "V":
+                    xNick = 7;
+                    break;
+                case "v":
+                    xNick = 8;
+                    break;
+                case "U":
+                    xNick = 9;
+                    break;
+                case "u":
+                    xNick = 10;
+                    break;
+                case "T":
+                    xNick = 11;
+                    break;
+                case "t":
+                    xNick = 12;
+                    break;
+                case "S":
+                    xNick = 13;
+                    break;
+                case "s":
+                    xNick = 14;
+                    break;
+                case "R":
+                    xNick = 15;
+                    break;
+                case "r":
+                    xNick = 16;
+                    break;
+                case "Q":
+                    xNick = 17;
+                    break;
+                case "q":
+                    xNick = 18;
+                    break;
+                case "P":
+                    xNick = 19;
+                    break;
+                case "p":
+                    xNick = 20;
+                    break;
+                case "O":
+                    xNick = 21;
+                    break;
+                case "o":
+                    xNick = 22;
+                    break;
+                case "N":
+                    xNick = 23;
+                    break;
+                case "n":
+                    xNick = 24;
+                    break;
+                case "M":
+                    xNick = 25;
+                    break;
+                case "m":
+                    xNick = 26;
+                    break;
+                case "L":
+                    xNick = 27;
+                    break;
+                case "l":
+                    xNick = 28;
+                    break;
+                case "K":
+                    xNick = 29;
+                    break;
+                case "k":
+                    xNick = 30;
+                    break;
+                case "J":
+                    xNick = 31;
+                    break;
+                case "j":
+                    xNick = 32;
+                    break;
+                case "I":
+                    xNick = 33;
+                    break;
+                case "i":
+                    xNick = 34;
+                    break;
+                case "H":
+                    xNick = 35;
+                    break;
+                case "h":
+                    xNick = 36;
+                    break;
+                case "G":
+                    xNick = 37;
+                    break;
+                case "g":
+                    xNick = 38;
+                    break;
+                case "F":
+                    xNick = 38;
+                    break;
+                case "f":
+                    xNick = 39;
+                    break;
+                case "E":
+                    xNick = 40;
+                    break;
+                case "e":
+                    xNick = 41;
+                    break;
+                case "D":
+                    xNick = 42;
+                    break;
+                case "d":
+                    xNick = 43;
+                    break;
+                case "C":
+                    xNick = 44;
+                    break;
+                case "c":
+                    xNick = 45;
+                    break;
+                case "B":
+                    xNick = 46;
+                    break;
+                case "b":
+                    xNick = 47;
+                    break;
+                case "A":
+                    xNick = 48;
+                    break;
+                case "a":
+                    xNick = 49;
+                    break;
+                default:
+                    xNick = 50;
+                    break;
+            }
+            #endregion
+            #region switch (aNicky)
+            switch (aNicky)
+            {
+                case "Z":
+                    yNick = 0;
+                    break;
+                case "z":
+                    yNick = 1;
+                    break;
+                case "Y":
+                    yNick = 2;
+                    break;
+                case "y":
+                    yNick = 3;
+                    break;
+                case "X":
+                    yNick = 3;
+                    break;
+                case "x":
+                    yNick = 4;
+                    break;
+                case "W":
+                    yNick = 5;
+                    break;
+                case "w":
+                    yNick = 6;
+                    break;
+                case "V":
+                    yNick = 7;
+                    break;
+                case "v":
+                    yNick = 8;
+                    break;
+                case "U":
+                    yNick = 9;
+                    break;
+                case "u":
+                    yNick = 10;
+                    break;
+                case "T":
+                    yNick = 11;
+                    break;
+                case "t":
+                    yNick = 12;
+                    break;
+                case "S":
+                    yNick = 13;
+                    break;
+                case "s":
+                    yNick = 14;
+                    break;
+                case "R":
+                    yNick = 15;
+                    break;
+                case "r":
+                    yNick = 16;
+                    break;
+                case "Q":
+                    yNick = 17;
+                    break;
+                case "q":
+                    yNick = 18;
+                    break;
+                case "P":
+                    yNick = 19;
+                    break;
+                case "p":
+                    yNick = 20;
+                    break;
+                case "O":
+                    yNick = 21;
+                    break;
+                case "o":
+                    yNick = 22;
+                    break;
+                case "N":
+                    yNick = 23;
+                    break;
+                case "n":
+                    yNick = 24;
+                    break;
+                case "M":
+                    yNick = 25;
+                    break;
+                case "m":
+                    yNick = 26;
+                    break;
+                case "L":
+                    yNick = 27;
+                    break;
+                case "l":
+                    yNick = 28;
+                    break;
+                case "K":
+                    yNick = 29;
+                    break;
+                case "k":
+                    yNick = 30;
+                    break;
+                case "J":
+                    yNick = 31;
+                    break;
+                case "j":
+                    yNick = 32;
+                    break;
+                case "I":
+                    yNick = 33;
+                    break;
+                case "i":
+                    yNick = 34;
+                    break;
+                case "H":
+                    yNick = 35;
+                    break;
+                case "h":
+                    yNick = 36;
+                    break;
+                case "G":
+                    yNick = 37;
+                    break;
+                case "g":
+                    yNick = 38;
+                    break;
+                case "F":
+                    yNick = 38;
+                    break;
+                case "f":
+                    yNick = 39;
+                    break;
+                case "E":
+                    yNick = 40;
+                    break;
+                case "e":
+                    yNick = 41;
+                    break;
+                case "D":
+                    yNick = 42;
+                    break;
+                case "d":
+                    yNick = 43;
+                    break;
+                case "C":
+                    yNick = 44;
+                    break;
+                case "c":
+                    yNick = 45;
+                    break;
+                case "B":
+                    yNick = 46;
+                    break;
+                case "b":
+                    yNick = 47;
+                    break;
+                case "A":
+                    yNick = 48;
+                    break;
+                case "a":
+                    yNick = 49;
+                    break;
+                default:
+                    yNick = 50;
+                    break;
+            }
+            #endregion
+
+
             if (xValue > yValue)
             {
-                return -1; //Variable x is bigger
+                return -1; //X has a higher rank
             }
             else if (xValue == yValue)
             {
-                return 0; //Both variables are the same :<
+                if (xNick > yNick)
+                {
+                    return -1; //Same rank, but X is higher in the alphabet
+                }
+                else if (xNick < yNick)
+                {
+                    return 1;  //Same rank, but Y is higher in the alphabet
+                }
+                else
+                {
+                    return 0; //The fuck is this shit?
+                }
             }
             else if (xValue < yValue)
             {
-                return 1; //Variable y is bigger
+                return 1; //Y has a higher rank
             }
             else
             {
