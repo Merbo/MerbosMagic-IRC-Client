@@ -502,6 +502,8 @@ namespace MerbosMagic_IRC_Client.RFC
             string[] nicksonchan = nicks[1].Split(' ');
             List<string> alldemnicks = nicksonchan.ToList<string>();
             alldemnicks.Sort(CompareNicks);
+
+            Program.M.UserClear(chan.Remove(0, 1));
             foreach (string nick in alldemnicks)
             {
                 if (nick != "")
