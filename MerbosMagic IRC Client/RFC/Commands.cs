@@ -20,12 +20,16 @@ namespace MerbosMagic_IRC_Client.RFC
         {
             try {
                 string[] commands = input.Split(' ');
-                if (commands[0] == "PING") {
+                if (commands[0] == "PING") 
+                {
                     RFC_1459_Commands.PONG(commands[1]);
-                } else {
+                } 
+                else 
+                {
                     #region Get the args
                     string args = "";
-                    if (commands.Length > 2) {
+                    if (commands.Length > 2) 
+                    {
                         args = commands[2];
                         if (commands.Length > 3)
                             args = String.Join(" ", commands, 2, commands.Length - 2);
@@ -39,7 +43,8 @@ namespace MerbosMagic_IRC_Client.RFC
                     string tmpString; //null
                     string[] tmpArray; //null
                     //Let's get the nick
-                    if (commands.Length > 0 && commands[0].Contains("!") && commands[0].Contains("@")) {
+                    if (commands.Length > 0 && commands[0].Contains("!") && commands[0].Contains("@")) 
+                    {
                         tmpString = commands[0].Remove(0, 1); //nick!user@host
                         tmpArray = tmpString.Split('!'); //nick | user@host
                         tmpString = tmpArray[0]; //nick
@@ -56,8 +61,10 @@ namespace MerbosMagic_IRC_Client.RFC
                     #endregion
                     #region Get the channel
                     string chan = "";
-                    if (commands.Length > 2) {
-                        if (commands[2].StartsWith(":")) {
+                    if (commands.Length > 2) 
+                    {
+                        if (commands[2].StartsWith(":")) 
+                        {
                             commands[2] = commands[2].Remove(0, 1);
                         }
                         chan = commands[2];
@@ -66,12 +73,14 @@ namespace MerbosMagic_IRC_Client.RFC
                     #region Get the Tab Name
                     string tabname;
                     tabname = chan;
-                    if (tabname.StartsWith("#")) {
+                    if (tabname.StartsWith("#")) 
+                    {
                         tabname = tabname.Remove(0, 1);
                     }
                     #endregion
                     #region CTCP Processing
-                    if (commands.Length > 3 && commands[3].StartsWith(":\x01")) {
+                    if (commands.Length > 3 && commands[3].StartsWith(":\x01"))
+                    {
                         CTCP.SendCTCPReply(nick, commands[3].Remove(0, 1));
                         string c3 = commands[3];
                         c3 = c3.Remove(0, 2);
@@ -83,7 +92,8 @@ namespace MerbosMagic_IRC_Client.RFC
 
                     #region switch (commands[1])
  else {
-                        switch (commands[1].ToUpper()) {
+                        switch (commands[1].ToUpper()) 
+                        {
                             case "QUIT":
                                 if (commands.Length > 3 && args != "")
                                     Program.M.ChatAdd(FormatQuit + nick + " (" + user + "@" + host + ") has quit. (" + args.Remove(0, 1) + ")");
@@ -127,11 +137,13 @@ namespace MerbosMagic_IRC_Client.RFC
                     #endregion
                 }
             }
-            catch (IndexOutOfRangeException ex) {
+            catch (IndexOutOfRangeException ex) 
+            {
                 MessageBox.Show(ex.ToString());
                 return;
             }
-            catch (ArgumentOutOfRangeException ex) {
+            catch (ArgumentOutOfRangeException ex) 
+            {
                 MessageBox.Show(ex.ToString());
                 return;
             }

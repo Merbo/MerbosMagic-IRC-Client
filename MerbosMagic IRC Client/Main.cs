@@ -84,6 +84,36 @@ namespace MerbosMagic_IRC_Client
         #endregion
 
         #region User Functions
+
+        private delegate void UserClearSafe(string chan);
+        public void UserClear(string chan)
+        {
+            if (this.tabControl1.InvokeRequired)
+            {
+                this.tabControl1.BeginInvoke(new UserClearSafe(UserAdd), chan);
+                return;
+            }
+            else
+            {
+                int Count = tabControl1.TabPages.Count;
+                List<Control> ControlList = new List<Control>();
+                for (int i = 1; i < Count; i++)
+                {
+                    ControlList.Add(tabControl1.GetControl(i));
+                }
+                foreach (Control C in ControlList)
+                {
+                    TabPage TP = (TabPage)C;
+                    if (TP.Name != "page_debugPage" && TP.Name != "page_Status")
+                    {
+                        Control[] targetFindListBox = TP.Controls.Find(TP.Name + "_lb1", true);
+                        ListBox LB = (ListBox)targetFindListBox[0];
+                        LB.Items.Clear();
+                    }
+                }
+            }
+        }
+
         private delegate void UserAddSafeOne(string chan, string text);
         public void UserAdd(string chan, string nick)
         {
