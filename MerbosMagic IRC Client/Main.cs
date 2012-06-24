@@ -301,7 +301,7 @@ namespace MerbosMagic_IRC_Client
                     lb1.Margin = new System.Windows.Forms.Padding(3, 3, 3, 3);
                     lb1.ItemHeight = 15;
 
-                    lb1.DrawMode = DrawMode.OwnerDrawVariable;
+                    lb1.DrawMode = DrawMode.OwnerDrawFixed;
                     lb1.DrawItem += new DrawItemEventHandler(this.NickListColorHandler);
                 }
                 #endregion
@@ -469,75 +469,67 @@ namespace MerbosMagic_IRC_Client
 
         private void NickListColorHandler(object sender, DrawItemEventArgs e)
         {
-            e.DrawBackground();
-
             try
             {
                 ListBox LB = (ListBox)sender;
                 if (LB != null)
                 {
+                    
                     int index = e.Index;
                     if (LB.Items.Count >= index)
                     {
-                        LB.SelectedIndex = index;
-                        object cNick = "";
+                        string currentNick = LB.Items[index].ToString();
+                        char[] NickInChars = currentNick.ToCharArray();
+                        char pNick = NickInChars[0];
 
-                        if (LB.SelectedItem != null)
+                        Color color = Color.White;
+
+                        #region switch (pNick)
+                        switch (pNick)
                         {
-                            cNick = LB.SelectedItem.ToString() as string;
-                            string currentNick = (string)cNick;
-                            LB.ClearSelected();
-                            char[] NickInChars = currentNick.ToCharArray();
-                            char pNick = NickInChars[0];
 
-                            Color color = Color.White;
-
-                            #region switch (pNick)
-                            switch (pNick)
-                            {
-
-                                case '.':
-                                    currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
-                                    color = Color.Orange;
-                                    break;
-                                case '~':
-                                    currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
-                                    color = Color.Purple;
-                                    break;
-                                case '=':
-                                    currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
-                                    color = Color.DarkBlue;
-                                    break;
-                                case '&':
-                                    currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
-                                    color = Color.Red;
-                                    break;
-                                case '@':
-                                    currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
-                                    color = Color.LawnGreen;
-                                    break;
-                                case '%':
-                                    currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
-                                    color = Color.DeepSkyBlue;
-                                    break;
-                                case '+':
-                                    currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
-                                    color = Color.Yellow;
-                                    break;
-                                default:
-                                    currentNick = " |" + currentNick;
-                                    color = Color.White;
-                                    break;
-                            }
-                            #endregion
-
-                            e.Graphics.DrawString(currentNick,
-                                                    new Font(FontFamily.GenericMonospace, 10, FontStyle.Regular),
-                                                    new SolidBrush(color),
-                                                    e.Bounds);
-
-                            e.DrawFocusRectangle();
+                            case '.':
+                                currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
+                                color = Color.Orange;
+                                break;
+                            case '~':
+                                currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
+                                color = Color.Purple;
+                                break;
+                            case '=':
+                                currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
+                                color = Color.DarkBlue;
+                                break;
+                            case '&':
+                                currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
+                                color = Color.Red;
+                                break;
+                            case '@':
+                                currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
+                                color = Color.LawnGreen;
+                                break;
+                            case '%':
+                                currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
+                                color = Color.DeepSkyBlue;
+                                break;
+                            case '+':
+                                currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
+                                color = Color.Yellow;
+                                break;
+                            default:
+                                currentNick = " |" + currentNick;
+                                color = Color.White;
+                                break;
                         }
+                        #endregion
+
+                        e.Graphics.DrawString(currentNick,
+                                                new Font(FontFamily.GenericMonospace, 10, FontStyle.Regular),
+                                                new SolidBrush(color),
+                                                e.Bounds);
+
+                        e.DrawFocusRectangle();
+                       
                     }
                 }
             }
