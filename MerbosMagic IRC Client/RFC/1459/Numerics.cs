@@ -504,7 +504,8 @@ namespace MerbosMagic_IRC_Client.RFC
             List<string> alldemnicks = nicksonchan.ToList<string>();
             alldemnicks.Sort(CompareNicks);
 
-            Program.M.UserClear(chan.Remove(0, 1));
+            if (Program.M.UsersLocked(chan.Remove(0, 1)))
+                Program.M.UserClear(chan.Remove(0, 1));
             foreach (string nick in alldemnicks)
             {
                 if (nick != "")
@@ -512,6 +513,12 @@ namespace MerbosMagic_IRC_Client.RFC
                     Program.M.UserAdd(chan.Remove(0, 1), nick);
                 }
             }
+        }
+        public static void RPL_ENDOFNAMES_366(string input)
+        {
+            //:barjavel.freenode.net 366 Merbo #powder :End of /NAMES list.
+            string[] commands = input.Split(' ');
+            Program.M.UsersLocked(commands[3].Remove(0, 1), true);
         }
 
         public static void ERR_NOSUCHNICK_401(string input)

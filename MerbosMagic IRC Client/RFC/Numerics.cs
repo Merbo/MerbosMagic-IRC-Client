@@ -32,6 +32,9 @@ namespace MerbosMagic_IRC_Client.RFC
                     case 353:
                         RFC_1459_Numerics.RPL_NAMREPLY_353(input);
                         break;
+                    case 366:
+                        RFC_1459_Numerics.RPL_ENDOFNAMES_366(input);
+                        break;
                     case 401:
                         RFC_1459_Numerics.ERR_NOSUCHNICK_401(input);
                         break;

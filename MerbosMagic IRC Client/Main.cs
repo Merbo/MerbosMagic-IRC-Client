@@ -261,6 +261,32 @@ namespace MerbosMagic_IRC_Client
                 }
             }
         }
+
+        private delegate bool UsersLockedSafe(string chan, bool locking = false);
+        public bool UsersLocked(string chan, bool locking = false)
+        {
+            if (this.tabControl1.InvokeRequired)
+            {
+                this.tabControl1.BeginInvoke(new UsersLockedSafe(UsersLocked), chan, locking);
+            }
+            else
+            {
+                chan = "page_" + chan;
+                Control[] targetFindTabPage = tabControl1.Controls.Find(chan, true);
+                TabPage TP = (TabPage)targetFindTabPage[0];
+
+                Control[] targetFindLabel = TP.Controls.Find(TP.Name + "_l1", true);
+                Label L = (Label)targetFindLabel[0];
+
+                if (locking)
+                {
+                    L.Text = "#" + chan;
+                    return true;
+                }
+                else return L.Text == "Unlocked NickList" ? false : true;
+            }
+            return false;
+        }
         #endregion
 
         #region Page Functions
@@ -292,8 +318,15 @@ namespace MerbosMagic_IRC_Client
                 #endregion
                 #region User list
                 ListBox lb1 = new ListBox();
+                Label l1 = new Label();
                 if (generateUserList)
                 {
+                    l1.BackColor = Color.Black;
+                    l1.Dock = DockStyle.Right | DockStyle.Top;
+                    l1.ForeColor = Color.White;
+                    l1.Name = codeName + "_l1";
+                    l1.Text = "Unlocked NickList";
+
                     lb1.BackColor = Color.Black;
                     lb1.Dock = DockStyle.Right;
                     lb1.ForeColor = Color.White;
@@ -328,10 +361,11 @@ namespace MerbosMagic_IRC_Client
                 tp.Controls.Add(tb2);
                 tp.Controls.Add(tb1);
                 if (generateUserList) tp.Controls.Add(lb1);
+                if (generateUserList) tp.Controls.Add(l1);
                 tp.Location = new Point(4, 22);
                 tp.Name = codeName;
                 tp.Padding = new Padding(3);
-                tp.Size = new Size(757, 370);
+                tp.Size = new Size(760, 480);
                 tp.TabIndex = 0;
                 tp.Text = Text;
                 tb1.BringToFront();
@@ -366,7 +400,7 @@ namespace MerbosMagic_IRC_Client
             }
             else
             {
-                for (int i = 0; i <= this.tabControl1.TabPages.Count; i++)
+                for (int i = 0; i < this.tabControl1.TabPages.Count; i++)
                 {
                     if (this.tabControl1.TabPages[i].Name != "page_debugPage" &&
                         this.tabControl1.TabPages[i].Name != "page_Status")
