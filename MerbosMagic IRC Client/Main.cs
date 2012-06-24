@@ -469,65 +469,71 @@ namespace MerbosMagic_IRC_Client
 
         private void NickListColorHandler(object sender, DrawItemEventArgs e)
         {
-            e.DrawBackground();
-            e.DrawFocusRectangle();
-
-            ListBox LB = (ListBox)sender;
-
-            int index = e.Index;
-            LB.SelectedIndex = index;
-            string currentNick = LB.SelectedItem.ToString();
-
-            //string currentNick = NickAdding;
-            //NickAdding = "";
-            char[] NickInChars = currentNick.ToCharArray();
-            char pNick = NickInChars[0];
-
-            Color color = Color.White;
-
-            #region switch (pNick)
-            switch (pNick)
+            try
             {
+                e.DrawBackground();
 
-                case '.':
-                    currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
-                    color = Color.Orange;
-                    break;
-                case '~':
-                    currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
-                    color = Color.Purple;
-                    break;
-                case '=':
-                    currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
-                    color = Color.DarkBlue;
-                    break;
-                case '&':
-                    currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
-                    color = Color.Red;
-                    break;
-                case '@':
-                    currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
-                    color = Color.LawnGreen;
-                    break;
-                case '%':
-                    currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
-                    color = Color.DeepSkyBlue;
-                    break;
-                case '+':
-                    currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
-                    color = Color.Yellow;
-                    break;
-                default:
-                    currentNick = " |" + currentNick;
-                    color = Color.White;
-                    break;
+                ListBox LB = (ListBox)sender;
+
+                int index = e.Index;
+                LB.SelectedIndex = index;
+                string currentNick = LB.SelectedItem.ToString();
+                LB.ClearSelected();
+                char[] NickInChars = currentNick.ToCharArray();
+                char pNick = NickInChars[0];
+
+                Color color = Color.White;
+
+                #region switch (pNick)
+                switch (pNick)
+                {
+
+                    case '.':
+                        currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
+                        color = Color.Orange;
+                        break;
+                    case '~':
+                        currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
+                        color = Color.Purple;
+                        break;
+                    case '=':
+                        currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
+                        color = Color.DarkBlue;
+                        break;
+                    case '&':
+                        currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
+                        color = Color.Red;
+                        break;
+                    case '@':
+                        currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
+                        color = Color.LawnGreen;
+                        break;
+                    case '%':
+                        currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
+                        color = Color.DeepSkyBlue;
+                        break;
+                    case '+':
+                        currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
+                        color = Color.Yellow;
+                        break;
+                    default:
+                        currentNick = " |" + currentNick;
+                        color = Color.White;
+                        break;
+                }
+                #endregion
+
+                e.Graphics.DrawString(currentNick,
+                                      new Font(FontFamily.GenericMonospace, 10, FontStyle.Regular),
+                                      new SolidBrush(color),
+                                      e.Bounds);
+
+                e.DrawFocusRectangle();
             }
-            #endregion
-
-            e.Graphics.DrawString(currentNick,
-                                  new Font(FontFamily.GenericMonospace, 10, FontStyle.Regular),
-                                  new SolidBrush(color),
-                                  e.Bounds);
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
         #endregion
 
