@@ -270,6 +270,7 @@ namespace MerbosMagic_IRC_Client
             if (IRC.IRCClient != null && IRC.IRCClient.Connected)
                 MessageBox.Show("You are already connected!", IRC.longversion, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else
+            {
                 try
                 {
                     IRCThread.Name = "IRCThread";
@@ -280,6 +281,7 @@ namespace MerbosMagic_IRC_Client
                 {
                     Console.WriteLine(ex.ToString());
                 }
+            }
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
@@ -335,6 +337,9 @@ namespace MerbosMagic_IRC_Client
                     lb1.ForeColor = Color.White;
                     lb1.Name = codeName + "_lb1";
                     lb1.Margin = new System.Windows.Forms.Padding(3, 3, 3, 3);
+
+                    lb1.DrawMode = DrawMode.OwnerDrawVariable;
+                    lb1.DrawItem += new DrawItemEventHandler(this.NickListColorHandler);
                 }
                 #region Chat history text box
                 RichTextBox tb1 = new RichTextBox();
@@ -451,6 +456,60 @@ namespace MerbosMagic_IRC_Client
             TabControl tc = (TabControl)sender;
             TabPage tp = tc.SelectedTab;
             this.Text = IRC.longversion + " - " + tp.Text;
+        }
+
+        private void NickListColorHandler(object sender, DrawItemEventArgs e)
+        {
+            e.DrawBackground();
+
+            ListBox LB = (ListBox)sender;
+
+            int index = e.Index;
+            LB.SelectedIndex = index;
+            string currentNick = LB.SelectedItem.ToString();
+            //MessageBox.Show(currentNick);
+            char[] NickInChars = currentNick.ToCharArray();
+            char pNick = NickInChars[0];
+
+            Color color = Color.White;
+
+            #region switch (pNick)
+            switch (pNick)
+            {
+
+                case '.':
+                    color = Color.Orange;
+                    break;
+                case '~':
+                    color = Color.Purple;
+                    break;
+                case '=':
+                    color = Color.DarkBlue;
+                    break;
+                case '&':
+                    color = Color.Red;
+                    break;
+                case '@':
+                    color = Color.Green;
+                    break;
+                case '%':
+                    color = Color.DeepSkyBlue;
+                    break;
+                case '+':
+                    color = Color.Yellow;
+                    break;
+                default:
+                    color = Color.White;
+                    break;
+            }
+            #endregion
+
+            e.Graphics.DrawString(currentNick,
+                                  new Font(FontFamily.GenericMonospace, 10, FontStyle.Regular),
+                                  new SolidBrush(color),
+                                  e.Bounds);
+
+            e.DrawFocusRectangle();
         }
         #endregion
 
