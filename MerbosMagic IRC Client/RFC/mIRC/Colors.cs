@@ -14,7 +14,7 @@ namespace MerbosMagic_IRC_Client.RFC
         Underlined=0x1f
     }
 
-    class RFC_mIRC_Colors : RFC
+    class RFC_mIRC_Colors : RFC //TODO: Get colors to use chars. Shouldn't be hard, but we *need* this in order to see bold. :<
     {
         // Formatting constants
         public const string
