@@ -66,6 +66,20 @@ namespace MerbosMagic_IRC_Client.RFC
                             RFC_1459_Commands.PRIVMSG(commands[1], GetRest(commands, 2));
                         }
                         break;
+                    case "server":
+                        if (commands.Length > 1)
+                        {
+                            int port = 6667;
+                            if (commands.Length > 2)
+                            {
+                                bool worked = int.TryParse(commands[2], out port);
+                            }
+                            RFC_MerbosMagic_IRC_Client_Commands.SERVER(commands[1], port);
+                            //Let the client know he's moving to a new server, and close all non-debug/chan windows.
+                            Program.M.ChatAdd("page_Status", IRCColorList.Red + "* Disconnected: Switching servers!");
+                            Program.M.RemoveAllPages();
+                        }
+                        break;
                 }
             }
             catch (IndexOutOfRangeException) {

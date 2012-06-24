@@ -356,6 +356,27 @@ namespace MerbosMagic_IRC_Client
             }
         }
 
+        private delegate void RemoveAllPagesSafe();
+        public void RemoveAllPages()
+        {
+            if (this.tabControl1.InvokeRequired)
+            {
+                this.tabControl1.BeginInvoke(new RemoveAllPagesSafe(RemoveAllPages));
+                return;
+            }
+            else
+            {
+                for (int i = 0; i <= this.tabControl1.TabPages.Count; i++)
+                {
+                    if (this.tabControl1.TabPages[i].Name != "page_debugPage" &&
+                        this.tabControl1.TabPages[i].Name != "page_Status")
+                    {
+                        this.tabControl1.TabPages.RemoveAt(i);
+                    }
+                }
+            }
+        }
+
         private delegate TabPage GetPageSafe();
         public object GetPage()
         {
@@ -372,24 +393,11 @@ namespace MerbosMagic_IRC_Client
         #endregion
 
         #region Form Functions
-        Thread IRCThread = new Thread(IRC.Connect);
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             if (IRC.IRCClient != null && IRC.IRCClient.Connected)
                 MessageBox.Show("You are already connected!", IRC.longversion, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            else
-            {
-                try
-                {
-                    IRCThread.Name = "IRCThread";
-                    IRCThread.IsBackground = true;
-                    IRCThread.Start();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.ToString());
-                }
-            }
+            RFC_MerbosMagic_IRC_Client_Commands.SERVER("merbosmagic.org", 6667);
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)

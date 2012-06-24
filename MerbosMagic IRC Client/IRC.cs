@@ -27,6 +27,8 @@ namespace MerbosMagic_IRC_Client
         {
             try 
             {
+                if (IRCClient != null)
+                    IRCClient = null;
                 IRCClient = new TcpClient(server, port); //Connect to the server
             }
             catch (SocketException) 
@@ -42,7 +44,6 @@ namespace MerbosMagic_IRC_Client
             PostConnect();
         }
 
-        public static bool alive = true;
         public static void PostConnect()
         {
             RFC_1459_Commands.NICK(nick);
