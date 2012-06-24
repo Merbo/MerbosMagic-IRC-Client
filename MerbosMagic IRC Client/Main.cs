@@ -267,7 +267,9 @@ namespace MerbosMagic_IRC_Client
         {
             if (this.tabControl1.InvokeRequired)
             {
-                this.tabControl1.BeginInvoke(new UsersLockedSafe(UsersLocked), chan, locking);
+                IAsyncResult result = this.tabControl1.BeginInvoke(new UsersLockedSafe(UsersLocked), chan, locking);
+                result.AsyncWaitHandle.WaitOne();
+                return (bool)this.tabControl1.EndInvoke(result);
             }
             else
             {
@@ -283,9 +285,8 @@ namespace MerbosMagic_IRC_Client
                     L.Text = "#" + chan;
                     return true;
                 }
-                else return L.Text == "Unlocked NickList" ? false : true;
+                else return L.Text != "Unlocked NickList";
             }
-            return false;
         }
         #endregion
 
