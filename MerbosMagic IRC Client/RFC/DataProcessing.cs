@@ -79,9 +79,12 @@ namespace MerbosMagic_IRC_Client.RFC
 #endif
             int num = 0;
             string[] commands = raw.Split(' ');
-            if (int.TryParse(commands[1], out num)) {
+            if (int.TryParse(commands[1], out num)) 
+            {
                 Numerics.Parse(raw);
-            } else {
+            } 
+            else 
+            {
                 Commands.Parse(raw);
             }
         }

@@ -496,6 +496,7 @@ namespace MerbosMagic_IRC_Client.RFC
         public static void RPL_NAMREPLY_353(string input)
         {
             //:merbosmagic.org 353 ClientTest = #MerbosMagic :Triclops200 !StatServ !MMServiceBot xaxes !Merbo ClientTest 
+
             string[] split = input.Split(' ');
             string chan = split[4];
             string[] nicks = input.Remove(0, 1).Split(':');
