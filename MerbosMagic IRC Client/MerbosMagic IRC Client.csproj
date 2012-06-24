@@ -102,6 +102,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RFC\IRCColorList.cs" />
+    <Compile Include="RFC\ModeHandler.cs" />
     <Compile Include="RFC\Charybdis\ChannelModes.cs" />
     <Compile Include="RFC\Charybdis\Commands.cs" />
     <Compile Include="RFC\Charybdis\Numerics.cs" />

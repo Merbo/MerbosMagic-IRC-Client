@@ -139,7 +139,12 @@ namespace MerbosMagic_IRC_Client.RFC
                                     Program.M.ChatAdd(tabname, FormatHighlight + "-" + nick + "- " + args.Remove(0, chan.Length + 2));
                                 break;
                             case "MODE":
-                                string PrintWhat = RFC_ModeHandler.Handle(chan, args.Remove(0, chan.Length + 2));
+                                string[] argsplit = args.Split(' ');
+                                string trueargs = "", PrintWhat = "";
+                                if (argsplit.Length > 2)
+                                    trueargs = String.Join(" ", argsplit, 2, argsplit.Length - 2);
+                                if (commands.Length > 3)
+                                    PrintWhat = RFC_ModeHandler.Handle(nick, chan, commands[3], trueargs);
                                 Program.M.ChatAdd(tabname, PrintWhat);
                                 break;
 

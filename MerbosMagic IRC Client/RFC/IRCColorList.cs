@@ -9,7 +9,7 @@ namespace MerbosMagic_IRC_Client.RFC
 {
     class IRCColorList
     {
-        public static const string
+        public static string
             White     = "\x03" + "00",
             Black     = "\x03" + "01",
             DarkBlue  = "\x03" + "02",

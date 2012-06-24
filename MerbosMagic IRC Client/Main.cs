@@ -90,7 +90,7 @@ namespace MerbosMagic_IRC_Client
         {
             if (this.tabControl1.InvokeRequired)
             {
-                this.tabControl1.BeginInvoke(new UserClearSafe(UserAdd), chan);
+                this.tabControl1.BeginInvoke(new UserClearSafe(UserClear), chan);
                 return;
             }
             else
@@ -263,44 +263,6 @@ namespace MerbosMagic_IRC_Client
         }
         #endregion
 
-        #region Form Functions
-        Thread IRCThread = new Thread(IRC.Connect);
-        private void toolStripButton1_Click(object sender, EventArgs e)
-        {
-            if (IRC.IRCClient != null && IRC.IRCClient.Connected)
-                MessageBox.Show("You are already connected!", IRC.longversion, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            else
-            {
-                try
-                {
-                    IRCThread.Name = "IRCThread";
-                    IRCThread.IsBackground = true;
-                    IRCThread.Start();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.ToString());
-                }
-            }
-        }
-
-        private void Main_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            try
-            {
-                RFC_1459_Commands.QUIT(IRC.longversion);
-                IRC.IRCStream.Close();
-            }
-            catch (Exception)
-            {
-
-            }
-            finally
-            {
-                Application.Exit();
-            }
-        }
-
         #region Page Functions
         private delegate void AddPageSafe(string codeName, string Text, bool generateUserList);
         public void AddPage(string codeName, string Text, bool generateUserList = true)
@@ -337,14 +299,15 @@ namespace MerbosMagic_IRC_Client
                     lb1.ForeColor = Color.White;
                     lb1.Name = codeName + "_lb1";
                     lb1.Margin = new System.Windows.Forms.Padding(3, 3, 3, 3);
+                    lb1.ItemHeight = 15;
 
                     lb1.DrawMode = DrawMode.OwnerDrawVariable;
                     lb1.DrawItem += new DrawItemEventHandler(this.NickListColorHandler);
                 }
+                #endregion
                 #region Chat history text box
                 RichTextBox tb1 = new RichTextBox();
                 tb1.BackColor = Color.Black;
-                //tb1.Location = new Point(3, 3);
                 tb1.Dock = DockStyle.Fill;
                 tb1.ForeColor = Color.White;
                 tb1.MaxLength = 99999999;
@@ -356,9 +319,8 @@ namespace MerbosMagic_IRC_Client
                 tb1.Size = new Size(751, 349);
                 tb1.TabStop = false;
                 tb1.TabIndex = 1;
-                tb1.ScrollBars = RichTextBoxScrollBars.Vertical;
+                tb1.ScrollBars = RichTextBoxScrollBars.Both;
                 tb1.TextChanged += new EventHandler(tb1_TextChanged);
-                #endregion
                 #endregion
                 #region Page
                 TabPage tp = new TabPage();
@@ -408,6 +370,46 @@ namespace MerbosMagic_IRC_Client
             }
         }
         #endregion
+
+        #region Form Functions
+        Thread IRCThread = new Thread(IRC.Connect);
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            if (IRC.IRCClient != null && IRC.IRCClient.Connected)
+                MessageBox.Show("You are already connected!", IRC.longversion, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            else
+            {
+                try
+                {
+                    IRCThread.Name = "IRCThread";
+                    IRCThread.IsBackground = true;
+                    IRCThread.Start();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+        }
+
+        private void Main_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                RFC_1459_Commands.QUIT(IRC.longversion);
+                IRC.IRCStream.Close();
+            }
+            catch (Exception)
+            {
+
+            }
+            finally
+            {
+                Application.Exit();
+            }
+        }
+
+
 
         private void Main_Load(object sender, EventArgs e)
         {
@@ -468,13 +470,13 @@ namespace MerbosMagic_IRC_Client
         private void NickListColorHandler(object sender, DrawItemEventArgs e)
         {
             e.DrawBackground();
+            e.DrawFocusRectangle();
 
             ListBox LB = (ListBox)sender;
 
             int index = e.Index;
             LB.SelectedIndex = index;
             string currentNick = LB.SelectedItem.ToString();
-            //MessageBox.Show(currentNick);
             char[] NickInChars = currentNick.ToCharArray();
             char pNick = NickInChars[0];
 
@@ -523,8 +525,6 @@ namespace MerbosMagic_IRC_Client
                                   new Font(FontFamily.GenericMonospace, 10, FontStyle.Regular),
                                   new SolidBrush(color),
                                   e.Bounds);
-
-            e.DrawFocusRectangle();
         }
         #endregion
 
