@@ -490,7 +490,7 @@ namespace MerbosMagic_IRC_Client
                     color = Color.Red;
                     break;
                 case '@':
-                    color = Color.Green;
+                    color = Color.LawnGreen;
                     break;
                 case '%':
                     color = Color.DeepSkyBlue;
