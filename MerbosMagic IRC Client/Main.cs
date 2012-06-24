@@ -535,7 +535,7 @@ namespace MerbosMagic_IRC_Client
             }
             catch (Exception ex)
             {
-                //MessageBox.Show(ex.ToString());
+                MessageBox.Show(ex.ToString());
             }
         }
         #endregion
