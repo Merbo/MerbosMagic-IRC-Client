@@ -477,6 +477,9 @@ namespace MerbosMagic_IRC_Client
             int index = e.Index;
             LB.SelectedIndex = index;
             string currentNick = LB.SelectedItem.ToString();
+
+            //string currentNick = NickAdding;
+            //NickAdding = "";
             char[] NickInChars = currentNick.ToCharArray();
             char pNick = NickInChars[0];
 
