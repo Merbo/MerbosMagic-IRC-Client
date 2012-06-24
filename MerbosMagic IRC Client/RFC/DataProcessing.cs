@@ -115,7 +115,17 @@ namespace MerbosMagic_IRC_Client.RFC
                         tmp = IRC.nick;
                         break;
                     case "$active":
-                        tmp = Program.M.GetPage().Text;
+                        TabPage TP;
+                        object o = Program.M.GetPage();
+                        try
+                        {
+                            TP = (TabPage)o;
+                            tmp = TP.Text;
+                        }
+                        catch (Exception)
+                        {
+                            tmp = "$active";
+                        }
                         break;
 
                 }

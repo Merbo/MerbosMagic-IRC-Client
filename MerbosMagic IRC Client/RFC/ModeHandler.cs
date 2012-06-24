@@ -5,13 +5,15 @@ using System.Text;
 
 namespace MerbosMagic_IRC_Client.RFC
 {
-    class RFC_Insp_ChannelModes : RFC
+    class RFC_ModeHandler : RFC
     {
-        enum ChannelModes
+
+        public static string Handle(string chan, string mode)
         {
 
 
-
+            return "ERR_FAILED";
         }
+
     }
 }

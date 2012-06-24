@@ -8,12 +8,13 @@ namespace MerbosMagic_IRC_Client.RFC
 {
     class Commands
     {
-        public static string FormatQuit = "\x03" + "03"; // green
-        public static string FormatJoin = "\x03" + "08"; // yellow
-        public static string FormatPart = "\x03" + "08"; // yellow
-        public static string FormatCtcp = "\x03" + "07"; // orange
-        public static string FormatNickChange = "\x03" + "03"; // green
-        public static string FormatHighlight = "\x03" + "02"; // blue
+        public static string FormatQuit        = IRCColorList.Green;
+        public static string FormatJoin        = IRCColorList.Yellow;
+        public static string FormatPart        = IRCColorList.Yellow;
+        public static string FormatCtcp        = IRCColorList.Orange;
+        public static string FormatNickChange  = IRCColorList.Green;
+        public static string FormatHighlight   = IRCColorList.Blue;  
+        public static string FormatMode        = IRCColorList.Red;
 
 
         public static void Parse(string input)
@@ -122,17 +123,26 @@ namespace MerbosMagic_IRC_Client.RFC
                                 Program.M.UserRename(nick, chan);
                                 break;
                             case "PRIVMSG":
-                                if (chan == IRC.nick) {
+                                if (chan == IRC.nick) 
+                                {
                                     Program.M.ChatAdd(nick, "<" + nick + "> " + args.Remove(0, chan.Length + 2));
-                                } else
+                                } 
+                                else
                                     Program.M.ChatAdd(tabname, (args.Remove(0, chan.Length + 2).Contains(IRC.nick) ? FormatHighlight : "") + "<" + nick + "> " + args.Remove(0, chan.Length + 2));
                                 break;
                             case "NOTICE":
-                                if (chan == IRC.nick) {
-                                    Program.M.ChatAdd("-" + nick + "- " + args.Remove(0, chan.Length + 2));
-                                } else
+                                if (chan == IRC.nick) 
+                                {
+                                    Program.M.ChatAdd(FormatHighlight + "-" + nick + "- " + args.Remove(0, chan.Length + 2));
+                                } 
+                                else
                                     Program.M.ChatAdd(tabname, FormatHighlight + "-" + nick + "- " + args.Remove(0, chan.Length + 2));
                                 break;
+                            case "MODE":
+                                string PrintWhat = RFC_ModeHandler.Handle(chan, args.Remove(0, chan.Length + 2));
+                                Program.M.ChatAdd(tabname, PrintWhat);
+                                break;
+
                         }
                     }
                     #endregion

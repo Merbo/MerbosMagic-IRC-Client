@@ -395,10 +395,17 @@ namespace MerbosMagic_IRC_Client
         }
 
         private delegate TabPage GetPageSafe();
-        public TabPage GetPage()
+        public object GetPage()
         {
-            TabPage tp = tabControl1.SelectedTab;
-            return tp;
+            if (this.tabControl1.InvokeRequired)
+            {
+                return "ERR_INVOKEREQUIRED";
+            }
+            else
+            {
+                TabPage tp = this.tabControl1.SelectedTab;
+                return tp;
+            }
         }
         #endregion
 
@@ -478,27 +485,35 @@ namespace MerbosMagic_IRC_Client
             {
 
                 case '.':
+                    currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
                     color = Color.Orange;
                     break;
                 case '~':
+                    currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
                     color = Color.Purple;
                     break;
                 case '=':
+                    currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
                     color = Color.DarkBlue;
                     break;
                 case '&':
+                    currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
                     color = Color.Red;
                     break;
                 case '@':
+                    currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
                     color = Color.LawnGreen;
                     break;
                 case '%':
+                    currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
                     color = Color.DeepSkyBlue;
                     break;
                 case '+':
+                    currentNick = pNick.ToString() + "|" + currentNick.Remove(0, 1);
                     color = Color.Yellow;
                     break;
                 default:
+                    currentNick = " |" + currentNick;
                     color = Color.White;
                     break;
             }
