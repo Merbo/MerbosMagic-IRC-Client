@@ -8,7 +8,7 @@ namespace MerbosMagic_IRC_Client.RFC
 {
     class DataProcessing : RFC
     {
-        private static string GetRest(string[] Array, int Start)
+        public static string GetRest(string[] Array, int Start)
         {
             return String.Join(" ", Array, Start, Array.Length - Start);
         }
@@ -20,18 +20,24 @@ namespace MerbosMagic_IRC_Client.RFC
                 string chan = "";
                 string msgargs = "";
 
-                if (commands.Length > 1) {
+                if (commands.Length > 1) 
+                {
                     chan = commands[1];
                 }
-                if (commands.Length > 2) {
-                    msgargs = String.Join(" ", commands, 2, commands.Length - 2);
+                if (commands.Length > 2) 
+                {
+                    msgargs = GetRest(commands, 2);
                 }
-                if (commands[0].StartsWith("/")) {
+                if (commands[0].StartsWith("/"))
+                {
                     commands[0] = commands[0].Remove(0, 1);
                 }
                 switch (commands[0]) {
                     case "msg":
                         RFC_1459_Commands.PRIVMSG(chan, msgargs);
+                        break;
+                    case "describe":
+                        CTCP.ACTION(chan, GetRest(commands, 2));
                         break;
                     case "privmsg":
                         RFC_1459_Commands.PRIVMSG(chan, msgargs);
@@ -43,17 +49,23 @@ namespace MerbosMagic_IRC_Client.RFC
                         RFC_1459_Commands.JOIN(chan);
                         break;
                     case "part":
-                        if (msgargs != "") {
+                        if (msgargs != "") 
+                        {
                             RFC_1459_Commands.PART(chan, msgargs);
-                        } else {
+                        } 
+                        else 
+                        {
                             RFC_1459_Commands.PART(chan);
                         }
                         break;
                     case "quit":
                         string rest = GetRest(commands, 1);
-                        if (rest != "") {
+                        if (rest != "") 
+                        {
                             RFC_1459_Commands.QUIT(rest);
-                        } else {
+                        } 
+                        else 
+                        {
                             RFC_1459_Commands.QUIT();
                         }
                         break;

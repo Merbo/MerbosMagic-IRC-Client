@@ -82,9 +82,16 @@ namespace MerbosMagic_IRC_Client.RFC
                     #region CTCP Processing
                     if (commands.Length > 3 && commands[3].StartsWith(":\x01"))
                     {
+
                         CTCP.SendCTCPReply(nick, commands[3].Remove(0, 1));
                         string c3 = commands[3];
                         c3 = c3.Remove(0, 2);
+                        if (c3 == "ACTION")
+                        {
+                            string rest = DataProcessing.GetRest(commands, 4);
+                            Program.M.ChatAdd(chan.Remove(0, 1), "* " + nick + " " + rest.Remove(rest.Length - 1, 1));
+                            return;
+                        }
                         c3 = c3.Remove(c3.Length - 1, 1);
                         Program.M.ChatAdd(FormatCtcp + "CTCP request \"" + c3 + "\" from " + nick);
                         Program.M.ChatAdd(FormatCtcp + "page_Status", "CTCP request \"" + c3 + "\" from " + nick);

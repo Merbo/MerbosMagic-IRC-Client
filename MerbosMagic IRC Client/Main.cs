@@ -282,7 +282,7 @@ namespace MerbosMagic_IRC_Client
 
                 if (locking)
                 {
-                    L.Text = "#" + chan;
+                    L.Text = "#" + chan.Remove(0, 5) + " NickList";
                     return true;
                 }
                 else return L.Text != "Unlocked NickList";
@@ -323,7 +323,6 @@ namespace MerbosMagic_IRC_Client
                 if (generateUserList)
                 {
                     l1.BackColor = Color.Black;
-                    l1.Dock = DockStyle.Right | DockStyle.Top;
                     l1.ForeColor = Color.White;
                     l1.Name = codeName + "_l1";
                     l1.Text = "Unlocked NickList";
@@ -361,8 +360,8 @@ namespace MerbosMagic_IRC_Client
                 tp.BackColor = Color.Black;
                 tp.Controls.Add(tb2);
                 tp.Controls.Add(tb1);
-                if (generateUserList) tp.Controls.Add(lb1);
                 if (generateUserList) tp.Controls.Add(l1);
+                if (generateUserList) tp.Controls.Add(lb1);
                 tp.Location = new Point(4, 22);
                 tp.Name = codeName;
                 tp.Padding = new Padding(3);
@@ -370,7 +369,6 @@ namespace MerbosMagic_IRC_Client
                 tp.TabIndex = 0;
                 tp.Text = Text;
                 tb1.BringToFront();
-                //tp.Text = tp.Name; //Debugging
                 #endregion
                 tabControl1.Controls.Add(tp);
                 tabControl1.SelectedTab = tp;
@@ -478,6 +476,10 @@ namespace MerbosMagic_IRC_Client
                 {
                     string s = DataProcessing.ResolveVars(TB.Text.Remove(0, 1));
                     DataProcessing.ProcessSend(s);
+                }
+                else if (TB.Text.StartsWith("/me"))
+                {
+                    CTCP.ACTION(TP.Text, TB.Text.Remove(0, 4));
                 }
                 else if (TB.Text.StartsWith("/"))
                 {

@@ -24,5 +24,12 @@ namespace MerbosMagic_IRC_Client.RFC
         {
             RFC_1459_Commands.PRIVMSG(target, ctcpchar + CTCP + ctcpchar);
         }
+        public static void ACTION(string target, string text)
+        {
+            IRC.SendRaw("PRIVMSG " + target + " :\x01" + "ACTION " + text + "\x01");
+            if (target.StartsWith("#"))
+                target = target.Remove(0, 1);
+            Program.M.ChatAdd(target, "* " + IRC.nick + " " + text);
+        }
     }
 }
