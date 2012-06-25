@@ -176,7 +176,8 @@ namespace MerbosMagic_IRC_Client
 
                 Control[] targetFindListBox = TP.Controls.Find(TP.Name + "_lb1", true);
                 ListBox LB = (ListBox)targetFindListBox[0];
-                LB.Items.Add(nick);
+                if (!LB.Items.Contains(nick))
+                    LB.Items.Add(nick);
             }
         }
         private delegate void UserAddSafeTwo(string nick);

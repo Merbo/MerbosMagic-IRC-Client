@@ -87,8 +87,8 @@ namespace MerbosMagic_IRC_Client.RFC
             }
             #endregion
 
-            aNickx = xValue == 0 ? pNickx : x.Substring(1, 1);
-            aNicky = yValue == 0 ? pNicky : y.Substring(1, 1);
+            aNickx = xValue == 0 ? x.Substring(1, 1) : x.Substring(2, 1);
+            aNicky = yValue == 0 ? y.Substring(1, 1) : y.Substring(2, 1);
 
             #region switch (aNickx)
             switch (aNickx)
@@ -420,6 +420,15 @@ namespace MerbosMagic_IRC_Client.RFC
             #endregion
 
 
+            MessageBox.Show(
+                "xValue: " + xValue + " " +
+                "yValue: " + yValue + " " +
+                "aNickx: " + aNickx + " " +
+                "aNicky: " + aNicky + " " +
+                  "xNick: " + xNick + " " +
+                  "yNick: " + yNick + " ");
+
+
             if (xValue > yValue)
             {
                 return -1; //X has a higher rank
@@ -499,6 +508,7 @@ namespace MerbosMagic_IRC_Client.RFC
         public static void RPL_NAMREPLY_353(string input)
         {
             NamesProcessing = Task.Factory.StartNew(() => ProcessNames(input));
+            NamesProcessing.Wait();
         }
 
         private static void ProcessNames(string input)
@@ -520,25 +530,27 @@ namespace MerbosMagic_IRC_Client.RFC
             }
         }
 
+        private static List<string> SortByNicks(List<string> L)
+        {
+            L.Sort(CompareNicks);
+            return L;
+        }
+
         public static void RPL_ENDOFNAMES_366(string input)
         {
             //:barjavel.freenode.net 366 Merbo #powder :End of /NAMES list.
             string[] commands = input.Split(' ');
             //Program.M.UsersLocked(commands[3].Remove(0, 1), true);
 
-            if (NamesProcessing != null)
+            if (NamesProcessing != null && !NamesProcessing.IsCompleted)
                 NamesProcessing.Wait();
 
             if (NamesProcessing.IsCompleted)
             {
 
                 string[] nicks = Program.M.GetUsers(commands[3].Remove(0, 1));
-                List<string> nicklist = nicks.ToList<string>();
-
-                //Program.M.UserClear(commands[3].Remove(0, 1));
-                Task NickSorter = Task.Factory.StartNew(() => nicklist.Sort(CompareNicks));
-                NickSorter.Wait();
-                
+                List<string> nickss = nicks.ToList<string>();
+                List<string> nicklist = SortByNicks(nickss);
 
                 foreach (string s in nicklist)
                 {
