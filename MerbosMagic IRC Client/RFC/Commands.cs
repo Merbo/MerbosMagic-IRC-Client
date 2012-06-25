@@ -8,11 +8,12 @@ namespace MerbosMagic_IRC_Client.RFC
 {
     class Commands
     {
-        public static string FormatJoin        = IRCColorList.Blue;
-        public static string FormatPart        = IRCColorList.Blue;
-        public static string FormatCtcp        = IRCColorList.Red;
-        public static string FormatNickChange  = IRCColorList.Red;
-        public static string FormatHighlight   = IRCColorList.Cyan;  
+        public static string FormatQuit        = IRCColorList.Green;
+        public static string FormatJoin        = IRCColorList.Yellow;
+        public static string FormatPart        = IRCColorList.Yellow;
+        public static string FormatCtcp        = IRCColorList.Orange;
+        public static string FormatNickChange  = IRCColorList.Green;
+        public static string FormatHighlight   = IRCColorList.Blue;  
         public static string FormatMode        = IRCColorList.Red;
 
 
@@ -104,9 +105,10 @@ namespace MerbosMagic_IRC_Client.RFC
                         {
                             case "QUIT":
                                 if (commands.Length > 3 && args != "")
-                                    Program.M.UserQuit(nick, nick + "!" + user + "@" + host, args.Remove(0, 1));
+                                    Program.M.ChatAdd(FormatQuit + nick + " (" + user + "@" + host + ") has quit. (" + args.Remove(0, 1) + ")");
                                 else
-                                    Program.M.UserQuit(nick, nick + "!" + user + "@" + host, "");
+                                    Program.M.ChatAdd(FormatQuit + nick + " (" + user + "@" + host + ") has quit.");
+                                Program.M.UserRemove(nick);
                                 break;
                             case "JOIN":
                                 Program.M.ChatAdd(tabname, FormatJoin + nick + " (" + user + "@" + host + ") has joined " + chan + ".");

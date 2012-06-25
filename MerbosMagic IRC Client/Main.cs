@@ -114,50 +114,6 @@ namespace MerbosMagic_IRC_Client
             }
         }
 
-        private delegate void UserQuitSafe(string nick, string fullname, string message);
-        public void UserQuit(string nick, string fullname, string message)
-        {
-            if (this.tabControl1.InvokeRequired)
-            {
-                this.tabControl1.BeginInvoke(new UserQuitSafe(UserQuit), nick, fullname, message);
-                return;
-            }
-            else
-            {
-                string FormatQuit = IRCColorList.Maroon;
-                int Count = tabControl1.TabPages.Count;
-                List<Control> ControlList = new List<Control>();
-                for (int i = 1; i < Count; i++)
-                {
-                    ControlList.Add(tabControl1.GetControl(i));
-                }
-                foreach (Control C in ControlList)
-                {
-                    TabPage TP = (TabPage)C;
-
-                    if (TP.Name != "page_debugPage" && TP.Name != "page_Status")
-                    {
-                        Control[] targetFindListBox = TP.Controls.Find(TP.Name + "_lb1", true);
-                        ListBox LB = (ListBox)targetFindListBox[0];
-                        string[] PNicks = { "", " |", "+|", "%|", "@|", "&|", "=|", "~|", ".|" };
-                        List<string> PNicksList = PNicks.ToList<string>();
-                        foreach (string pnicktoremove in PNicksList)
-                        {
-                            string pnick = pnicktoremove;
-                            string pnickplusnick = pnick + nick;
-                            object objectivepnick = pnickplusnick;
-                            if (LB.Items.Contains(objectivepnick))
-                            {
-                                LB.Items.Remove(objectivepnick);
-                                ChatAdd(TP.Name, FormatQuit + pnickplusnick + " (" + fullname + ") has quit IRC (" + message + ")");
-                            }
-                        }
-
-                    }
-                }
-            }
-        }
-
         private delegate void UserAddSafeOne(string chan, string text);
         public void UserAdd(string chan, string nick)
         {
@@ -260,17 +216,10 @@ namespace MerbosMagic_IRC_Client
                     {
                         Control[] targetFindListBox = TP.Controls.Find(TP.Name + "_lb1", true);
                         ListBox LB = (ListBox)targetFindListBox[0];
-                        string[] PNicks = { " |", "+|", "%|", "@|", "&|", "=|", "~|", ".|" };
+                        string[] PNicks = { nick, "+" + nick, "%" + nick, "@" + nick, "&" + nick, "=" + nick, "~" + nick, "!" + nick, "." + nick };
                         List<string> PNicksList = PNicks.ToList<string>();
-                        foreach (string pnicktoremove in PNicksList)
-                        {
-                            string pnick = pnicktoremove.Remove(1, 1);
-                            if (LB.Items.Contains(pnick + nick))
-                            {
-                                int index = LB.Items.IndexOf(pnick + nick);
-                                LB.Items.Remove(pnick + nick);
-                            }
-                        }
+                        foreach (string nicktoremove in PNicksList)
+                            LB.Items.Remove(nicktoremove);
                     }
                 }
             }
@@ -295,6 +244,8 @@ namespace MerbosMagic_IRC_Client
                 foreach (Control C in ControlList)
                 {
                     TabPage TP = (TabPage)C;
+
+                    RFC_1459_Commands.NAMES(TP.Text);
 
                     if (TP.Name != "page_debugPage" && TP.Name != "page_Status")
                     {
@@ -579,11 +530,11 @@ namespace MerbosMagic_IRC_Client
 
         private void tb1_TextChanged(object sender, EventArgs e)
         {
+
             RichTextBox TB = (RichTextBox)sender;
 
             TB.SelectionStart = TB.Text.Length;
             TB.ScrollToCaret();
-            
             TB.Refresh();
         }
 
