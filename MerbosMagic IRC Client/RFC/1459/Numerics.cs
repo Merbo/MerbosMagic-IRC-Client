@@ -7,8 +7,7 @@ using System.Windows.Forms;
 namespace MerbosMagic_IRC_Client.RFC
 {
     class RFC_1459_Numerics : RFC
-    {
-        private static int CompareNicks(string x, string y)
+    {public static int CompareNicks(string x, string y)
         {
             string pNickx, pNicky, aNickx, aNicky;
 

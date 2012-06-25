@@ -243,20 +243,26 @@ namespace MerbosMagic_IRC_Client
                 foreach (Control C in ControlList)
                 {
                     TabPage TP = (TabPage)C;
+
+                    RFC_1459_Commands.NAMES(TP.Text);
+
                     if (TP.Name != "page_debugPage" && TP.Name != "page_Status")
                     {
                         Control[] targetFindListBox = TP.Controls.Find(TP.Name + "_lb1", true);
                         ListBox LB = (ListBox)targetFindListBox[0];
-                        string[] PNicks = { oldnick, "+" + oldnick, "%" + oldnick, "@" + oldnick, "&" + oldnick, "=" + oldnick, "~" + oldnick, "!" + oldnick, "." + oldnick };
+                        string[] PNicks = { " |", "+|", "%|", "@|", "&|", "=|", "~|", ".|" };
                         List<string> PNicksList = PNicks.ToList<string>();
-                        foreach (string nicktoremove in PNicksList)
+                        foreach (string pnicktoremove in PNicksList)
                         {
-                            if (LB.Items.Contains(nicktoremove))
+                            string pnick = pnicktoremove.Remove(1, 1);
+                            if (LB.Items.Contains(pnick + oldnick))
                             {
-                                LB.Items.Remove(nicktoremove);
-                                LB.Items.Add(newnick);
+                                int index = LB.Items.IndexOf(pnick + oldnick);
+                                LB.Items.Remove(pnick + oldnick);
+                                LB.Items.Insert(index, pnick + newnick);
                             }
                         }
+                        
                     }
                 }
             }
