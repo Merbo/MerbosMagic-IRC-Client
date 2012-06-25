@@ -343,6 +343,33 @@ namespace MerbosMagic_IRC_Client
                 else return L.Text != "Unlocked NickList";
             }
         }
+
+        private delegate string[] GetUsersSafe(string chan);
+        public string[] GetUsers(string chan)
+        {
+            if (this.tabControl1.InvokeRequired)
+            {
+                IAsyncResult result = this.tabControl1.BeginInvoke(new GetUsersSafe(GetUsers), chan);
+                result.AsyncWaitHandle.WaitOne();
+                return (string[])this.tabControl1.EndInvoke(result);
+            }
+            else
+            {
+                chan = "page_" + chan;
+                Control[] targetFindTabPage = tabControl1.Controls.Find(chan, true);
+                TabPage TP = (TabPage)targetFindTabPage[0];
+
+                Control[] targetFindListBox = TP.Controls.Find(TP.Name + "_lb1", true);
+                ListBox LB = (ListBox)targetFindListBox[0];
+
+                string[] Nicks = { TP.Text };
+                foreach (string s in LB.Items)
+                {
+                    Nicks[Nicks.Length - 1] = s;
+                }
+                return Nicks;
+            }
+        }
         #endregion
 
         #region Page Functions
@@ -576,11 +603,14 @@ namespace MerbosMagic_IRC_Client
                 {
                     
                     int index = e.Index;
-                    if (LB.Items.Count >= index)
+                    if (LB.Items.Count >= index && index > -1)
                     {
                         string currentNick = LB.Items[index].ToString();
                         char[] NickInChars = currentNick.ToCharArray();
-                        char pNick = NickInChars[0];
+                        char pNick;
+                        if (NickInChars.Length > 0)
+                            pNick = NickInChars[0];
+                        else return;
 
                         Color color = Color.White;
 

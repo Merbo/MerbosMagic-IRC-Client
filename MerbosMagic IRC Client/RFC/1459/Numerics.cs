@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace MerbosMagic_IRC_Client.RFC
 {
     class RFC_1459_Numerics : RFC
-    {public static int CompareNicks(string x, string y)
+    {
+        public static int CompareNicks(string x, string y)
         {
             string pNickx, pNicky, aNickx, aNicky;
 
@@ -492,7 +495,13 @@ namespace MerbosMagic_IRC_Client.RFC
             StatusAdd(FormatInfo + RestOfIt);
         }
 
+        private static Task NamesProcessing;
         public static void RPL_NAMREPLY_353(string input)
+        {
+            NamesProcessing = Task.Factory.StartNew(() => ProcessNames(input));
+        }
+
+        private static void ProcessNames(string input)
         {
             //:merbosmagic.org 353 ClientTest = #MerbosMagic :Triclops200 !StatServ !MMServiceBot xaxes !Merbo ClientTest 
 
@@ -501,23 +510,42 @@ namespace MerbosMagic_IRC_Client.RFC
             string[] nicks = input.Remove(0, 1).Split(':');
             string[] nicksonchan = nicks[1].Split(' ');
             List<string> alldemnicks = nicksonchan.ToList<string>();
-            alldemnicks.Sort(CompareNicks);
 
-            if (Program.M.UsersLocked(chan.Remove(0, 1)))
-                Program.M.UserClear(chan.Remove(0, 1));
             foreach (string nick in alldemnicks)
             {
-                if (nick != "")
+                if (nick != null && nick != "")
                 {
                     Program.M.UserAdd(chan.Remove(0, 1), nick);
                 }
             }
         }
+
         public static void RPL_ENDOFNAMES_366(string input)
         {
             //:barjavel.freenode.net 366 Merbo #powder :End of /NAMES list.
             string[] commands = input.Split(' ');
-            Program.M.UsersLocked(commands[3].Remove(0, 1), true);
+            //Program.M.UsersLocked(commands[3].Remove(0, 1), true);
+
+            if (NamesProcessing != null)
+                NamesProcessing.Wait();
+
+            if (NamesProcessing.IsCompleted)
+            {
+
+                string[] nicks = Program.M.GetUsers(commands[3].Remove(0, 1));
+                List<string> nicklist = nicks.ToList<string>();
+
+                //Program.M.UserClear(commands[3].Remove(0, 1));
+                Task NickSorter = Task.Factory.StartNew(() => nicklist.Sort(CompareNicks));
+                NickSorter.Wait();
+                
+
+                foreach (string s in nicklist)
+                {
+                    if (s != null && s != "")
+                        Program.M.UserAdd(commands[3].Remove(0, 1), s);
+                }
+            }
         }
 
         public static void ERR_NOSUCHNICK_401(string input)
