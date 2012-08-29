@@ -20,7 +20,7 @@ namespace MerbosMagic_IRC_Client
         public static string nick = Environment.UserName.Replace(" ","_");                                      //Nick
         public static string user = Environment.UserName;                                                       //Real name
         public static int port = 6667;                                                                          //Port to connect on
-        public static string server = "merbosmagic.org";                                                        //Server to connect to
+        public static string server = "irc.merbosmagic.co.cc";                                                  //Server to connect to
         public static Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;    //Client version :D
         public static string longversion = "MerbosMagic IRC Client Version " + version;                         //Longer client version :D
         public static void Connect()
